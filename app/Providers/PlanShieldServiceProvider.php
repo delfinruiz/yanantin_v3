@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use BezhanSalleh\FilamentShield\FilamentShield;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
 class PlanShieldServiceProvider extends ServiceProvider
@@ -74,6 +75,39 @@ class PlanShieldServiceProvider extends ServiceProvider
             {
                 return tenant()->allowedEntities();
             }
+        });
+    }
+
+    public function boot(): void
+    {
+        Gate::before(function ($user, string $ability, array $arguments): ?bool {
+            if (! $user?->hasRole('super_admin')) {
+                return null;
+            }
+
+            if (! tenancy()->initialized || ! tenant()) {
+                return true;
+            }
+
+            $allowed = tenant()->allowedEntities();
+
+            if (empty($allowed)) {
+                return false;
+            }
+
+            foreach ($arguments as $argument) {
+                $class = is_object($argument) ? get_class($argument) : (is_string($argument) ? $argument : null);
+
+                if ($class && class_exists($class)) {
+                    $basename = class_basename($class);
+
+                    if (! in_array($basename, $allowed)) {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
         });
     }
 }
