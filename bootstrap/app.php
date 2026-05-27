@@ -16,6 +16,10 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->group('universal', []);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
+        $exceptions->dontReport([
+            TenantCouldNotBeIdentifiedOnDomainException::class,
+        ]);
+
         $exceptions->render(function (TenantCouldNotBeIdentifiedOnDomainException $e) {
             return response()->view('tenant.not-found', [], 404);
         });
