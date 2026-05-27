@@ -85,7 +85,17 @@ function cleanLivewireTmp(string $path): int
 
 echo "\n\033[1m=== Diagnostico y Fix Yanantin ===\033[0m\n\n";
 
+// Detectar raíz del proyecto (funciona desde cualquier ubicación)
 $base = __DIR__;
+while (! file_exists($base.'/artisan') && $base !== dirname($base)) {
+    $base = dirname($base);
+}
+
+if (! file_exists($base.'/artisan')) {
+    echo "\033[31m[ERROR]\033[0m No se encontró artisan. Ejecuta desde la raíz del proyecto.\n";
+    exit(1);
+}
+
 $public = $base.'/public';
 $storage = $base.'/storage';
 $bootstrap = $base.'/bootstrap/cache';
