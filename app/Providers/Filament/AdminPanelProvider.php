@@ -7,6 +7,7 @@ use App\Filament\Pages\Auth\TenantLogin;
 use App\Filament\Pages\Auth\TenantRegister;
 use App\Filament\Pages\Auth\TenantRequestPasswordReset;
 use App\Filament\Pages\Dashboard;
+use App\Filament\Pages\EditProfilePage;
 use App\Http\Middleware\CheckSubscriptionStatus;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Filament\Actions\Action;
@@ -15,6 +16,7 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\MenuItem;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
@@ -77,6 +79,10 @@ class AdminPanelProvider extends PanelProvider
                     ->scopeToTenant(false),
             ])
             ->userMenuItems([
+                'profile' => MenuItem::make()
+                    ->label(fn () => auth()->user()->name)
+                    ->url(fn (): string => EditProfilePage::getUrl())
+                    ->icon('heroicon-o-user-circle'),
                 'logout' => Action::make('logout')
                     ->label('Cerrar sesion')
                     ->icon('heroicon-o-arrow-right-on-rectangle')

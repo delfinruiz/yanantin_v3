@@ -25,6 +25,8 @@ class EditProfilePage extends Page
 
     protected static ?string $title = 'Editar perfil';
 
+    protected static bool $shouldRegisterNavigation = false;
+
     protected static ?string $navigationLabel = 'Editar perfil';
 
     protected string $view = 'filament.pages.edit-profile';
