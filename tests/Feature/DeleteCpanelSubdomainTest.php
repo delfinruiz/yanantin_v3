@@ -14,9 +14,10 @@ beforeEach(function () {
 
 it('dispatches DeleteCpanelSubdomain job when tenant is deleted', function () {
     Http::fake([
-        '*/execute/SubDomain/delsubdomain*' => Http::response([
+        '*/json-api/cpanel*' => Http::response([
             'status' => 1,
             'errors' => null,
+            'data' => [],
         ]),
     ]);
 
@@ -26,20 +27,22 @@ it('dispatches DeleteCpanelSubdomain job when tenant is deleted', function () {
     ]);
     $tenant->domains()->create(['domain' => 'delete-test-tenant']);
 
-    // Dispatch the job directly (in production it's dispatched via TenantDeleted event)
     DeleteCpanelSubdomain::dispatchSync($tenant);
 
     Http::assertSent(function ($request) {
-        return str_contains($request->url(), 'SubDomain/delsubdomain')
-            && $request['domain'] === 'delete-test-tenant.cahilt.com';
+        return str_contains($request->url(), 'json-api/cpanel')
+            && $request['cpanel_jsonapi_module'] === 'SubDomain'
+            && $request['cpanel_jsonapi_func'] === 'delsubdomain'
+            && $request['domain'] === 'delete-test-tenant';
     });
 });
 
 it('calls cPanel API to delete subdomain', function () {
     Http::fake([
-        '*/execute/SubDomain/delsubdomain*' => Http::response([
+        '*/json-api/cpanel*' => Http::response([
             'status' => 1,
             'errors' => null,
+            'data' => [],
         ]),
     ]);
 
@@ -53,8 +56,11 @@ it('calls cPanel API to delete subdomain', function () {
     $job->handle();
 
     Http::assertSent(function ($request) {
-        return str_contains($request->url(), 'SubDomain/delsubdomain')
-            && $request['domain'] === 'api-test-tenant.cahilt.com';
+        return str_contains($request->url(), 'json-api/cpanel')
+            && $request['cpanel_jsonapi_module'] === 'SubDomain'
+            && $request['cpanel_jsonapi_func'] === 'delsubdomain'
+            && $request['domain'] === 'api-test-tenant'
+            && $request['rootdomain'] === 'cahilt.com';
     });
 });
 

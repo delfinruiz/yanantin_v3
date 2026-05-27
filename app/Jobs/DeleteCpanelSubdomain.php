@@ -46,13 +46,19 @@ class DeleteCpanelSubdomain implements ShouldQueue
             ->withoutVerifying()
             ->timeout(30)
             ->connectTimeout(10)
-            ->get("https://{$host}:2083/execute/SubDomain/delsubdomain", [
-                'domain' => $fqdn,
+            ->get("https://{$host}:2083/json-api/cpanel", [
+                'cpanel_jsonapi_module' => 'SubDomain',
+                'cpanel_jsonapi_func' => 'delsubdomain',
+                'cpanel_jsonapi_apiversion' => 2,
+                'domain' => $subdomain,
+                'rootdomain' => $rootDomain,
             ]);
 
         $body = $response->json();
 
-        if ($response->failed() || ! empty($body['errors'])) {
+        $errors = $body['errors'] ?? $body['data'][0]['result']['errors'] ?? [];
+
+        if ($response->failed() || ! empty($errors)) {
             Log::error('cPanel: No se pudo eliminar el subdominio '.$fqdn, [
                 'status' => $response->status(),
                 'response' => $body,

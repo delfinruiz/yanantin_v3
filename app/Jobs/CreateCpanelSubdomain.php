@@ -66,29 +66,5 @@ class CreateCpanelSubdomain implements ShouldQueue
         }
 
         Log::info('cPanel: Subdominio creado: '.$fqdn);
-
-        $this->enableAutoSsl($auth, $host, $fqdn);
-    }
-
-    protected function enableAutoSsl(string $auth, string $host, string $fqdn): void
-    {
-        $response = Http::withHeaders(['Authorization' => $auth])
-            ->withoutVerifying()
-            ->timeout(30)
-            ->connectTimeout(10)
-            ->get("https://{$host}:2083/execute/SSL/enable_autossl", [
-                'domains' => $fqdn,
-            ]);
-
-        $body = $response->json();
-
-        if ($response->successful() && empty($body['errors'])) {
-            Log::info('cPanel: AutoSSL activado para '.$fqdn);
-        } else {
-            Log::warning('cPanel: No se pudo activar AutoSSL para '.$fqdn, [
-                'status' => $response->status(),
-                'response' => $body,
-            ]);
-        }
     }
 }
