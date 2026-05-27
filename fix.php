@@ -151,7 +151,7 @@ if ($cleaned > 0) {
 echo "\n  \033[1mCaches:\033[0m\n";
 
 $artisan = $base.'/artisan';
-$php = PHP_BINARY;
+$php = file_exists('/usr/local/bin/ea-php84') ? '/usr/local/bin/ea-php84' : PHP_BINARY;
 
 $commands = [
     'view:clear' => 'Vistas compiladas',

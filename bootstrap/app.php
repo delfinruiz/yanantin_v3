@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -27,4 +28,10 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->render(function (TenantCouldNotBeIdentifiedException $e) {
             return response()->view('tenant.not-found', [], 404);
         });
-    })->create();
+    })
+    ->withSchedule(function (Schedule $schedule): void {
+        $schedule->command('queue:work --stop-when-empty --queue=default')
+            ->everyMinute()
+            ->withoutOverlapping();
+    })
+    ->create();
