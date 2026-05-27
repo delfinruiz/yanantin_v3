@@ -1,0 +1,162 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e3]:
+    - button "Expandir barra lateral" [ref=e4] [cursor=pointer]:
+      - img [ref=e5]
+    - generic [ref=e7]:
+      - generic [ref=e10]:
+        - generic [ref=e11]: Búsqueda global
+        - generic [ref=e12]:
+          - img [ref=e14]
+          - searchbox "Búsqueda global" [ref=e17]
+      - button "Menú del usuario" [ref=e20] [cursor=pointer]:
+        - img "Avatar of Admin" [ref=e21]
+  - generic [ref=e22]:
+    - complementary [ref=e23]:
+      - navigation [ref=e26]:
+        - list [ref=e27]:
+          - listitem [ref=e28]:
+            - list [ref=e29]:
+              - listitem [ref=e30]:
+                - link [ref=e31] [cursor=pointer]:
+                  - /url: http://cahilt.localhost:8000/admin
+                  - img [ref=e32]
+              - listitem [ref=e34]:
+                - link [ref=e35] [cursor=pointer]:
+                  - /url: http://cahilt.localhost:8000/admin/edit-profile
+          - listitem [ref=e36]:
+            - list [ref=e37]:
+              - listitem [ref=e38]:
+                - link [ref=e39] [cursor=pointer]:
+                  - /url: http://cahilt.localhost:8000/admin/departments
+                  - img [ref=e40]
+          - listitem [ref=e42]:
+            - list [ref=e43]:
+              - listitem [ref=e44]:
+                - link [ref=e45] [cursor=pointer]:
+                  - /url: http://cahilt.localhost:8000/admin/users
+                  - img [ref=e46]
+          - listitem [ref=e48]:
+            - list [ref=e49]:
+              - listitem [ref=e50]:
+                - link [ref=e51] [cursor=pointer]:
+                  - /url: http://cahilt.localhost:8000/admin/shield/roles
+                  - img [ref=e52]
+          - listitem [ref=e54]:
+            - list [ref=e55]:
+              - listitem [ref=e56]:
+                - link [ref=e57] [cursor=pointer]:
+                  - /url: http://cahilt.localhost:8000/admin/products
+                  - img [ref=e58]
+    - main [ref=e61]:
+      - generic [ref=e63]:
+        - heading "Editar perfil" [level=1] [ref=e66]
+        - generic [ref=e68]:
+          - generic [ref=e69]:
+            - generic [ref=e74]:
+              - generic [ref=e76]:
+                - heading "Información del perfil" [level=2] [ref=e77]
+                - paragraph [ref=e78]: Actualiza la información del perfil de tu cuenta y tu dirección de correo electrónico
+              - generic [ref=e80]:
+                - generic [ref=e83]:
+                  - generic [ref=e87]: Foto
+                  - group "Foto" [ref=e89]:
+                    - button "Foto" [ref=e91]
+                - generic [ref=e94]:
+                  - generic [ref=e98]:
+                    - text: Nombre
+                    - superscript [ref=e99]: "*"
+                  - textbox "Nombre* Nombre*" [ref=e103]: Admin
+                - generic [ref=e106]:
+                  - generic [ref=e110]:
+                    - text: Correo Electrónico
+                    - superscript [ref=e111]: "*"
+                  - textbox "Correo Electrónico* Correo Electrónico*" [ref=e115]: admin@cahilt.localhost
+            - generic [ref=e116]:
+              - button "Guardar" [disabled]
+          - generic [ref=e117]:
+            - generic [ref=e122]:
+              - generic [ref=e124]:
+                - heading "Información del perfil" [level=2] [ref=e125]
+                - paragraph [ref=e126]: Actualiza la información del perfil de tu cuenta y tu dirección de correo electrónico
+              - generic [ref=e128]:
+                - generic [ref=e131]:
+                  - generic [ref=e135]: Foto
+                  - group "Foto" [ref=e137]:
+                    - button "Foto" [ref=e139]
+                - generic [ref=e142]:
+                  - generic [ref=e146]:
+                    - text: Nombre
+                    - superscript [ref=e147]: "*"
+                  - textbox [ref=e151]: Admin
+                - generic [ref=e154]:
+                  - generic [ref=e158]:
+                    - text: Correo Electrónico
+                    - superscript [ref=e159]: "*"
+                  - textbox [ref=e163]: admin@cahilt.localhost
+            - generic [ref=e164]:
+              - button "Guardar" [disabled]
+          - generic [ref=e165]:
+            - generic [ref=e170]:
+              - generic [ref=e172]:
+                - heading "Actualizar Contraseña" [level=2] [ref=e173]
+                - paragraph [ref=e174]: Asegúrate de que tu cuenta utiliza una contraseña larga y aleatoria para estar seguro
+              - generic [ref=e176]:
+                - generic [ref=e179]:
+                  - generic [ref=e183]:
+                    - text: Contraseña actual
+                    - superscript [ref=e184]: "*"
+                  - generic [ref=e186]:
+                    - textbox "Contraseña actual*" [ref=e188]
+                    - button "Mostrar contraseña" [ref=e191] [cursor=pointer]:
+                      - img [ref=e192]
+                - generic [ref=e197]:
+                  - generic [ref=e201]:
+                    - text: Nueva Contraseña
+                    - superscript [ref=e202]: "*"
+                  - generic [ref=e204]:
+                    - textbox "Nueva Contraseña*" [ref=e206]
+                    - button "Mostrar contraseña" [ref=e209] [cursor=pointer]:
+                      - img [ref=e210]
+                - generic [ref=e215]:
+                  - generic [ref=e219]:
+                    - text: Confirmar Contraseña
+                    - superscript [ref=e220]: "*"
+                  - generic [ref=e222]:
+                    - textbox "Confirmar Contraseña*" [ref=e224]
+                    - button "Mostrar contraseña" [ref=e227] [cursor=pointer]:
+                      - img [ref=e228]
+            - button "Guardar" [ref=e232] [cursor=pointer]
+          - generic [ref=e239]:
+            - generic [ref=e241]:
+              - heading "Sesiones del navegador" [level=2] [ref=e242]
+              - paragraph [ref=e243]: Gestiona y cierra tus sesiones activas en otros navegadores y dispositivos
+            - generic [ref=e245]:
+              - generic [ref=e248]:
+                - generic [ref=e249]: Sesiones del navegador
+                - generic [ref=e253]:
+                  - generic [ref=e254]: Si es necesario, puedes cerrar todas tus sesiones de navegación en todos tus dispositivos. Algunas de sus sesiones recientes se enumeran a continuación; sin embargo, esta lista puede no ser exhaustiva. Si cree que su cuenta ha sido comprometida, también debería actualizar su contraseña
+                  - generic [ref=e255]:
+                    - generic [ref=e256]:
+                      - img [ref=e258]
+                      - generic [ref=e260]:
+                        - generic [ref=e261]: Linux - Chrome
+                        - generic [ref=e263]: 127.0.0.1, Este dispositivo
+                    - generic [ref=e264]:
+                      - img [ref=e266]
+                      - generic [ref=e268]:
+                        - generic [ref=e269]: Linux - Chrome
+                        - generic [ref=e271]: 127.0.0.1, Última activa hace 16 horas
+              - button "Cerrar otras sesiones del navegador" [ref=e276] [cursor=pointer]
+          - generic [ref=e283]:
+            - generic [ref=e285]:
+              - heading "Eliminar cuenta" [level=2] [ref=e286]
+              - paragraph [ref=e287]: Elimina permanentemente tu cuenta
+            - generic [ref=e289]:
+              - generic [ref=e292]:
+                - generic [ref=e293]: Delete Account
+                - generic [ref=e296]: Una vez eliminada tu cuenta, todos tus recursos y datos serán borrados permanentemente. Antes de borrar tu cuenta, por favor descarga cualquier dato o información que desees conservar.
+              - button "Eliminar cuenta" [ref=e301] [cursor=pointer]:
+                - img [ref=e302]
+                - text: Eliminar cuenta
+  - generic:
+    - status

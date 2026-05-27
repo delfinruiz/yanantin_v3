@@ -1,0 +1,226 @@
+- generic [ref=e2]:
+  - generic [ref=e4]:
+    - generic [ref=e5]:
+      - img [ref=e7]
+      - generic [ref=e10]: Internal Server Error
+    - button "Copy as Markdown" [ref=e11] [cursor=pointer]:
+      - img [ref=e12]
+      - generic [ref=e15]: Copy as Markdown
+  - generic [ref=e18]:
+    - generic [ref=e19]:
+      - heading "Error" [level=1] [ref=e20]
+      - generic [ref=e22]: app/Filament/Pages/EditProfilePage.php:45
+      - paragraph [ref=e23]: Class "Filament\Forms\Components\Section" not found
+    - generic [ref=e24]:
+      - generic [ref=e25]:
+        - generic [ref=e26]:
+          - generic [ref=e27]: LARAVEL
+          - generic [ref=e28]: 13.9.0
+        - generic [ref=e29]:
+          - generic [ref=e30]: PHP
+          - generic [ref=e31]: 8.5.4
+      - generic [ref=e32]:
+        - img [ref=e33]
+        - text: UNHANDLED
+      - generic [ref=e36]: CODE 0
+    - generic [ref=e38]:
+      - generic [ref=e39]:
+        - img [ref=e40]
+        - text: "500"
+      - generic [ref=e43]:
+        - img [ref=e44]
+        - text: GET
+      - generic [ref=e47]: http://cahilt.localhost:8000/admin/edit-profile
+      - button [ref=e48] [cursor=pointer]:
+        - img [ref=e49]
+  - generic [ref=e53]:
+    - generic [ref=e54]:
+      - generic [ref=e55]:
+        - img [ref=e57]
+        - heading "Exception trace" [level=3] [ref=e60]
+      - generic [ref=e61]:
+        - generic [ref=e62]:
+          - generic [ref=e63] [cursor=pointer]:
+            - generic [ref=e66]:
+              - code [ref=e70]:
+                - generic [ref=e71]: App\Filament\Pages\EditProfilePage->form()
+              - generic [ref=e73]: app/Filament/Pages/EditProfilePage.php:45
+            - button [ref=e75]:
+              - img [ref=e76]
+          - code [ref=e84]:
+            - generic [ref=e85]: "40 public function form(Schema $schema): Schema"
+            - generic [ref=e86]: "41 {"
+            - generic [ref=e87]: 42 return $schema
+            - generic [ref=e88]: 43 ->statePath('data')
+            - generic [ref=e89]: 44 ->components([
+            - generic [ref=e90]: 45 Section::make('Información del perfil')
+            - generic [ref=e91]: 46 ->description('Actualiza la informacion del perfil de tu cuenta.')
+            - generic [ref=e92]: 47 ->aside()
+            - generic [ref=e93]: 48 ->schema([
+            - generic [ref=e94]: 49 FileUpload::make('avatar_url')
+            - generic [ref=e95]: 50 ->label('Foto')
+            - generic [ref=e96]: 51 ->avatar()
+            - generic [ref=e97]: 52 ->imageEditor()
+            - generic [ref=e98]: 53 ->disk('public')
+            - generic [ref=e99]: 54 ->directory('avatars'),
+            - generic [ref=e100]: 55 TextInput::make('name')
+            - generic [ref=e101]: 56 ->label('Nombre')
+            - generic [ref=e102]: "57"
+        - generic [ref=e104] [cursor=pointer]:
+          - img [ref=e105]
+          - generic [ref=e109]: 3 vendor frames
+          - button [ref=e110]:
+            - img [ref=e111]
+        - generic [ref=e116] [cursor=pointer]:
+          - generic [ref=e119]:
+            - code [ref=e123]:
+              - generic [ref=e124]: Filament\Pages\BasePage->__get()
+            - generic [ref=e126]: app/Filament/Pages/EditProfilePage.php:33
+          - button [ref=e128]:
+            - img [ref=e129]
+        - generic [ref=e134] [cursor=pointer]:
+          - img [ref=e135]
+          - generic [ref=e139]: 44 vendor frames
+          - button [ref=e140]:
+            - img [ref=e141]
+        - generic [ref=e146] [cursor=pointer]:
+          - generic [ref=e149]:
+            - code [ref=e153]:
+              - generic [ref=e154]: "Illuminate\\Pipeline\\Pipeline->{closure:{closure:Illuminate\\Pipeline\\Pipeline::carry():194}:195}()"
+            - generic [ref=e156]: app/Http/Middleware/CheckSubscriptionStatus.php:20
+          - button [ref=e158]:
+            - img [ref=e159]
+        - generic [ref=e164] [cursor=pointer]:
+          - img [ref=e165]
+          - generic [ref=e169]: 39 vendor frames
+          - button [ref=e170]:
+            - img [ref=e171]
+        - generic [ref=e176] [cursor=pointer]:
+          - generic [ref=e179]:
+            - code [ref=e183]:
+              - generic [ref=e184]: Illuminate\Foundation\Application->handleRequest()
+            - generic [ref=e186]: public/index.php:20
+          - button [ref=e188]:
+            - img [ref=e189]
+        - generic [ref=e194] [cursor=pointer]:
+          - img [ref=e195]
+          - generic [ref=e199]: 1 vendor frame
+          - button [ref=e200]:
+            - img [ref=e201]
+    - generic [ref=e205]:
+      - generic [ref=e206]:
+        - generic [ref=e207]:
+          - img [ref=e209]
+          - heading "Queries" [level=3] [ref=e211]
+        - generic [ref=e213]: 1-5 of 5
+      - generic [ref=e214]:
+        - generic [ref=e215]:
+          - generic [ref=e216]:
+            - generic [ref=e217]:
+              - img [ref=e218]
+              - generic [ref=e220]: mysql
+            - code [ref=e224]:
+              - generic [ref=e225]: "select * from `tenants` where exists (select * from `domains` where `tenants`.`id` = `domains`.`tenant_id` and `domain` = 'cahilt') limit 1"
+          - generic [ref=e226]: 2.06ms
+        - generic [ref=e227]:
+          - generic [ref=e228]:
+            - generic [ref=e229]:
+              - img [ref=e230]
+              - generic [ref=e232]: mysql
+            - code [ref=e236]:
+              - generic [ref=e237]: "select * from `domains` where `domains`.`tenant_id` in ('cahilt-0caf09e3-f568-3331-817f-c15b48f69988')"
+          - generic [ref=e238]: 0.39ms
+        - generic [ref=e239]:
+          - generic [ref=e240]:
+            - generic [ref=e241]:
+              - img [ref=e242]
+              - generic [ref=e244]: mysql
+            - code [ref=e248]:
+              - generic [ref=e249]: "delete from `cache` where `key` in ('yanantin-cache-spatie.permission.cache.cahilt-0caf09e3-f568-3331-817f-c15b48f69988', 'yanantin-cache-illuminate:cache:flexible:created:spatie.permission.cache.cahilt-0caf09e3-f568-3331-817f-c15b48f69988')"
+          - generic [ref=e250]: 0.37ms
+        - generic [ref=e251]:
+          - generic [ref=e252]:
+            - generic [ref=e253]:
+              - img [ref=e254]
+              - generic [ref=e256]: mysql
+            - code [ref=e260]:
+              - generic [ref=e261]: "select * from `sessions` where `id` = 'WQWNO1LAke4IJE53pIWC1YxtVesmUwLVvVER466Z' limit 1"
+          - generic [ref=e262]: 0.63ms
+        - generic [ref=e263]:
+          - generic [ref=e264]:
+            - generic [ref=e265]:
+              - img [ref=e266]
+              - generic [ref=e268]: mysql
+            - code [ref=e272]:
+              - generic [ref=e273]: "select * from `users` where `id` = 7 and `users`.`tenant_id` = 'cahilt-0caf09e3-f568-3331-817f-c15b48f69988' limit 1"
+          - generic [ref=e274]: 0.54ms
+  - generic [ref=e276]:
+    - generic [ref=e277]:
+      - heading "Headers" [level=2] [ref=e278]
+      - generic [ref=e279]:
+        - generic [ref=e280]:
+          - generic [ref=e281]: host
+          - generic [ref=e283]: cahilt.localhost:8000
+        - generic [ref=e284]:
+          - generic [ref=e285]: connection
+          - generic [ref=e287]: keep-alive
+        - generic [ref=e288]:
+          - generic [ref=e289]: sec-ch-ua
+          - generic [ref=e291]: "\"Chromium\";v=\"148\", \"Google Chrome\";v=\"148\", \"Not/A)Brand\";v=\"99\""
+        - generic [ref=e292]:
+          - generic [ref=e293]: sec-ch-ua-mobile
+          - generic [ref=e295]: "?0"
+        - generic [ref=e296]:
+          - generic [ref=e297]: sec-ch-ua-platform
+          - generic [ref=e299]: "\"Linux\""
+        - generic [ref=e300]:
+          - generic [ref=e301]: upgrade-insecure-requests
+          - generic [ref=e303]: "1"
+        - generic [ref=e304]:
+          - generic [ref=e305]: user-agent
+          - generic [ref=e307]: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36
+        - generic [ref=e308]:
+          - generic [ref=e309]: accept
+          - generic [ref=e311]: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+        - generic [ref=e312]:
+          - generic [ref=e313]: sec-fetch-site
+          - generic [ref=e315]: none
+        - generic [ref=e316]:
+          - generic [ref=e317]: sec-fetch-mode
+          - generic [ref=e319]: navigate
+        - generic [ref=e320]:
+          - generic [ref=e321]: sec-fetch-user
+          - generic [ref=e323]: "?1"
+        - generic [ref=e324]:
+          - generic [ref=e325]: sec-fetch-dest
+          - generic [ref=e327]: document
+        - generic [ref=e328]:
+          - generic [ref=e329]: accept-encoding
+          - generic [ref=e331]: gzip, deflate, br, zstd
+        - generic [ref=e332]:
+          - generic [ref=e333]: accept-language
+          - generic [ref=e335]: es-ES,es;q=0.9
+        - generic [ref=e336]:
+          - generic [ref=e337]: cookie
+          - generic [ref=e339]: XSRF-TOKEN=eyJpdiI6Im1GbVdBZnVaSGYxVW8za1h1cXhIckE9PSIsInZhbHVlIjoiSHJKUEovaytKb2tERHFSc2VlSUhyS0txdzEzU0VFMjZaTjNPdlFvZ25jTWxoWnhWMXdwVDBYc29GL3NoaGx2LzNWL1QrekFRZDlEcVVvbXo1aTFVd3F5a3ltVFJFRUVkSzdIeU1peGpBRXRKWlZ3SSsxUzcybVgvSlovUkxTNFMiLCJtYWMiOiIyZTY4YTUxNDU0Y2E0MzlkNGI5M2NhMDQ2MjVhOGRjOWYzZmMyNjZlOWJiNGVjYTA2Zjg2ZDhlYTM1Yjk4MWYyIiwidGFnIjoiIn0%3D; yanantin-session=eyJpdiI6IjdmWHF4bll5bkNjWmIzN3NVK0tubHc9PSIsInZhbHVlIjoiK3hWdnhLelM5bFBaS25QK1N5emprSGdoQTIxUUJuUFYzQ3R1YTRyVVFldlZMemp5OVQ2MHc2aXQwc1pQRHFid1BzMll6TFR0VlZKWWJpQVYzYUNiSU9MS2JFKzllMTFFTHBtV3hKM0Y4SW44dWNGcEpKUkRpT1dHRTh2NldhdmUiLCJtYWMiOiJlMDM1N2E0MDY0NGVmMDJmZGRjZTY1OWM4N2M5ZTdhNGY5ZDkwODVkZjJmNzIxZGRmMWE4OTc5YmNmM2ZjYmJkIiwidGFnIjoiIn0%3D
+    - generic [ref=e340]:
+      - heading "Body" [level=2] [ref=e341]
+      - generic [ref=e342]: // No request body
+    - generic [ref=e343]:
+      - heading "Routing" [level=2] [ref=e344]
+      - generic [ref=e345]:
+        - generic [ref=e346]:
+          - generic [ref=e347]: controller
+          - generic [ref=e349]: App\Filament\Pages\EditProfilePage
+        - generic [ref=e350]:
+          - generic [ref=e351]: route name
+          - generic [ref=e353]: filament.admin.pages.edit-profile
+        - generic [ref=e354]:
+          - generic [ref=e355]: middleware
+          - generic [ref=e357]: panel:admin, Stancl\Tenancy\Middleware\InitializeTenancyBySubdomain, App\Http\Middleware\CheckSubscriptionStatus, Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains, Illuminate\Cookie\Middleware\EncryptCookies, Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse, Illuminate\Session\Middleware\StartSession, Filament\Http\Middleware\AuthenticateSession, Illuminate\View\Middleware\ShareErrorsFromSession, Illuminate\Foundation\Http\Middleware\PreventRequestForgery, Illuminate\Routing\Middleware\SubstituteBindings, Filament\Http\Middleware\DisableBladeIconComponents, Filament\Http\Middleware\DispatchServingFilamentEvent, Filament\Http\Middleware\Authenticate, verified:filament.admin.auth.email-verification.prompt
+    - generic [ref=e358]:
+      - heading "Routing parameters" [level=2] [ref=e359]
+      - generic [ref=e360]: // No routing parameters
+  - generic [ref=e363]:
+    - img [ref=e365]
+    - img [ref=e3403]
