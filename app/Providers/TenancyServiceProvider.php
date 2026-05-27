@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Jobs\CleanupTenantFiles;
+use App\Jobs\CleanupTenantUsers;
 use App\Jobs\CreateCpanelSubdomain;
+use App\Jobs\DeleteCpanelSubdomain;
 use App\Jobs\SeedTenantAdmin;
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Support\Facades\Event;
@@ -42,7 +44,9 @@ class TenancyServiceProvider extends ServiceProvider
             Events\DeletingTenant::class => [],
             Events\TenantDeleted::class => [
                 JobPipeline::make([
+                    CleanupTenantUsers::class,
                     CleanupTenantFiles::class,
+                    DeleteCpanelSubdomain::class,
                 ])->send(function (Events\TenantDeleted $event) {
                     return $event->tenant;
                 })->shouldBeQueued(app()->isProduction()),

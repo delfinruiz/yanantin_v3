@@ -27,7 +27,7 @@ class CentralPanelProvider extends PanelProvider
             ->default()
             ->id('central')
             ->path('central')
-            ->domain('localhost')
+            ->domain(config('app.central_panel_domain'))
             ->login()
             ->colors([
                 'primary' => Color::Blue,

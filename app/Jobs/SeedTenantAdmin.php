@@ -27,12 +27,17 @@ class SeedTenantAdmin implements ShouldQueue
     {
         tenancy()->initialize($this->tenant);
 
-        $user = User::create([
-            'name' => 'Admin',
-            'email' => 'admin@'.$this->getTenantSlug().'.localhost',
-            'password' => Hash::make('password'),
-            'is_internal' => true,
-        ]);
+        $adminEmail = 'admin@'.$this->getTenantSlug().'.localhost';
+
+        $user = User::withoutGlobalScope('tenant')->updateOrCreate(
+            ['email' => $adminEmail],
+            [
+                'name' => 'Admin',
+                'password' => Hash::make('password'),
+                'is_internal' => true,
+                'tenant_id' => $this->tenant->id,
+            ]
+        );
 
         $superAdmin = Role::firstOrCreate([
             'name' => 'super_admin',
