@@ -32,45 +32,33 @@ return [
             'label' => 'Felicidad Organizacional',
             'entities' => ['Mood', 'HappinessSuggestion', 'CompanyHappiness', 'CompanyHappinessBarWidget', 'DailyMoodWidget', 'AiSuggestionsPanel', 'MoodTodayPieChart', 'MoodFilteredPieChart', 'MoodMonthlyDistributionChart', 'MoodPromptOverlay', 'ManageSettings'],
         ],
+        'file_manager' => [
+            'label' => 'Gestor de Archivos',
+            'entities' => ['FileManager'],
+        ],
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Default Plan
-    |--------------------------------------------------------------------------
-    |
-    | Default plan assigned to new tenants when no plan is selected.
-    |
-    */
     'default' => 'free',
 
-    /*
-    |--------------------------------------------------------------------------
-    | Plans
-    |--------------------------------------------------------------------------
-    |
-    | Predefined plans with their features. These are seeded into the database.
-    |
-    */
     'plans' => [
         'free' => [
             'name' => 'Gratuito',
-            'features' => ['products', 'felicidad-organizacional'],
+            'features' => ['products', 'felicidad-organizacional', 'file_manager'],
             'max_users' => null,
         ],
         'basic' => [
             'name' => 'Basico',
-            'features' => ['products', 'users', 'felicidad-organizacional'],
+            'features' => ['products', 'users', 'felicidad-organizacional', 'file_manager'],
             'max_users' => null,
         ],
         'pro' => [
             'name' => 'Profesional',
-            'features' => ['products', 'users', 'roles', 'felicidad-organizacional'],
+            'features' => ['products', 'users', 'roles', 'felicidad-organizacional', 'file_manager'],
             'max_users' => null,
         ],
         'enterprise' => [
             'name' => 'Enterprise',
-            'features' => ['products', 'users', 'roles', 'departments', 'felicidad-organizacional'],
+            'features' => ['products', 'users', 'roles', 'departments', 'felicidad-organizacional', 'file_manager'],
             'max_users' => null,
         ],
     ],

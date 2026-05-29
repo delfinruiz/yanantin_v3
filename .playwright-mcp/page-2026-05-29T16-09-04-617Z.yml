@@ -1,0 +1,103 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e3]:
+    - button "Expandir barra lateral" [ref=e4] [cursor=pointer]:
+      - img [ref=e5]
+    - generic [ref=e7]:
+      - generic [ref=e10]:
+        - generic [ref=e11]: Búsqueda global
+        - generic [ref=e12]:
+          - img [ref=e14]
+          - searchbox "Búsqueda global" [ref=e17]
+      - button "Menú del usuario" [ref=e20] [cursor=pointer]:
+        - img "Avatar of Ivan Ruiz Delfin" [ref=e21]
+  - generic [ref=e22]:
+    - complementary [ref=e23]:
+      - navigation [ref=e26]:
+        - list [ref=e27]:
+          - listitem [ref=e28]:
+            - list [ref=e29]:
+              - listitem [ref=e30]:
+                - link [ref=e31] [cursor=pointer]:
+                  - /url: http://cahilt.localhost:8000/admin
+                  - img [ref=e32]
+          - listitem [ref=e34]:
+            - list [ref=e35]:
+              - listitem [ref=e36]:
+                - link [ref=e37] [cursor=pointer]:
+                  - /url: http://cahilt.localhost:8000/admin/file-manager
+                  - img [ref=e38]
+    - main [ref=e41]:
+      - generic [ref=e43]:
+        - generic [ref=e44]:
+          - heading "Gestor de Archivos" [level=1] [ref=e46]
+          - generic [ref=e48]:
+            - button "Crear carpeta" [ref=e49] [cursor=pointer]:
+              - img [ref=e50]
+              - text: Crear carpeta
+            - button "Crear archivo" [ref=e52] [cursor=pointer]:
+              - img [ref=e53]
+              - text: Crear archivo
+            - button "Subir archivos" [ref=e55] [cursor=pointer]:
+              - img [ref=e56]
+              - text: Subir archivos
+        - generic [ref=e60]:
+          - button [ref=e62] [cursor=pointer]:
+            - img [ref=e63]
+          - generic [ref=e67]:
+            - generic [ref=e71]:
+              - generic [ref=e72]: Búsqueda
+              - generic [ref=e73]:
+                - img [ref=e75]
+                - searchbox "Búsqueda" [ref=e78]
+            - table [ref=e80]:
+              - rowgroup [ref=e81]:
+                - row "Seleccionar/deseleccionar todos los elementos para las acciones masivas. Tipo Nombre Tamano Ubicacion Modificado Propietario Permiso Compartido Acciones" [ref=e82]:
+                  - columnheader "Seleccionar/deseleccionar todos los elementos para las acciones masivas." [ref=e83]:
+                    - checkbox "Seleccionar/deseleccionar todos los elementos para las acciones masivas." [ref=e84]
+                  - columnheader "Tipo" [ref=e85]
+                  - columnheader "Nombre" [ref=e86]:
+                    - button "Nombre" [ref=e87] [cursor=pointer]:
+                      - text: Nombre
+                      - img [ref=e88]
+                  - columnheader "Tamano" [ref=e90]
+                  - columnheader "Ubicacion" [ref=e91]
+                  - columnheader "Modificado" [ref=e92]:
+                    - button "Modificado" [ref=e93] [cursor=pointer]:
+                      - text: Modificado
+                      - img [ref=e94]
+                  - columnheader "Propietario" [ref=e96]
+                  - columnheader "Permiso" [ref=e97]
+                  - columnheader "Compartido" [ref=e98]
+                  - columnheader "Acciones" [ref=e99]
+              - rowgroup [ref=e100]:
+                - row "Compartidos — / 29-05-2026 16:08:29 Yo Todos" [ref=e101]:
+                  - cell [ref=e102]
+                  - cell [ref=e103]:
+                    - button [ref=e104] [cursor=pointer]:
+                      - img [ref=e106]
+                  - cell "Compartidos" [ref=e108]:
+                    - generic [ref=e110]: Compartidos
+                  - cell "—" [ref=e111]:
+                    - generic [ref=e113]: —
+                  - cell / [ref=e114]:
+                    - generic [ref=e116]: /
+                  - cell "29-05-2026 16:08:29" [ref=e117]:
+                    - generic [ref=e119]: 29-05-2026 16:08:29
+                  - cell "Yo" [ref=e120]:
+                    - generic [ref=e123]: Yo
+                  - cell "Todos" [ref=e124]:
+                    - generic [ref=e127]: Todos
+                  - cell [ref=e128]:
+                    - button [ref=e129] [cursor=pointer]:
+                      - img [ref=e131]
+                  - cell [ref=e133]
+            - navigation "Navegación de paginación" [ref=e134]:
+              - generic [ref=e137]:
+                - generic [ref=e139]: por página
+                - combobox "por página" [ref=e141]:
+                  - option "5"
+                  - option "10"
+                  - option "25"
+                  - option "50" [selected]
+  - generic:
+    - status

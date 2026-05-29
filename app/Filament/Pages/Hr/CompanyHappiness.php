@@ -55,6 +55,11 @@ class CompanyHappiness extends Page implements HasTable
         return static::shieldCanAccess();
     }
 
+    protected static function getPagePermission(): ?string
+    {
+        return 'View:'.class_basename(static::class);
+    }
+
     public static function shouldRegisterNavigation(): bool
     {
         return static::canAccess();

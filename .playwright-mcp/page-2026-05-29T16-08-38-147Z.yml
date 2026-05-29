@@ -1,0 +1,41 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - button "Cambiar tema" [ref=e3] [cursor=pointer]:
+      - img [ref=e4]
+      - img [ref=e8]
+    - generic [ref=e11]:
+      - img "Cahilt" [ref=e12]
+      - paragraph [ref=e13]: Ingresa tus credenciales para acceder al panel
+      - generic [ref=e14]:
+        - generic [ref=e21]:
+          - generic [ref=e25]:
+            - generic [ref=e28]:
+              - generic [ref=e32]:
+                - text: Correo electrónico
+                - superscript [ref=e33]: "*"
+              - textbox "Correo electrónico*" [ref=e37]
+            - generic [ref=e40]:
+              - generic [ref=e44]:
+                - text: Contraseña
+                - superscript [ref=e45]: "*"
+              - generic [ref=e47]:
+                - textbox "Contraseña*" [ref=e49]
+                - button "Mostrar contraseña" [ref=e52] [cursor=pointer]:
+                  - img [ref=e53]
+            - generic [ref=e61]:
+              - checkbox "Recordarme" [ref=e62]
+              - generic [ref=e63]: Recordarme
+          - button "Entrar" [ref=e69] [cursor=pointer]:
+            - generic [ref=e70]: Entrar
+        - generic [ref=e71]:
+          - link "Inicio" [ref=e72] [cursor=pointer]:
+            - /url: /
+          - text: ·
+          - link "¿Olvidaste tu contraseña?" [ref=e73] [cursor=pointer]:
+            - /url: http://cahilt.localhost:8000/admin/password-reset/request
+          - text: ·
+          - link "Registrarse" [ref=e74] [cursor=pointer]:
+            - /url: http://cahilt.localhost:8000/admin/register
+      - paragraph [ref=e75]: © 2026 Cahilt
+  - generic:
+    - status
