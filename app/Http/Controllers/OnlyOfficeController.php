@@ -140,6 +140,7 @@ class OnlyOfficeController extends Controller
                     'name' => 'Invitado',
                 ],
             ],
+            'documentType' => $this->getDocumentType(pathinfo($targetFile->name, PATHINFO_EXTENSION)),
         ];
 
         return view('onlyoffice.editor', compact('config'));
@@ -311,5 +312,16 @@ class OnlyOfficeController extends Controller
         }
 
         return $path;
+    }
+
+    private function getDocumentType($ext)
+    {
+        return match (strtolower($ext)) {
+            'docx', 'doc', 'txt', 'odt', 'rtf', 'html', 'htm' => 'word',
+            'xlsx', 'xls', 'ods', 'csv' => 'cell',
+            'pptx', 'ppt', 'odp' => 'slide',
+            'pdf' => 'pdf',
+            default => 'word',
+        };
     }
 }

@@ -1536,6 +1536,7 @@ class FileManager extends Page implements HasTable
                 'open-onlyoffice',
                 url: route('onlyoffice.open', [
                     'fileItem' => $record->id,
+                    'permission' => $record->permission_type,
                 ])
             );
 

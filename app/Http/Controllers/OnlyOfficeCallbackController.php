@@ -12,12 +12,31 @@ class OnlyOfficeCallbackController extends Controller
 {
     public function handle(Request $request)
     {
-        Log::channel('daily')->info('[OnlyOffice callback] Recibido', [
-            'status' => $request->input('status'),
-            'key' => $request->input('key'),
-            'url' => $request->input('url'),
-            'tenant' => tenant()->id,
-            'all' => $request->all(),
+        try {
+            return $this->processCallback($request);
+        } catch (\Throwable $e) {
+            Log::channel('daily')->error('[OnlyOffice callback] EXCEPCION', [
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            return response()->json(['error' => 1]);
+        }
+    }
+
+    private function processCallback(Request $request)
+    {
+        $rawInput = $request->getContent();
+
+        Log::channel('daily')->info('[OnlyOffice callback] POST recibido', [
+            'tenant_id' => tenant()?->id ?? 'NULL',
+            'subdomain' => $request->getHost(),
+            'ip' => $request->ip(),
+            'content_type' => $request->header('Content-Type'),
+            'user_agent' => $request->header('User-Agent'),
+            'body' => mb_substr($rawInput, 0, 2000),
         ]);
 
         $data = $request->all();
@@ -26,17 +45,42 @@ class OnlyOfficeCallbackController extends Controller
         $fileUrl = $data['url'] ?? null;
         $documentKey = $data['key'] ?? null;
 
+        Log::channel('daily')->info('[OnlyOffice callback] Datos extraidos', [
+            'status' => $status,
+            'has_url' => ! empty($fileUrl),
+            'has_key' => ! empty($documentKey),
+        ]);
+
         if (! in_array($status, [2, 6]) || ! $fileUrl || ! $documentKey) {
             Log::channel('daily')->info('[OnlyOffice callback] Sin cambios que guardar', ['status' => $status]);
 
             return response()->json(['error' => 0]);
         }
 
-        $tenantId = tenant()->id;
+        $tenantId = tenant()?->id;
+
+        if (! $tenantId) {
+            Log::channel('daily')->error('[OnlyOffice callback] SIN TENANT - subdomain no resuelto', [
+                'host' => $request->getHost(),
+            ]);
+
+            return response()->json(['error' => 1]);
+        }
+
         $keyMapPath = storage_path("app/tenants/{$tenantId}/onlyoffice/key_map.json");
 
+        Log::channel('daily')->info('[OnlyOffice callback] Buscando key_map', [
+            'tenantId' => $tenantId,
+            'map_path' => $keyMapPath,
+            'map_exists' => file_exists($keyMapPath),
+            'document_key' => $documentKey,
+        ]);
+
         if (! file_exists($keyMapPath)) {
-            Log::channel('daily')->error('[ONLYOFFICE] key_map.json no existe: '.$keyMapPath);
+            Log::channel('daily')->error('[OnlyOffice callback] key_map.json no existe', [
+                'path' => $keyMapPath,
+                'tenant_id' => $tenantId,
+            ]);
 
             return response()->json(['error' => 1]);
         }
@@ -44,9 +88,10 @@ class OnlyOfficeCallbackController extends Controller
         $keyMap = json_decode(file_get_contents($keyMapPath), true);
 
         if (! isset($keyMap[$documentKey])) {
-            Log::channel('daily')->error('[ONLYOFFICE] Clave no encontrada en mapa', [
-                'key' => $documentKey,
-                'keys_count' => count($keyMap),
+            Log::channel('daily')->error('[OnlyOffice callback] Clave no encontrada en key_map', [
+                'document_key' => $documentKey,
+                'keys_en_mapa' => array_keys($keyMap),
+                'total_keys' => count($keyMap),
             ]);
 
             return response()->json(['error' => 1]);
@@ -54,37 +99,49 @@ class OnlyOfficeCallbackController extends Controller
 
         $relativePath = ltrim(str_replace('//', '/', $keyMap[$documentKey]), '/');
 
-        Log::channel('daily')->info('[ONLYOFFICE] Ruta destino', ['path' => $relativePath]);
+        Log::channel('daily')->info('[OnlyOffice callback] Ruta resuelta', [
+            'relative_path' => $relativePath,
+            'absoluta' => Storage::disk('public')->path($relativePath),
+        ]);
 
         $disk = Storage::disk('public');
+
+        Log::channel('daily')->info('[OnlyOffice callback] Descargando desde OnlyOffice', ['url' => $fileUrl]);
 
         $fileContent = $this->downloadFromOnlyOffice($fileUrl);
 
         if ($fileContent === false || strlen($fileContent) === 0) {
-            Log::channel('daily')->error('[ONLYOFFICE] Descarga fallida', ['url' => $fileUrl]);
+            Log::channel('daily')->error('[OnlyOffice callback] Descarga fallida', [
+                'url' => $fileUrl,
+                'size' => $fileContent === false ? 'false' : strlen($fileContent),
+            ]);
 
             return response()->json(['error' => 1]);
         }
+
+        Log::channel('daily')->info('[OnlyOffice callback] Archivo descargado', ['size' => strlen($fileContent)]);
 
         $directory = dirname($relativePath);
 
         if (! $disk->exists($directory)) {
             $disk->makeDirectory($directory);
+            Log::channel('daily')->info('[OnlyOffice callback] Directorio creado', ['dir' => $directory]);
         }
 
         if (! $disk->put($relativePath, $fileContent)) {
-            Log::channel('daily')->error('[ONLYOFFICE] Error escribiendo archivo', ['path' => $relativePath]);
+            Log::channel('daily')->error('[OnlyOffice callback] Error escribiendo archivo en disco', [
+                'path' => $relativePath,
+            ]);
 
             return response()->json(['error' => 1]);
         }
 
-        Log::channel('daily')->info('[ONLYOFFICE] Archivo guardado', [
+        Log::channel('daily')->info('[OnlyOffice callback] Archivo guardado en disco', [
             'path' => $relativePath,
             'size' => strlen($fileContent),
         ]);
 
         try {
-            // El path es: tenants/{tenantId}/files/{userId}/docs/reporte.docx
             $parts = explode('/', $relativePath);
 
             if (count($parts) >= 5 && $parts[0] === 'tenants' && $parts[2] === 'files') {
@@ -117,17 +174,31 @@ class OnlyOfficeCallbackController extends Controller
                         'mime_type' => mime_content_type($disk->path($relativePath)) ?: 'application/octet-stream',
                     ]);
 
-                    Log::channel('daily')->info('[ONLYOFFICE] BD sincronizada', [
-                        'id' => $fileItem->id,
+                    Log::channel('daily')->info('[OnlyOffice callback] BD sincronizada', [
+                        'fileItem_id' => $fileItem->id,
                         'new_size' => strlen($fileContent),
                     ]);
                 } else {
-                    Log::channel('daily')->warning('[ONLYOFFICE] No se encontro registro en BD');
+                    Log::channel('daily')->warning('[OnlyOffice callback] No se encontro registro en BD', [
+                        'user_id' => $userId,
+                        'path' => $logicalPath,
+                        'name' => $fileName,
+                    ]);
                 }
+            } else {
+                Log::channel('daily')->warning('[OnlyOffice callback] Path no coincide con formato esperado', [
+                    'path' => $relativePath,
+                    'parts_count' => count($parts),
+                ]);
             }
         } catch (\Exception $e) {
-            Log::error('OnlyOffice: Error sincronizando BD', ['error' => $e->getMessage()]);
+            Log::channel('daily')->error('[OnlyOffice callback] Error sincronizando BD', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
         }
+
+        Log::channel('daily')->info('[OnlyOffice callback] COMPLETADO EXITOSAMENTE');
 
         return response()->json(['error' => 0]);
     }
@@ -147,14 +218,15 @@ class OnlyOfficeCallbackController extends Controller
                 return $response->body();
             }
 
-            Log::error('OnlyOffice: Download failed', [
+            Log::channel('daily')->error('[OnlyOffice callback] HTTP download failed', [
                 'url' => $url,
                 'status' => $response->status(),
+                'body' => mb_substr($response->body(), 0, 500),
             ]);
 
             return false;
         } catch (\Exception $e) {
-            Log::error('OnlyOffice: Download exception', [
+            Log::channel('daily')->error('[OnlyOffice callback] Download exception', [
                 'url' => $url,
                 'message' => $e->getMessage(),
             ]);
