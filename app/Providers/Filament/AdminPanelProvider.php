@@ -100,6 +100,8 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->userMenu(position: UserMenuPosition::Topbar)
             ->sidebarCollapsibleOnDesktop()
+            ->databaseNotifications()
+            ->databaseNotificationsPolling('30s')
             ->renderHook(
                 PanelsRenderHook::BODY_END,
                 fn (): string => tenant()?->hasEntity('MoodPromptOverlay') ? Blade::render('@livewire(\'mood-prompt-overlay\')') : '',
