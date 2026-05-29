@@ -257,18 +257,12 @@ class OnlyOfficeController extends Controller
 
     private function getDocumentType($ext)
     {
-        $types = [
-            'text' => ['docx', 'doc', 'txt', 'odt', 'rtf', 'html', 'htm'],
-            'spreadsheet' => ['xlsx', 'xls', 'ods', 'csv'],
-            'presentation' => ['pptx', 'ppt', 'odp'],
-        ];
-
-        foreach ($types as $type => $extensions) {
-            if (in_array(strtolower($ext), $extensions)) {
-                return $type;
-            }
-        }
-
-        return 'text';
+        return match (strtolower($ext)) {
+            'docx', 'doc', 'txt', 'odt', 'rtf', 'html', 'htm' => 'word',
+            'xlsx', 'xls', 'ods', 'csv' => 'cell',
+            'pptx', 'ppt', 'odp' => 'slide',
+            'pdf' => 'pdf',
+            default => 'word',
+        };
     }
 }
