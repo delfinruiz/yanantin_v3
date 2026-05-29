@@ -1,0 +1,107 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e3]:
+    - button "Expandir barra lateral" [ref=e4] [cursor=pointer]:
+      - img [ref=e5]
+    - generic [ref=e7]:
+      - generic [ref=e10]:
+        - generic [ref=e11]: Búsqueda global
+        - generic [ref=e12]:
+          - img [ref=e14]
+          - searchbox "Búsqueda global" [ref=e17]
+      - button "Menú del usuario" [ref=e20] [cursor=pointer]:
+        - img "Avatar of Admin" [ref=e21]
+  - generic [ref=e22]:
+    - complementary [ref=e23]:
+      - navigation [ref=e26]:
+        - list [ref=e27]:
+          - listitem [ref=e28]:
+            - list [ref=e29]:
+              - listitem [ref=e30]:
+                - link [ref=e31] [cursor=pointer]:
+                  - /url: http://cahilt.localhost:8000/admin
+                  - img [ref=e32]
+          - listitem [ref=e34]:
+            - list [ref=e35]:
+              - listitem [ref=e36]:
+                - link [ref=e37] [cursor=pointer]:
+                  - /url: http://cahilt.localhost:8000/admin/hr/company-happiness
+                  - img [ref=e38]
+          - listitem [ref=e40]:
+            - list [ref=e41]:
+              - listitem [ref=e42]:
+                - link [ref=e43] [cursor=pointer]:
+                  - /url: http://cahilt.localhost:8000/admin/departments
+                  - img [ref=e44]
+          - listitem [ref=e46]:
+            - list [ref=e47]:
+              - listitem [ref=e48]:
+                - link [ref=e49] [cursor=pointer]:
+                  - /url: http://cahilt.localhost:8000/admin/users
+                  - img [ref=e50]
+          - listitem [ref=e52]:
+            - list [ref=e53]:
+              - listitem [ref=e54]:
+                - link [ref=e55] [cursor=pointer]:
+                  - /url: http://cahilt.localhost:8000/admin/shield/roles
+                  - img [ref=e56]
+          - listitem [ref=e58]:
+            - list [ref=e59]:
+              - listitem [ref=e60]:
+                - link [ref=e61] [cursor=pointer]:
+                  - /url: http://cahilt.localhost:8000/admin/products
+                  - img [ref=e62]
+          - listitem [ref=e64]:
+            - list [ref=e65]:
+              - listitem [ref=e66]:
+                - link [ref=e67] [cursor=pointer]:
+                  - /url: http://cahilt.localhost:8000/admin/manage-settings
+                  - img [ref=e68]
+    - main [ref=e72]:
+      - generic [ref=e74]:
+        - heading "Escritorio" [level=1] [ref=e77]
+        - generic [ref=e84]:
+          - generic [ref=e90]:
+            - heading "Estado de felicidad de la organización (hoy)" [level=2] [ref=e92]
+            - generic [ref=e93]:
+              - generic [ref=e94]:
+                - generic [ref=e95]: Nivel 3/5
+                - generic [ref=e96]: Respuestas 0
+              - generic [ref=e97]:
+                - generic [ref=e98]:
+                  - generic [ref=e99]: 😭
+                  - generic [ref=e100]: 0%
+                - generic [ref=e101]:
+                  - generic [ref=e102]: 🙁
+                  - generic [ref=e103]: 0%
+                - generic [ref=e104]:
+                  - generic [ref=e105]: 😐
+                  - generic [ref=e106]: 0%
+                - generic [ref=e107]:
+                  - generic [ref=e108]: 🙂
+                  - generic [ref=e109]: 0%
+                - generic [ref=e110]:
+                  - generic [ref=e111]: 😄
+                  - generic [ref=e112]: 0%
+          - generic [ref=e118]:
+            - heading "Mensaje del día" [level=2] [ref=e120]
+            - generic [ref=e122]: Sin mensaje para hoy.
+  - generic:
+    - status
+  - generic [ref=e125]:
+    - heading "Como te sientes hoy?" [level=2] [ref=e126]
+    - generic [ref=e127]:
+      - button "😢 Muy triste" [ref=e128] [cursor=pointer]:
+        - generic [ref=e129]: 😢
+        - generic [ref=e130]: Muy triste
+      - button "🙁 Medianamente triste" [ref=e131] [cursor=pointer]:
+        - generic [ref=e132]: 🙁
+        - generic [ref=e133]: Medianamente triste
+      - button "😐 Neutral" [ref=e134] [cursor=pointer]:
+        - generic [ref=e135]: 😐
+        - generic [ref=e136]: Neutral
+      - button "🙂 Medianamente feliz" [ref=e137] [cursor=pointer]:
+        - generic [ref=e138]: 🙂
+        - generic [ref=e139]: Medianamente feliz
+      - button "😄 Muy feliz" [ref=e140] [cursor=pointer]:
+        - generic [ref=e141]: 😄
+        - generic [ref=e142]: Muy feliz

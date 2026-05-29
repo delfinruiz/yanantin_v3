@@ -28,6 +28,10 @@ return [
             'label' => 'Departamentos',
             'entities' => ['Department'],
         ],
+        'felicidad-organizacional' => [
+            'label' => 'Felicidad Organizacional',
+            'entities' => ['Mood', 'HappinessSuggestion', 'CompanyHappiness', 'CompanyHappinessBarWidget', 'DailyMoodWidget', 'AiSuggestionsPanel', 'MoodTodayPieChart', 'MoodFilteredPieChart', 'MoodMonthlyDistributionChart', 'MoodPromptOverlay', 'ManageSettings'],
+        ],
     ],
 
     /*
@@ -51,22 +55,22 @@ return [
     'plans' => [
         'free' => [
             'name' => 'Gratuito',
-            'features' => ['products'],
+            'features' => ['products', 'felicidad-organizacional'],
             'max_users' => null,
         ],
         'basic' => [
             'name' => 'Basico',
-            'features' => ['products', 'users'],
+            'features' => ['products', 'users', 'felicidad-organizacional'],
             'max_users' => null,
         ],
         'pro' => [
             'name' => 'Profesional',
-            'features' => ['products', 'users', 'roles'],
+            'features' => ['products', 'users', 'roles', 'felicidad-organizacional'],
             'max_users' => null,
         ],
         'enterprise' => [
             'name' => 'Enterprise',
-            'features' => ['products', 'users', 'roles'],
+            'features' => ['products', 'users', 'roles', 'departments', 'felicidad-organizacional'],
             'max_users' => null,
         ],
     ],

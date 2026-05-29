@@ -1,0 +1,81 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e3]:
+    - button "Expandir barra lateral" [ref=e4] [cursor=pointer]:
+      - img [ref=e5]
+    - generic [ref=e7]:
+      - generic [ref=e10]:
+        - generic [ref=e11]: Búsqueda global
+        - generic [ref=e12]:
+          - img [ref=e14]
+          - searchbox "Búsqueda global" [ref=e17]
+      - button "Menú del usuario" [ref=e20] [cursor=pointer]:
+        - img "Avatar of Admin" [ref=e21]
+  - generic [ref=e22]:
+    - complementary [ref=e23]:
+      - navigation [ref=e26]:
+        - list [ref=e27]:
+          - listitem [ref=e28]:
+            - list [ref=e29]:
+              - listitem [ref=e30]:
+                - link [ref=e31] [cursor=pointer]:
+                  - /url: http://cahilt.localhost:8000/admin
+                  - img [ref=e32]
+          - listitem [ref=e34]:
+            - list [ref=e35]:
+              - listitem [ref=e36]:
+                - link [ref=e37] [cursor=pointer]:
+                  - /url: http://cahilt.localhost:8000/admin/hr/company-happiness
+                  - img [ref=e38]
+          - listitem [ref=e40]:
+            - list [ref=e41]:
+              - listitem [ref=e42]:
+                - link [ref=e43] [cursor=pointer]:
+                  - /url: http://cahilt.localhost:8000/admin/departments
+                  - img [ref=e44]
+          - listitem [ref=e46]:
+            - list [ref=e47]:
+              - listitem [ref=e48]:
+                - link [ref=e49] [cursor=pointer]:
+                  - /url: http://cahilt.localhost:8000/admin/users
+                  - img [ref=e50]
+          - listitem [ref=e52]:
+            - list [ref=e53]:
+              - listitem [ref=e54]:
+                - link [ref=e55] [cursor=pointer]:
+                  - /url: http://cahilt.localhost:8000/admin/shield/roles
+                  - img [ref=e56]
+          - listitem [ref=e58]:
+            - list [ref=e59]:
+              - listitem [ref=e60]:
+                - link [ref=e61] [cursor=pointer]:
+                  - /url: http://cahilt.localhost:8000/admin/products
+                  - img [ref=e62]
+          - listitem [ref=e64]:
+            - list [ref=e65]:
+              - listitem [ref=e66]:
+                - link [ref=e67] [cursor=pointer]:
+                  - /url: http://cahilt.localhost:8000/admin/manage-settings
+                  - img [ref=e68]
+    - main [ref=e72]:
+      - heading "Escritorio" [level=1] [ref=e77]
+  - generic:
+    - status
+  - generic [ref=e89]:
+    - heading "Como te sientes hoy?" [level=2] [ref=e90]
+    - paragraph [ref=e91]: Selecciona como te sientes para recibir un mensaje personalizado
+    - generic [ref=e92]:
+      - button "😢 Muy triste" [ref=e93] [cursor=pointer]:
+        - generic [ref=e94]: 😢
+        - generic [ref=e95]: Muy triste
+      - button "🙁 Medianamente triste" [ref=e96] [cursor=pointer]:
+        - generic [ref=e97]: 🙁
+        - generic [ref=e98]: Medianamente triste
+      - button "😐 Neutral" [ref=e99] [cursor=pointer]:
+        - generic [ref=e100]: 😐
+        - generic [ref=e101]: Neutral
+      - button "🙂 Medianamente feliz" [ref=e102] [cursor=pointer]:
+        - generic [ref=e103]: 🙂
+        - generic [ref=e104]: Medianamente feliz
+      - button "😄 Muy feliz" [ref=e105] [cursor=pointer]:
+        - generic [ref=e106]: 😄
+        - generic [ref=e107]: Muy feliz

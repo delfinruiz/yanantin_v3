@@ -1,0 +1,163 @@
+- generic [ref=e2]:
+  - generic [ref=e4]:
+    - generic [ref=e5]:
+      - img [ref=e7]
+      - generic [ref=e10]: Internal Server Error
+    - button "Copy as Markdown" [ref=e11] [cursor=pointer]:
+      - img [ref=e12]
+      - generic [ref=e15]: Copy as Markdown
+  - generic [ref=e18]:
+    - generic [ref=e19]:
+      - heading "ParseError" [level=1] [ref=e20]
+      - generic [ref=e22]: app/Filament/Pages/ManageSettings.php:81
+      - paragraph [ref=e23]: syntax error, unexpected token "public", expecting end of file
+    - generic [ref=e24]:
+      - generic [ref=e25]:
+        - generic [ref=e26]:
+          - generic [ref=e27]: LARAVEL
+          - generic [ref=e28]: 13.9.0
+        - generic [ref=e29]:
+          - generic [ref=e30]: PHP
+          - generic [ref=e31]: 8.5.4
+      - generic [ref=e32]:
+        - img [ref=e33]
+        - text: UNHANDLED
+      - generic [ref=e36]: CODE 0
+    - generic [ref=e38]:
+      - generic [ref=e39]:
+        - img [ref=e40]
+        - text: "500"
+      - generic [ref=e43]:
+        - img [ref=e44]
+        - text: GET
+      - generic [ref=e47]: http://cahilt.localhost:8000/admin/manage-settings
+      - button [ref=e48] [cursor=pointer]:
+        - img [ref=e49]
+  - generic [ref=e53]:
+    - generic [ref=e54]:
+      - generic [ref=e55]:
+        - img [ref=e57]
+        - heading "Exception trace" [level=3] [ref=e60]
+      - generic [ref=e61]:
+        - generic [ref=e62]:
+          - generic [ref=e63] [cursor=pointer]:
+            - generic [ref=e66]:
+              - code [ref=e70]:
+                - generic [ref=e71]: "{closure:Composer\\Autoload\\ClassLoader::initializeIncludeClosure():575}()"
+              - generic [ref=e73]: app/Filament/Pages/ManageSettings.php:81
+            - button [ref=e75]:
+              - img [ref=e76]
+          - code [ref=e84]:
+            - generic [ref=e85]: "76 {"
+            - generic [ref=e86]: 77 return 'full';
+            - generic [ref=e87]: "78 }"
+            - generic [ref=e88]: "79}"
+            - generic [ref=e89]: "80"
+            - generic [ref=e90]: "81 public function save(): void"
+            - generic [ref=e91]: "82 {"
+            - generic [ref=e92]: 83 $data = $this->form->getState();
+            - generic [ref=e93]: "84"
+            - generic [ref=e94]: 85 $tenant = tenant();
+            - generic [ref=e95]: "86"
+            - generic [ref=e96]: "87 if ($tenant) {"
+            - generic [ref=e97]: 88 $tenant->token_ai = $data['token_ai'];
+            - generic [ref=e98]: 89 $tenant->save();
+            - generic [ref=e99]: "90 }"
+            - generic [ref=e100]: "91"
+            - generic [ref=e101]: 92 Notification::make()
+            - generic [ref=e102]: "93"
+        - generic [ref=e104] [cursor=pointer]:
+          - img [ref=e105]
+          - generic [ref=e109]: 3 vendor frames
+          - button [ref=e110]:
+            - img [ref=e111]
+        - generic [ref=e116] [cursor=pointer]:
+          - generic [ref=e119]:
+            - code [ref=e123]:
+              - generic [ref=e124]: Filament\Panel->discoverPages()
+            - generic [ref=e126]: app/Providers/Filament/AdminPanelProvider.php:59
+          - button [ref=e128]:
+            - img [ref=e129]
+        - generic [ref=e134] [cursor=pointer]:
+          - img [ref=e135]
+          - generic [ref=e139]: 34 vendor frames
+          - button [ref=e140]:
+            - img [ref=e141]
+        - generic [ref=e146] [cursor=pointer]:
+          - generic [ref=e149]:
+            - code [ref=e153]:
+              - generic [ref=e154]: Illuminate\Foundation\Application->handleRequest()
+            - generic [ref=e156]: public/index.php:20
+          - button [ref=e158]:
+            - img [ref=e159]
+        - generic [ref=e164] [cursor=pointer]:
+          - img [ref=e165]
+          - generic [ref=e169]: 1 vendor frame
+          - button [ref=e170]:
+            - img [ref=e171]
+    - generic [ref=e175]:
+      - generic [ref=e177]:
+        - img [ref=e179]
+        - heading "Queries" [level=3] [ref=e181]
+      - generic [ref=e183]: // No queries executed
+  - generic [ref=e185]:
+    - generic [ref=e186]:
+      - heading "Headers" [level=2] [ref=e187]
+      - generic [ref=e188]:
+        - generic [ref=e189]:
+          - generic [ref=e190]: host
+          - generic [ref=e192]: cahilt.localhost:8000
+        - generic [ref=e193]:
+          - generic [ref=e194]: connection
+          - generic [ref=e196]: keep-alive
+        - generic [ref=e197]:
+          - generic [ref=e198]: sec-ch-ua
+          - generic [ref=e200]: "\"Chromium\";v=\"148\", \"Google Chrome\";v=\"148\", \"Not/A)Brand\";v=\"99\""
+        - generic [ref=e201]:
+          - generic [ref=e202]: sec-ch-ua-mobile
+          - generic [ref=e204]: "?0"
+        - generic [ref=e205]:
+          - generic [ref=e206]: sec-ch-ua-platform
+          - generic [ref=e208]: "\"Linux\""
+        - generic [ref=e209]:
+          - generic [ref=e210]: upgrade-insecure-requests
+          - generic [ref=e212]: "1"
+        - generic [ref=e213]:
+          - generic [ref=e214]: user-agent
+          - generic [ref=e216]: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36
+        - generic [ref=e217]:
+          - generic [ref=e218]: accept
+          - generic [ref=e220]: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+        - generic [ref=e221]:
+          - generic [ref=e222]: sec-fetch-site
+          - generic [ref=e224]: none
+        - generic [ref=e225]:
+          - generic [ref=e226]: sec-fetch-mode
+          - generic [ref=e228]: navigate
+        - generic [ref=e229]:
+          - generic [ref=e230]: sec-fetch-user
+          - generic [ref=e232]: "?1"
+        - generic [ref=e233]:
+          - generic [ref=e234]: sec-fetch-dest
+          - generic [ref=e236]: document
+        - generic [ref=e237]:
+          - generic [ref=e238]: accept-encoding
+          - generic [ref=e240]: gzip, deflate, br, zstd
+        - generic [ref=e241]:
+          - generic [ref=e242]: accept-language
+          - generic [ref=e244]: es-ES,es;q=0.9
+        - generic [ref=e245]:
+          - generic [ref=e246]: cookie
+          - generic [ref=e248]: XSRF-TOKEN=eyJpdiI6IjZhY3lPV24vdmtWQVd1dHJDTlhoOWc9PSIsInZhbHVlIjoidEYvY1MxTW1TUUk5aHBBaGx5eldNRDlNN0dDRC9yQ0Z1ZjI4TFQvR1NyT2wvOTE1eEVPRWRyTEEzL2d1QWMwRG5WeW5KZkRSU085MG96dzkvejVrNjBsN0FPeVpTVWJZamp5aWhtdSt6MGV4cVphVkE2ZVhETjlrUUhnM1dlSXUiLCJtYWMiOiJmYjg0M2Q3N2UyMDYwOWUzYzhlZjJiMzViOTRlMmZkMGE5N2ViMTQ2OWU3MzcyNzVjMTZiYjlmMTYwYjJiODI3IiwidGFnIjoiIn0%3D; yanantin-session=eyJpdiI6Ill2SGVNNWd0RVR0Q1U5OGtDZStVUHc9PSIsInZhbHVlIjoiZlVoSll5a1dNc3R4Zk9kOWlBYnFmdHFFenpGTFVON0ZKVmMrS0VQMUljN0hwU29ZeWg0dkk0ZTJjbzBtSEM0NTNrMzNXR1VlNmJTTnFac0JQME0wQjJ6RHN3TWRESi9CRUtBOXVodFFlUEREZG1ZMlR3WEhVdktWeEN0WDROVy8iLCJtYWMiOiJhODNjYzk2NzkyYmQ0ZWY1MzkzN2EzZGU4YjIyYjE0ZDNmYTcwZTFkNDdjZTJlODdiMTg0N2ViZTUxOTM1OTFjIiwidGFnIjoiIn0%3D
+    - generic [ref=e249]:
+      - heading "Body" [level=2] [ref=e250]
+      - generic [ref=e251]: // No request body
+    - generic [ref=e252]:
+      - heading "Routing" [level=2] [ref=e253]
+      - generic [ref=e255]: // No routing context
+    - generic [ref=e256]:
+      - heading "Routing parameters" [level=2] [ref=e257]
+      - generic [ref=e258]: // No routing parameters
+  - generic [ref=e261]:
+    - img [ref=e263]
+    - img [ref=e3301]

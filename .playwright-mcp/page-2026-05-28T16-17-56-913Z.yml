@@ -1,0 +1,123 @@
+- generic [active] [ref=e1]:
+  - link "Saltar al contenido" [ref=e2] [cursor=pointer]:
+    - /url: "#main"
+  - banner [ref=e3]:
+    - generic [ref=e5]:
+      - link "Cahilt Transgresoria Digital Cahilt Transgresoria Digital" [ref=e6] [cursor=pointer]:
+        - /url: http://cahilt.localhost:8000/yanantin#inicio
+        - generic [ref=e7]: Cahilt Transgresoria Digital
+        - img "Cahilt Transgresoria Digital" [ref=e8]
+      - navigation "Navegación principal" [ref=e9]:
+        - link "Inicio" [ref=e10] [cursor=pointer]:
+          - /url: http://cahilt.localhost:8000
+        - link "Por qué" [ref=e11] [cursor=pointer]:
+          - /url: http://cahilt.localhost:8000/yanantin#por-que
+        - link "Acompañamiento" [ref=e12] [cursor=pointer]:
+          - /url: http://cahilt.localhost:8000/yanantin#acompanamiento
+        - link "Módulos" [ref=e13] [cursor=pointer]:
+          - /url: http://cahilt.localhost:8000/yanantin#modulos
+        - link "Planes" [ref=e14] [cursor=pointer]:
+          - /url: http://cahilt.localhost:8000/yanantin#planes
+        - link "Acceso" [ref=e15] [cursor=pointer]:
+          - /url: http://cahilt.localhost:8000/login
+        - button "Cambiar a modo oscuro" [ref=e16] [cursor=pointer]:
+          - generic [ref=e17]: Cambiar tema
+          - generic [ref=e18]: 
+          - generic [ref=e19]: 
+          - generic:
+            - generic: 
+            - text: 
+    - text:    
+  - main [ref=e20]:
+    - generic [ref=e21]:
+      - generic [ref=e22]:
+        - heading "REGISTRO" [level=1] [ref=e25]
+        - paragraph [ref=e26]: Completa tus datos para crear tu cuenta.
+      - generic [ref=e28]:
+        - generic [ref=e29]:
+          - generic [ref=e30]:
+            - generic [ref=e31]: Nombre completo
+            - generic [ref=e32]:
+              - generic [ref=e34]: 
+              - textbox "Nombre completo" [ref=e35]:
+                - /placeholder: Tu nombre y apellidos
+            - alert
+          - generic [ref=e36]:
+            - generic [ref=e37]: Correo electrónico
+            - generic [ref=e38]:
+              - generic [ref=e40]: 
+              - textbox "Correo electrónico" [ref=e41]:
+                - /placeholder: tu@correo.com
+            - alert
+          - generic [ref=e42]:
+            - generic [ref=e43]: Contraseña
+            - generic [ref=e44]:
+              - generic [ref=e46]: 
+              - textbox "Contraseña" [ref=e47]:
+                - /placeholder: ••••••••
+              - button "Mostrar contraseña" [ref=e48] [cursor=pointer]:
+                - generic [ref=e49]: 
+            - alert
+          - generic [ref=e50]:
+            - generic [ref=e51]: Confirmar contraseña
+            - generic [ref=e52]:
+              - generic [ref=e54]: 
+              - textbox "Confirmar contraseña" [ref=e55]:
+                - /placeholder: ••••••••
+              - button "Mostrar confirmar contraseña" [ref=e56] [cursor=pointer]:
+                - generic [ref=e57]: 
+            - alert
+        - generic [ref=e58]:
+          - paragraph [ref=e59]: Requisitos de contraseña
+          - list [ref=e60]:
+            - listitem [ref=e61]:
+              - generic [ref=e62]: 
+              - generic [ref=e63]: Al menos 8 caracteres
+            - listitem [ref=e64]:
+              - generic [ref=e65]: 
+              - generic [ref=e66]: Al menos una mayúscula
+            - listitem [ref=e67]:
+              - generic [ref=e68]: 
+              - generic [ref=e69]: Al menos un número
+            - listitem [ref=e70]:
+              - generic [ref=e71]: 
+              - generic [ref=e72]: Al menos un símbolo
+            - listitem [ref=e73]:
+              - generic [ref=e74]: 
+              - generic [ref=e75]: Las contraseñas deben coincidir
+        - paragraph
+        - button "Registrarme" [disabled] [ref=e77]
+      - paragraph [ref=e78]:
+        - text: ¿Ya tienes una cuenta?
+        - link "Inicia sesión" [ref=e79] [cursor=pointer]:
+          - /url: http://cahilt.localhost:8000/login
+  - contentinfo [ref=e80]:
+    - generic [ref=e81]:
+      - generic [ref=e82]:
+        - generic [ref=e83]:
+          - img "Cahilt Transgresoria Digital" [ref=e85]
+          - generic [ref=e86]:
+            - paragraph [ref=e87]: Cahilt Transgresoria Digital
+            - paragraph [ref=e88]: Acompañamiento, implementación y soporte para tu organización.
+        - generic [ref=e89]:
+          - link "Por qué" [ref=e90] [cursor=pointer]:
+            - /url: http://cahilt.localhost:8000/yanantin#por-que
+          - link "Acompañamiento" [ref=e91] [cursor=pointer]:
+            - /url: http://cahilt.localhost:8000/yanantin#acompanamiento
+          - link "Módulos" [ref=e92] [cursor=pointer]:
+            - /url: http://cahilt.localhost:8000/yanantin#modulos
+          - link "Planes" [ref=e93] [cursor=pointer]:
+            - /url: http://cahilt.localhost:8000/yanantin#planes
+      - generic [ref=e94]:
+        - paragraph [ref=e95]: © 2026 Cahilt Transgresoria Digital. Todos los derechos reservados.
+        - paragraph [ref=e96]: "Compatibilidad: Chrome, Firefox, Safari, Edge."
+  - generic [ref=e97]:
+    - text: Este sitio está protegido por reCAPTCHA y aplican la
+    - link "Política de privacidad" [ref=e98] [cursor=pointer]:
+      - /url: https://policies.google.com/privacy
+    - text: y los
+    - link "Términos del servicio" [ref=e99] [cursor=pointer]:
+      - /url: https://policies.google.com/terms
+    - text: de Google.
+  - generic:
+    - status

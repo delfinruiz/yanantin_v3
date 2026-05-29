@@ -1,0 +1,189 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e3]:
+    - generic [ref=e4]:
+      - button "Contraer barra lateral" [ref=e6] [cursor=pointer]:
+        - img [ref=e7]
+      - link "Cahilt" [ref=e9] [cursor=pointer]:
+        - /url: http://cahilt.localhost:8000/admin
+        - generic [ref=e10]: Cahilt
+    - generic [ref=e11]:
+      - generic [ref=e14]:
+        - generic [ref=e15]: Búsqueda global
+        - generic [ref=e16]:
+          - img [ref=e18]
+          - searchbox "Búsqueda global" [ref=e21]
+      - button "Menú del usuario" [ref=e24] [cursor=pointer]:
+        - img "Avatar of Admin" [ref=e25]
+  - generic [ref=e26]:
+    - complementary [ref=e28]:
+      - navigation [ref=e29]:
+        - list [ref=e30]:
+          - listitem [ref=e31]:
+            - list [ref=e32]:
+              - listitem [ref=e33]:
+                - link "Escritorio" [ref=e34] [cursor=pointer]:
+                  - /url: http://cahilt.localhost:8000/admin
+                  - img [ref=e35]
+                  - generic [ref=e37]: Escritorio
+          - listitem [ref=e38]:
+            - generic [ref=e39] [cursor=pointer]:
+              - generic [ref=e40]: Talento Humano
+              - button "Talento Humano" [expanded] [ref=e41]:
+                - img [ref=e42]
+            - list [ref=e44]:
+              - listitem [ref=e45]:
+                - link "Felicidad Organizacional" [ref=e46] [cursor=pointer]:
+                  - /url: http://cahilt.localhost:8000/admin/hr/company-happiness
+                  - img [ref=e47]
+                  - generic [ref=e49]: Felicidad Organizacional
+          - listitem [ref=e50]:
+            - generic [ref=e51] [cursor=pointer]:
+              - generic [ref=e52]: Recursos Humanos
+              - button "Recursos Humanos" [expanded] [ref=e53]:
+                - img [ref=e54]
+            - list [ref=e56]:
+              - listitem [ref=e57]:
+                - link "Departamentos" [ref=e58] [cursor=pointer]:
+                  - /url: http://cahilt.localhost:8000/admin/departments
+                  - img [ref=e59]
+                  - generic [ref=e61]: Departamentos
+          - listitem [ref=e62]:
+            - generic [ref=e63] [cursor=pointer]:
+              - generic [ref=e64]: Usuarios
+              - button "Usuarios" [expanded] [ref=e65]:
+                - img [ref=e66]
+            - list [ref=e68]:
+              - listitem [ref=e69]:
+                - link "Usuarios" [ref=e70] [cursor=pointer]:
+                  - /url: http://cahilt.localhost:8000/admin/users
+                  - img [ref=e71]
+                  - generic [ref=e73]: Usuarios
+          - listitem [ref=e74]:
+            - generic [ref=e75] [cursor=pointer]:
+              - generic [ref=e76]: Filament Shield
+              - button "Filament Shield" [expanded] [ref=e77]:
+                - img [ref=e78]
+            - list [ref=e80]:
+              - listitem [ref=e81]:
+                - link "Roles" [ref=e82] [cursor=pointer]:
+                  - /url: http://cahilt.localhost:8000/admin/shield/roles
+                  - img [ref=e83]
+                  - generic [ref=e85]: Roles
+          - listitem [ref=e86]:
+            - generic [ref=e87] [cursor=pointer]:
+              - generic [ref=e88]: Inventario
+              - button "Inventario" [expanded] [ref=e89]:
+                - img [ref=e90]
+            - list [ref=e92]:
+              - listitem [ref=e93]:
+                - link "Productos" [ref=e94] [cursor=pointer]:
+                  - /url: http://cahilt.localhost:8000/admin/products
+                  - img [ref=e95]
+                  - generic [ref=e97]: Productos
+          - listitem [ref=e98]:
+            - generic [ref=e99] [cursor=pointer]:
+              - generic [ref=e100]: Configuracion
+              - button "Configuracion" [expanded] [ref=e101]:
+                - img [ref=e102]
+            - list [ref=e104]:
+              - listitem [ref=e105]:
+                - link "Manage Settings" [ref=e106] [cursor=pointer]:
+                  - /url: http://cahilt.localhost:8000/admin/manage-settings
+                  - img [ref=e107]
+                  - generic [ref=e110]: Manage Settings
+    - main [ref=e112]:
+      - generic [ref=e114]:
+        - heading "Manage Settings" [level=1] [ref=e117]
+        - generic [ref=e119]:
+          - generic [ref=e120]:
+            - generic [ref=e124]:
+              - generic [ref=e126]:
+                - heading "Zona Horaria" [level=2] [ref=e127]
+                - paragraph [ref=e128]: Define la zona horaria del tenant. Todos los modulos que requieran sincronizacion horaria usaran esta configuracion.
+              - generic [ref=e133]:
+                - generic [ref=e137]: Zona Horaria
+                - generic [ref=e138]:
+                  - generic [ref=e143]:
+                    - button "America/Lima" [ref=e144] [cursor=pointer]:
+                      - generic [ref=e146]: America/Lima
+                    - button "Clear selection" [ref=e147] [cursor=pointer]:
+                      - img [ref=e148]
+                  - generic [ref=e153]: Selecciona la zona horaria para este tenant.
+            - generic [ref=e157]:
+              - generic [ref=e159]:
+                - heading "Apariencia" [level=2] [ref=e160]
+                - paragraph [ref=e161]: Personaliza los elementos visuales del tenant.
+              - generic [ref=e163]:
+                - generic [ref=e166]:
+                  - generic [ref=e170]: Logo (modo claro)
+                  - generic [ref=e171]:
+                    - group "Logo (modo claro)" [ref=e172]:
+                      - button "Logo (modo claro)" [ref=e174]
+                    - generic [ref=e178]: "Imagen para el modo claro. Recomendado: formato PNG con fondo transparente."
+                - generic [ref=e181]:
+                  - generic [ref=e185]: Logo (modo oscuro)
+                  - generic [ref=e186]:
+                    - group "Logo (modo oscuro)" [ref=e187]:
+                      - button "Logo (modo oscuro)" [ref=e189]
+                    - generic [ref=e193]: "Imagen para el modo oscuro. Recomendado: PNG con texto claro."
+                - generic [ref=e196]:
+                  - generic [ref=e200]: Favicon
+                  - generic [ref=e201]:
+                    - group "Favicon" [ref=e202]:
+                      - button "Favicon" [ref=e204]
+                    - generic [ref=e208]: "Icono del sitio. Recomendado: 32x32 o 64x64 PNG."
+            - generic [ref=e212]:
+              - generic [ref=e214]:
+                - heading "Configuracion de OpenAI" [level=2] [ref=e215]
+                - paragraph [ref=e216]: Clave de API para la generacion de mensajes y sugerencias de IA.
+              - generic [ref=e221]:
+                - generic [ref=e225]: Token de OpenAI
+                - generic [ref=e226]:
+                  - generic [ref=e227]:
+                    - textbox "Token de OpenAI" [ref=e229]:
+                      - /placeholder: sk-...
+                    - generic [ref=e231]:
+                      - button "Mostrar contraseña" [disabled]:
+                        - img
+                  - generic [ref=e235]: Se usa para generar mensajes personalizados y sugerencias organizacionales en el modulo de Felicidad Organizacional.
+            - generic [ref=e239]:
+              - generic [ref=e241]:
+                - heading "Cpanel" [level=2] [ref=e242]
+                - paragraph [ref=e243]: Credenciales para la integracion con Cpanel.
+              - generic [ref=e245]:
+                - generic [ref=e248]:
+                  - generic [ref=e252]: Host Cpanel
+                  - generic [ref=e253]:
+                    - textbox "Host Cpanel" [ref=e256]:
+                      - /placeholder: https://cpanel.tudominio.com:2083
+                    - generic [ref=e260]: URL del servidor Cpanel.
+                - generic [ref=e263]:
+                  - generic [ref=e267]: Usuario Cpanel
+                  - generic [ref=e268]:
+                    - textbox "Usuario Cpanel" [ref=e271]
+                    - generic [ref=e275]: Nombre de usuario para acceder a Cpanel.
+                - generic [ref=e278]:
+                  - generic [ref=e282]: Token Cpanel
+                  - generic [ref=e283]:
+                    - generic [ref=e284]:
+                      - textbox "Token Cpanel" [ref=e286]
+                      - generic [ref=e288]:
+                        - button "Mostrar contraseña" [disabled]:
+                          - img
+                    - generic [ref=e292]: Token de API de Cpanel.
+            - generic [ref=e296]:
+              - generic [ref=e298]:
+                - heading "Zadarma" [level=2] [ref=e299]
+                - paragraph [ref=e300]: Configuracion para la integracion con Zadarma VoIP.
+              - generic [ref=e305]:
+                - generic [ref=e309]: Token Zadarma
+                - generic [ref=e310]:
+                  - generic [ref=e311]:
+                    - textbox "Token Zadarma" [ref=e313]
+                    - generic [ref=e315]:
+                      - button "Mostrar contraseña" [disabled]:
+                        - img
+                  - generic [ref=e319]: Token de API de Zadarma para integracion de telefonia.
+          - button "Guardar configuracion" [ref=e321] [cursor=pointer]
+  - generic:
+    - status

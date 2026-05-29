@@ -1,0 +1,69 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e3]:
+    - generic [ref=e4]:
+      - button "Contraer barra lateral" [ref=e6] [cursor=pointer]:
+        - img [ref=e7]
+      - link "Logo" [ref=e9] [cursor=pointer]:
+        - /url: http://cahilt.localhost:8000/admin
+        - img "Logo" [ref=e11]
+    - generic [ref=e12]:
+      - generic [ref=e15]:
+        - generic [ref=e16]: Búsqueda global
+        - generic [ref=e17]:
+          - img [ref=e19]
+          - searchbox "Búsqueda global" [ref=e22]
+      - button "Menú del usuario" [ref=e25] [cursor=pointer]:
+        - img "Avatar of Ivan Ruiz Delfin" [ref=e26]
+  - generic [ref=e27]:
+    - complementary [ref=e29]:
+      - navigation [ref=e30]:
+        - list [ref=e31]:
+          - listitem [ref=e32]:
+            - list [ref=e33]:
+              - listitem [ref=e34]:
+                - link "Escritorio" [ref=e35] [cursor=pointer]:
+                  - /url: http://cahilt.localhost:8000/admin
+                  - img [ref=e36]
+                  - generic [ref=e38]: Escritorio
+          - listitem [ref=e39]:
+            - generic [ref=e40] [cursor=pointer]:
+              - generic [ref=e41]: Talento Humano
+              - button "Talento Humano" [expanded] [ref=e42]:
+                - img [ref=e43]
+            - list [ref=e45]:
+              - listitem [ref=e46]:
+                - link "Felicidad Organizacional" [ref=e47] [cursor=pointer]:
+                  - /url: http://cahilt.localhost:8000/admin/hr/company-happiness
+                  - img [ref=e48]
+                  - generic [ref=e50]: Felicidad Organizacional
+    - main [ref=e52]:
+      - generic [ref=e54]:
+        - heading "Escritorio" [level=1] [ref=e57]
+        - generic [ref=e64]:
+          - generic [ref=e70]:
+            - heading "Estado de felicidad de la organización (hoy)" [level=2] [ref=e72]
+            - generic [ref=e73]:
+              - generic [ref=e74]:
+                - generic [ref=e75]: Nivel 3/5
+                - generic [ref=e76]: Respuestas 1
+              - generic [ref=e77]:
+                - generic [ref=e78]:
+                  - generic [ref=e79]: 😭
+                  - generic [ref=e80]: 0%
+                - generic [ref=e81]:
+                  - generic [ref=e82]: 🙁
+                  - generic [ref=e83]: 0%
+                - generic [ref=e84]:
+                  - generic [ref=e85]: 😐
+                  - generic [ref=e86]: 100%
+                - generic [ref=e87]:
+                  - generic [ref=e88]: 🙂
+                  - generic [ref=e89]: 0%
+                - generic [ref=e90]:
+                  - generic [ref=e91]: 😄
+                  - generic [ref=e92]: 0%
+          - generic [ref=e98]:
+            - heading "Mensaje del día" [level=2] [ref=e100]
+            - generic [ref=e102]: "\"Los dias neutrales son perfectos para reflexionar y recargar energias.\""
+  - generic:
+    - status

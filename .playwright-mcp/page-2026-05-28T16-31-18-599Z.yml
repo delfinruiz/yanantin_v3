@@ -1,0 +1,93 @@
+- generic [active] [ref=e1]:
+  - link "Saltar al contenido" [ref=e2] [cursor=pointer]:
+    - /url: "#main"
+  - banner [ref=e3]:
+    - generic [ref=e5]:
+      - link "Cahilt Transgresoria Digital Cahilt Transgresoria Digital" [ref=e6] [cursor=pointer]:
+        - /url: http://cahilt.localhost:8000/yanantin#inicio
+        - generic [ref=e7]: Cahilt Transgresoria Digital
+        - img "Cahilt Transgresoria Digital" [ref=e8]
+      - navigation "Navegación principal" [ref=e9]:
+        - link "Inicio" [ref=e10] [cursor=pointer]:
+          - /url: http://cahilt.localhost:8000
+        - link "Por qué" [ref=e11] [cursor=pointer]:
+          - /url: http://cahilt.localhost:8000/yanantin#por-que
+        - link "Acompañamiento" [ref=e12] [cursor=pointer]:
+          - /url: http://cahilt.localhost:8000/yanantin#acompanamiento
+        - link "Módulos" [ref=e13] [cursor=pointer]:
+          - /url: http://cahilt.localhost:8000/yanantin#modulos
+        - link "Planes" [ref=e14] [cursor=pointer]:
+          - /url: http://cahilt.localhost:8000/yanantin#planes
+        - link "Acceso" [ref=e15] [cursor=pointer]:
+          - /url: http://cahilt.localhost:8000/login
+        - button "Cambiar a modo oscuro" [ref=e16] [cursor=pointer]:
+          - generic [ref=e17]: Cambiar tema
+          - generic [ref=e18]: 
+          - generic [ref=e19]: 
+          - generic:
+            - generic: 
+            - text: 
+    - text:    
+  - main [ref=e20]:
+    - generic [ref=e21]:
+      - generic [ref=e22]:
+        - heading "INICIO DE SESIÓN" [level=1] [ref=e25]
+        - paragraph [ref=e26]: Ingresa tus credenciales para acceder a tu espacio de trabajo.
+      - generic [ref=e27]:
+        - generic [ref=e29]:
+          - generic [ref=e30]:
+            - generic [ref=e31]: Correo electrónico
+            - generic [ref=e32]:
+              - generic [ref=e34]: 
+              - textbox "Correo electrónico" [ref=e35]:
+                - /placeholder: tu@correo.com
+          - generic [ref=e36]:
+            - generic [ref=e37]:
+              - generic [ref=e38]: Contraseña
+              - link "¿La olvidaste?" [ref=e39] [cursor=pointer]:
+                - /url: http://cahilt.localhost:8000/mi-panel/recuperar-contrasena/solicitar
+            - generic [ref=e40]:
+              - generic [ref=e42]: 
+              - textbox "Contraseña" [ref=e43]:
+                - /placeholder: ••••••••
+              - button "Mostrar contraseña" [ref=e44] [cursor=pointer]:
+                - generic [ref=e45]: 
+          - generic [ref=e46]:
+            - checkbox "Recordarme" [ref=e47]
+            - generic [ref=e48]: Recordarme
+          - button "Iniciar sesión" [ref=e50] [cursor=pointer]:
+            - generic [ref=e51]: Iniciar sesión
+        - paragraph [ref=e52]:
+          - text: ¿No tienes una cuenta?
+          - link "Regístrate" [ref=e53] [cursor=pointer]:
+            - /url: http://cahilt.localhost:8000/registro
+  - contentinfo [ref=e54]:
+    - generic [ref=e55]:
+      - generic [ref=e56]:
+        - generic [ref=e57]:
+          - img "Cahilt Transgresoria Digital" [ref=e59]
+          - generic [ref=e60]:
+            - paragraph [ref=e61]: Cahilt Transgresoria Digital
+            - paragraph [ref=e62]: Acompañamiento, implementación y soporte para tu organización.
+        - generic [ref=e63]:
+          - link "Por qué" [ref=e64] [cursor=pointer]:
+            - /url: http://cahilt.localhost:8000/yanantin#por-que
+          - link "Acompañamiento" [ref=e65] [cursor=pointer]:
+            - /url: http://cahilt.localhost:8000/yanantin#acompanamiento
+          - link "Módulos" [ref=e66] [cursor=pointer]:
+            - /url: http://cahilt.localhost:8000/yanantin#modulos
+          - link "Planes" [ref=e67] [cursor=pointer]:
+            - /url: http://cahilt.localhost:8000/yanantin#planes
+      - generic [ref=e68]:
+        - paragraph [ref=e69]: © 2026 Cahilt Transgresoria Digital. Todos los derechos reservados.
+        - paragraph [ref=e70]: "Compatibilidad: Chrome, Firefox, Safari, Edge."
+  - generic:
+    - status
+  - iframe [ref=e73]:
+    - generic [ref=f17e2]:
+      - generic [ref=f17e6]:
+        - text: El host local no está en la lista de
+        - link "dominios admitidos" [ref=f17e7] [cursor=pointer]:
+          - /url: https://cloud.google.com/recaptcha/docs/troubleshoot-recaptcha-issues#localhost-error
+        - text: para esta clave del sitio web.
+      - generic [ref=f17e11]: reCAPTCHA

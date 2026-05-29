@@ -1,0 +1,137 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e3]:
+    - generic [ref=e4]:
+      - button "Contraer barra lateral" [ref=e6] [cursor=pointer]:
+        - img [ref=e7]
+      - link "Logo" [ref=e9] [cursor=pointer]:
+        - /url: http://cahilt.localhost:8000/admin
+        - img "Logo" [ref=e11]
+    - generic [ref=e12]:
+      - generic [ref=e15]:
+        - generic [ref=e16]: Búsqueda global
+        - generic [ref=e17]:
+          - img [ref=e19]
+          - searchbox "Búsqueda global" [ref=e22]
+      - button "Menú del usuario" [ref=e25] [cursor=pointer]:
+        - img "Avatar of Admin" [ref=e26]
+  - generic [ref=e27]:
+    - complementary [ref=e29]:
+      - navigation [ref=e30]:
+        - list [ref=e31]:
+          - listitem [ref=e32]:
+            - list [ref=e33]:
+              - listitem [ref=e34]:
+                - link "Escritorio" [ref=e35] [cursor=pointer]:
+                  - /url: http://cahilt.localhost:8000/admin
+                  - img [ref=e36]
+                  - generic [ref=e38]: Escritorio
+          - listitem [ref=e39]:
+            - generic [ref=e40] [cursor=pointer]:
+              - generic [ref=e41]: Talento Humano
+              - button "Talento Humano" [expanded] [ref=e42]:
+                - img [ref=e43]
+            - list [ref=e45]:
+              - listitem [ref=e46]:
+                - link "Felicidad Organizacional" [ref=e47] [cursor=pointer]:
+                  - /url: http://cahilt.localhost:8000/admin/hr/company-happiness
+                  - img [ref=e48]
+                  - generic [ref=e50]: Felicidad Organizacional
+          - listitem [ref=e51]:
+            - generic [ref=e52] [cursor=pointer]:
+              - generic [ref=e53]: Recursos Humanos
+              - button "Recursos Humanos" [expanded] [ref=e54]:
+                - img [ref=e55]
+            - list [ref=e57]:
+              - listitem [ref=e58]:
+                - link "Departamentos" [ref=e59] [cursor=pointer]:
+                  - /url: http://cahilt.localhost:8000/admin/departments
+                  - img [ref=e60]
+                  - generic [ref=e62]: Departamentos
+          - listitem [ref=e63]:
+            - generic [ref=e64] [cursor=pointer]:
+              - generic [ref=e65]: Usuarios
+              - button "Usuarios" [expanded] [ref=e66]:
+                - img [ref=e67]
+            - list [ref=e69]:
+              - listitem [ref=e70]:
+                - link "Usuarios" [ref=e71] [cursor=pointer]:
+                  - /url: http://cahilt.localhost:8000/admin/users
+                  - img [ref=e72]
+                  - generic [ref=e74]: Usuarios
+          - listitem [ref=e75]:
+            - generic [ref=e76] [cursor=pointer]:
+              - generic [ref=e77]: Filament Shield
+              - button "Filament Shield" [expanded] [ref=e78]:
+                - img [ref=e79]
+            - list [ref=e81]:
+              - listitem [ref=e82]:
+                - link "Roles" [ref=e83] [cursor=pointer]:
+                  - /url: http://cahilt.localhost:8000/admin/shield/roles
+                  - img [ref=e84]
+                  - generic [ref=e86]: Roles
+          - listitem [ref=e87]:
+            - generic [ref=e88] [cursor=pointer]:
+              - generic [ref=e89]: Inventario
+              - button "Inventario" [expanded] [ref=e90]:
+                - img [ref=e91]
+            - list [ref=e93]:
+              - listitem [ref=e94]:
+                - link "Productos" [ref=e95] [cursor=pointer]:
+                  - /url: http://cahilt.localhost:8000/admin/products
+                  - img [ref=e96]
+                  - generic [ref=e98]: Productos
+          - listitem [ref=e99]:
+            - generic [ref=e100] [cursor=pointer]:
+              - generic [ref=e101]: Configuracion
+              - button "Configuracion" [expanded] [ref=e102]:
+                - img [ref=e103]
+            - list [ref=e105]:
+              - listitem [ref=e106]:
+                - link "Manage Settings" [ref=e107] [cursor=pointer]:
+                  - /url: http://cahilt.localhost:8000/admin/manage-settings
+                  - img [ref=e108]
+                  - generic [ref=e111]: Manage Settings
+    - main [ref=e113]:
+      - generic [ref=e115]:
+        - heading "Felicidad Organizacional" [level=1] [ref=e118]
+        - generic [ref=e130]:
+          - heading "Registros de Estados de Animo" [level=2] [ref=e133]
+          - generic [ref=e139]:
+            - generic [ref=e142]:
+              - generic [ref=e143]:
+                - generic [ref=e144]: Búsqueda
+                - generic [ref=e145]:
+                  - img [ref=e147]
+                  - searchbox "Búsqueda" [ref=e150]
+              - button "Filtrar" [ref=e153] [cursor=pointer]:
+                - img [ref=e154]
+                - generic [ref=e157]: "0"
+            - table [ref=e159]:
+              - rowgroup [ref=e160]:
+                - row "Empleado Departamento Fecha Hora Estado de animo" [ref=e161]:
+                  - columnheader "Empleado" [ref=e162]
+                  - columnheader "Departamento" [ref=e163]
+                  - columnheader "Fecha" [ref=e164]
+                  - columnheader "Hora" [ref=e165]
+                  - columnheader "Estado de animo" [ref=e166]
+              - rowgroup [ref=e167]:
+                - row "Ivan Ruiz Delfin I + D+ i 2026-05-28 18:06:25 Neutral" [ref=e168]:
+                  - cell "Ivan Ruiz Delfin" [ref=e169]:
+                    - generic [ref=e171]: Ivan Ruiz Delfin
+                  - cell "I + D+ i" [ref=e172]:
+                    - generic [ref=e174]: I + D+ i
+                  - cell "2026-05-28" [ref=e175]:
+                    - generic [ref=e177]: 2026-05-28
+                  - cell "18:06:25" [ref=e178]:
+                    - generic [ref=e180]: 18:06:25
+                  - cell "Neutral" [ref=e181]:
+                    - generic [ref=e183]: Neutral
+            - navigation "Navegación de paginación" [ref=e184]:
+              - generic [ref=e187]:
+                - generic [ref=e189]: por página
+                - combobox "por página" [ref=e191]:
+                  - option "10" [selected]
+                  - option "25"
+                  - option "50"
+  - generic:
+    - status

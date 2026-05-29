@@ -1,0 +1,82 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e3]:
+    - generic [ref=e4]:
+      - button "Contraer barra lateral" [ref=e6] [cursor=pointer]:
+        - img [ref=e7]
+      - link "Logo" [ref=e9] [cursor=pointer]:
+        - /url: http://cahilt.localhost:8000/admin
+        - img "Logo" [ref=e11]
+    - generic [ref=e12]:
+      - generic [ref=e15]:
+        - generic [ref=e16]: Búsqueda global
+        - generic [ref=e17]:
+          - img [ref=e19]
+          - searchbox "Búsqueda global" [ref=e22]
+      - button "Menú del usuario" [ref=e25] [cursor=pointer]:
+        - img "Avatar of Ivan Ruiz Delfin" [ref=e26]
+  - generic [ref=e27]:
+    - complementary [ref=e29]:
+      - navigation [ref=e30]:
+        - list [ref=e31]:
+          - listitem [ref=e32]:
+            - list [ref=e33]:
+              - listitem [ref=e34]:
+                - link "Escritorio" [ref=e35] [cursor=pointer]:
+                  - /url: http://cahilt.localhost:8000/admin
+                  - img [ref=e36]
+                  - generic [ref=e38]: Escritorio
+          - listitem [ref=e39]:
+            - generic [ref=e40] [cursor=pointer]:
+              - generic [ref=e41]: Talento Humano
+              - button "Talento Humano" [expanded] [ref=e42]:
+                - img [ref=e43]
+            - list [ref=e45]:
+              - listitem [ref=e46]:
+                - link "Felicidad Organizacional" [ref=e47] [cursor=pointer]:
+                  - /url: http://cahilt.localhost:8000/admin/hr/company-happiness
+                  - img [ref=e48]
+                  - generic [ref=e50]: Felicidad Organizacional
+    - main [ref=e52]:
+      - generic [ref=e54]:
+        - heading "Felicidad Organizacional" [level=1] [ref=e57]
+        - generic [ref=e69]:
+          - heading "Registros de Estados de Animo" [level=2] [ref=e72]
+          - generic [ref=e78]:
+            - generic [ref=e81]:
+              - generic [ref=e82]:
+                - generic [ref=e83]: Búsqueda
+                - generic [ref=e84]:
+                  - img [ref=e86]
+                  - searchbox "Búsqueda" [ref=e89]
+              - button "Filtrar" [ref=e92] [cursor=pointer]:
+                - img [ref=e93]
+                - generic [ref=e96]: "0"
+            - table [ref=e98]:
+              - rowgroup [ref=e99]:
+                - row "Empleado Departamento Fecha Hora Estado de animo" [ref=e100]:
+                  - columnheader "Empleado" [ref=e101]
+                  - columnheader "Departamento" [ref=e102]
+                  - columnheader "Fecha" [ref=e103]
+                  - columnheader "Hora" [ref=e104]
+                  - columnheader "Estado de animo" [ref=e105]
+              - rowgroup [ref=e106]:
+                - row "Ivan Ruiz Delfin I + D+ i 2026-05-28 18:06:25 Neutral" [ref=e107]:
+                  - cell "Ivan Ruiz Delfin" [ref=e108]:
+                    - generic [ref=e110]: Ivan Ruiz Delfin
+                  - cell "I + D+ i" [ref=e111]:
+                    - generic [ref=e113]: I + D+ i
+                  - cell "2026-05-28" [ref=e114]:
+                    - generic [ref=e116]: 2026-05-28
+                  - cell "18:06:25" [ref=e117]:
+                    - generic [ref=e119]: 18:06:25
+                  - cell "Neutral" [ref=e120]:
+                    - generic [ref=e122]: Neutral
+            - navigation "Navegación de paginación" [ref=e123]:
+              - generic [ref=e126]:
+                - generic [ref=e128]: por página
+                - combobox "por página" [ref=e130]:
+                  - option "10" [selected]
+                  - option "25"
+                  - option "50"
+  - generic:
+    - status

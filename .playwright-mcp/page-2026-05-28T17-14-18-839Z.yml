@@ -1,0 +1,156 @@
+- generic [ref=e2]:
+  - generic [ref=e4]:
+    - generic [ref=e5]:
+      - img [ref=e7]
+      - generic [ref=e10]: Internal Server Error
+    - button "Copy as Markdown" [ref=e11] [cursor=pointer]:
+      - img [ref=e12]
+      - generic [ref=e15]: Copy as Markdown
+  - generic [ref=e18]:
+    - generic [ref=e19]:
+      - heading "BadMethodCallException" [level=1] [ref=e20]
+      - generic [ref=e22]: vendor/filament/support/src/Concerns/Macroable.php:77
+      - paragraph [ref=e23]: Method Filament\Panel::vite does not exist.
+    - generic [ref=e24]:
+      - generic [ref=e25]:
+        - generic [ref=e26]:
+          - generic [ref=e27]: LARAVEL
+          - generic [ref=e28]: 13.9.0
+        - generic [ref=e29]:
+          - generic [ref=e30]: PHP
+          - generic [ref=e31]: 8.5.4
+      - generic [ref=e32]:
+        - img [ref=e33]
+        - text: UNHANDLED
+      - generic [ref=e36]: CODE 0
+    - generic [ref=e38]:
+      - generic [ref=e39]:
+        - img [ref=e40]
+        - text: "500"
+      - generic [ref=e43]:
+        - img [ref=e44]
+        - text: GET
+      - generic [ref=e47]: http://cahilt.localhost:8000/admin
+      - button [ref=e48] [cursor=pointer]:
+        - img [ref=e49]
+  - generic [ref=e53]:
+    - generic [ref=e54]:
+      - generic [ref=e55]:
+        - img [ref=e57]
+        - heading "Exception trace" [level=3] [ref=e60]
+      - generic [ref=e61]:
+        - generic [ref=e63] [cursor=pointer]:
+          - img [ref=e64]
+          - generic [ref=e68]: 1 vendor frame
+          - button [ref=e69]:
+            - img [ref=e70]
+        - generic [ref=e74]:
+          - generic [ref=e75] [cursor=pointer]:
+            - generic [ref=e78]:
+              - code [ref=e82]:
+                - generic [ref=e83]: Filament\Support\Components\Component->__call()
+              - generic [ref=e85]: app/Providers/Filament/AdminPanelProvider.php:52
+            - button [ref=e87]:
+              - img [ref=e88]
+          - code [ref=e96]:
+            - generic [ref=e97]: 47 ->emailVerification(TenantEmailVerificationPrompt::class)
+            - generic [ref=e98]: 48 ->colors([
+            - generic [ref=e99]: 49 'primary' => Color::Amber,
+            - generic [ref=e100]: 50 ])
+            - generic [ref=e101]: 51 ->brandName(fn () => tenant()?->name ?? 'Admin')
+            - generic [ref=e102]: 52 ->vite('resources/css/app.css')
+            - generic [ref=e103]: "53 ->brandLogo(fn () => ($url = tenant()?->logoLightUrl()) ? new HtmlString('<img src=\"'.$url.'\" alt=\"Logo\" style=\"height:2.5rem;max-height:2.5rem;width:auto\" class=\"object-contain\">') : null)"
+            - generic [ref=e104]: "54 ->darkModeBrandLogo(fn () => ($url = tenant()?->logoDarkUrl()) ? new HtmlString('<img src=\"'.$url.'\" alt=\"Logo\" style=\"height:2.5rem;max-height:2.5rem;width:auto\" class=\"object-contain\">') : null)"
+            - generic [ref=e105]: 55 ->favicon(fn () => tenant()?->faviconUrl())
+            - generic [ref=e106]: 56 ->maxContentWidth('full')
+            - generic [ref=e107]: 57 ->simplePageMaxContentWidth(Width::Full)
+            - generic [ref=e108]: "58 ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')"
+            - generic [ref=e109]: "59 ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')"
+            - generic [ref=e110]: 60 ->pages([
+            - generic [ref=e111]: 61 Dashboard::class,
+            - generic [ref=e112]: 62 ManageSettings::class,
+            - generic [ref=e113]: 63 ])
+            - generic [ref=e114]: "64"
+        - generic [ref=e116] [cursor=pointer]:
+          - img [ref=e117]
+          - generic [ref=e121]: 34 vendor frames
+          - button [ref=e122]:
+            - img [ref=e123]
+        - generic [ref=e128] [cursor=pointer]:
+          - generic [ref=e131]:
+            - code [ref=e135]:
+              - generic [ref=e136]: Illuminate\Foundation\Application->handleRequest()
+            - generic [ref=e138]: public/index.php:20
+          - button [ref=e140]:
+            - img [ref=e141]
+        - generic [ref=e146] [cursor=pointer]:
+          - img [ref=e147]
+          - generic [ref=e151]: 1 vendor frame
+          - button [ref=e152]:
+            - img [ref=e153]
+    - generic [ref=e157]:
+      - generic [ref=e159]:
+        - img [ref=e161]
+        - heading "Queries" [level=3] [ref=e163]
+      - generic [ref=e165]: // No queries executed
+  - generic [ref=e167]:
+    - generic [ref=e168]:
+      - heading "Headers" [level=2] [ref=e169]
+      - generic [ref=e170]:
+        - generic [ref=e171]:
+          - generic [ref=e172]: host
+          - generic [ref=e174]: cahilt.localhost:8000
+        - generic [ref=e175]:
+          - generic [ref=e176]: connection
+          - generic [ref=e178]: keep-alive
+        - generic [ref=e179]:
+          - generic [ref=e180]: sec-ch-ua
+          - generic [ref=e182]: "\"Chromium\";v=\"148\", \"Google Chrome\";v=\"148\", \"Not/A)Brand\";v=\"99\""
+        - generic [ref=e183]:
+          - generic [ref=e184]: sec-ch-ua-mobile
+          - generic [ref=e186]: "?0"
+        - generic [ref=e187]:
+          - generic [ref=e188]: sec-ch-ua-platform
+          - generic [ref=e190]: "\"Linux\""
+        - generic [ref=e191]:
+          - generic [ref=e192]: upgrade-insecure-requests
+          - generic [ref=e194]: "1"
+        - generic [ref=e195]:
+          - generic [ref=e196]: user-agent
+          - generic [ref=e198]: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36
+        - generic [ref=e199]:
+          - generic [ref=e200]: accept
+          - generic [ref=e202]: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+        - generic [ref=e203]:
+          - generic [ref=e204]: sec-fetch-site
+          - generic [ref=e206]: none
+        - generic [ref=e207]:
+          - generic [ref=e208]: sec-fetch-mode
+          - generic [ref=e210]: navigate
+        - generic [ref=e211]:
+          - generic [ref=e212]: sec-fetch-user
+          - generic [ref=e214]: "?1"
+        - generic [ref=e215]:
+          - generic [ref=e216]: sec-fetch-dest
+          - generic [ref=e218]: document
+        - generic [ref=e219]:
+          - generic [ref=e220]: accept-encoding
+          - generic [ref=e222]: gzip, deflate, br, zstd
+        - generic [ref=e223]:
+          - generic [ref=e224]: accept-language
+          - generic [ref=e226]: es-ES,es;q=0.9
+        - generic [ref=e227]:
+          - generic [ref=e228]: cookie
+          - generic [ref=e230]: XSRF-TOKEN=eyJpdiI6IllvTHB2ajhaSU1jT0hNSHNjQWFabGc9PSIsInZhbHVlIjoianJSSXM0VXRLNEJESEQxVkhjZklsQVcvbnhMYy9ER2dzVmtQWkVFdnZlb1REdC9FdHZzeG5wZVd4Qkh3TDZlcUxrcjl6c2JGVm5lelRMdC9NaWhVTWE0ZHo1ZzZRcE1uT3NISnpiRzJGMm1sbUZmbDZ6aHF1bEVJVTZ2Y2JJbE8iLCJtYWMiOiI2MTBiZTNlMjEyODA3ODM0Njc4MTk2ZWUyMWQwYjBlODc3ZGViOTRhMWUyNGE4N2Y1OWQwNmRhMzk0Y2JmYjZkIiwidGFnIjoiIn0%3D; yanantin-session=eyJpdiI6IlFSaVg4Z0NLcFRQbDdYQm1RSnNGTkE9PSIsInZhbHVlIjoiN1lsR0VFUlgwa2duVVVWUFlzWUE2ZUsrU2JXblRHRnlZNjRMRTZZeWpIc0ZZZDhoSVE0RFIvRm5vcjFNL0JNaGJDbjRMZUdVcnNOUHYwNlF6ZytzOGFjTjhsczFzMENOSzg5eXV5bUFMbmdPU0txVCszN2ptandpWHNPUHhySXoiLCJtYWMiOiI0YjMxYjgwMGFiZDhlMTExZWVlZTFlYWU2NGJiMTE3ZmUwMWI3NzllM2Q2NjAwOTVhN2FjYTJiYTE5YzE1OTE5IiwidGFnIjoiIn0%3D
+    - generic [ref=e231]:
+      - heading "Body" [level=2] [ref=e232]
+      - generic [ref=e233]: // No request body
+    - generic [ref=e234]:
+      - heading "Routing" [level=2] [ref=e235]
+      - generic [ref=e237]: // No routing context
+    - generic [ref=e238]:
+      - heading "Routing parameters" [level=2] [ref=e239]
+      - generic [ref=e240]: // No routing parameters
+  - generic [ref=e243]:
+    - img [ref=e245]
+    - img [ref=e3283]

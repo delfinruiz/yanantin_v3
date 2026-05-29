@@ -15,7 +15,7 @@ class Tenant extends BaseTenant implements TenantWithDatabase
 
     public static function getCustomColumns(): array
     {
-        return ['id', 'name', 'plan', 'plan_id', 'status', 'status_changed_at'];
+        return ['id', 'name', 'plan', 'plan_id', 'status', 'status_changed_at', 'token_ai'];
     }
 
     public function isActive(): bool
@@ -67,6 +67,11 @@ class Tenant extends BaseTenant implements TenantWithDatabase
             ->unique()
             ->values()
             ->toArray();
+    }
+
+    public function hasEntity(string $basename): bool
+    {
+        return in_array($basename, $this->allowedEntities());
     }
 
     public function getAdminEmailAttribute(): string

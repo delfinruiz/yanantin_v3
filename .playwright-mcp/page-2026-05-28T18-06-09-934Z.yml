@@ -1,0 +1,98 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e3]:
+    - generic [ref=e4]:
+      - button "Contraer barra lateral" [ref=e6] [cursor=pointer]:
+        - img [ref=e7]
+      - link "Logo" [ref=e9] [cursor=pointer]:
+        - /url: http://cahilt.localhost:8000/admin
+        - img "Logo" [ref=e11]
+    - generic [ref=e12]:
+      - generic [ref=e15]:
+        - generic [ref=e16]: Búsqueda global
+        - generic [ref=e17]:
+          - img [ref=e19]
+          - searchbox "Búsqueda global" [ref=e22]
+      - button "Menú del usuario" [ref=e25] [cursor=pointer]:
+        - img "Avatar of Ivan Ruiz Delfin" [ref=e26]
+  - generic [ref=e27]:
+    - complementary [ref=e29]:
+      - navigation [ref=e30]:
+        - list [ref=e31]:
+          - listitem [ref=e32]:
+            - list [ref=e33]:
+              - listitem [ref=e34]:
+                - link "Escritorio" [ref=e35] [cursor=pointer]:
+                  - /url: http://cahilt.localhost:8000/admin
+                  - img [ref=e36]
+                  - generic [ref=e38]: Escritorio
+          - listitem [ref=e39]:
+            - generic [ref=e40] [cursor=pointer]:
+              - generic [ref=e41]: Talento Humano
+              - button "Talento Humano" [expanded] [ref=e42]:
+                - img [ref=e43]
+            - list [ref=e45]:
+              - listitem [ref=e46]:
+                - link "Felicidad Organizacional" [ref=e47] [cursor=pointer]:
+                  - /url: http://cahilt.localhost:8000/admin/hr/company-happiness
+                  - img [ref=e48]
+                  - generic [ref=e50]: Felicidad Organizacional
+          - listitem [ref=e51]:
+            - generic [ref=e52] [cursor=pointer]:
+              - generic [ref=e53]: Configuracion
+              - button "Configuracion" [expanded] [ref=e54]:
+                - img [ref=e55]
+            - list [ref=e57]:
+              - listitem [ref=e58]:
+                - link "Manage Settings" [ref=e59] [cursor=pointer]:
+                  - /url: http://cahilt.localhost:8000/admin/manage-settings
+                  - img [ref=e60]
+                  - generic [ref=e63]: Manage Settings
+    - main [ref=e65]:
+      - generic [ref=e67]:
+        - heading "Escritorio" [level=1] [ref=e70]
+        - generic [ref=e77]:
+          - generic [ref=e83]:
+            - heading "Estado de felicidad de la organización (hoy)" [level=2] [ref=e85]
+            - generic [ref=e86]:
+              - generic [ref=e87]:
+                - generic [ref=e88]: Nivel 5/5
+                - generic [ref=e89]: Respuestas 1
+              - generic [ref=e90]:
+                - generic [ref=e91]:
+                  - generic [ref=e92]: 😭
+                  - generic [ref=e93]: 0%
+                - generic [ref=e94]:
+                  - generic [ref=e95]: 🙁
+                  - generic [ref=e96]: 0%
+                - generic [ref=e97]:
+                  - generic [ref=e98]: 😐
+                  - generic [ref=e99]: 0%
+                - generic [ref=e100]:
+                  - generic [ref=e101]: 🙂
+                  - generic [ref=e102]: 0%
+                - generic [ref=e103]:
+                  - generic [ref=e104]: 😄
+                  - generic [ref=e105]: 100%
+          - generic [ref=e111]:
+            - heading "Mensaje del día" [level=2] [ref=e113]
+            - generic [ref=e115]: Sin mensaje para hoy.
+  - generic:
+    - status
+  - generic [ref=e118]:
+    - heading "Como te sientes hoy?" [level=2] [ref=e119]
+    - generic [ref=e120]:
+      - button "😢 Muy triste" [ref=e121] [cursor=pointer]:
+        - generic [ref=e122]: 😢
+        - generic [ref=e123]: Muy triste
+      - button "🙁 Medianamente triste" [ref=e124] [cursor=pointer]:
+        - generic [ref=e125]: 🙁
+        - generic [ref=e126]: Medianamente triste
+      - button "😐 Neutral" [ref=e127] [cursor=pointer]:
+        - generic [ref=e128]: 😐
+        - generic [ref=e129]: Neutral
+      - button "🙂 Medianamente feliz" [ref=e130] [cursor=pointer]:
+        - generic [ref=e131]: 🙂
+        - generic [ref=e132]: Medianamente feliz
+      - button "😄 Muy feliz" [ref=e133] [cursor=pointer]:
+        - generic [ref=e134]: 😄
+        - generic [ref=e135]: Muy feliz

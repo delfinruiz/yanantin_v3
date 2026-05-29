@@ -44,4 +44,9 @@ return [
         'document_root' => env('CPANEL_DOCUMENT_ROOT', ''),
     ],
 
+    'openai' => [
+        'key' => env('OPENAI_API_KEY'),
+        'model' => env('OPENAI_MODEL', 'gpt-4o-mini'),
+    ],
+
 ];

@@ -8,6 +8,7 @@ use App\Filament\Pages\Auth\TenantRegister;
 use App\Filament\Pages\Auth\TenantRequestPasswordReset;
 use App\Filament\Pages\Dashboard;
 use App\Filament\Pages\EditProfilePage;
+use App\Filament\Pages\ManageSettings;
 use App\Http\Middleware\CheckSubscriptionStatus;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Filament\Actions\Action;
@@ -21,11 +22,13 @@ use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\Support\Enums\Width;
+use Filament\View\PanelsRenderHook;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Stancl\Tenancy\Middleware\InitializeTenancyBySubdomain;
@@ -51,10 +54,12 @@ class AdminPanelProvider extends PanelProvider
             ->favicon(fn () => tenant()?->faviconUrl())
             ->maxContentWidth('full')
             ->simplePageMaxContentWidth(Width::Full)
+            ->viteTheme('resources/css/filament/admin/theme.css')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([
                 Dashboard::class,
+                ManageSettings::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->middleware([
@@ -94,6 +99,10 @@ class AdminPanelProvider extends PanelProvider
                     }),
             ])
             ->userMenu(position: UserMenuPosition::Topbar)
-            ->sidebarCollapsibleOnDesktop();
+            ->sidebarCollapsibleOnDesktop()
+            ->renderHook(
+                PanelsRenderHook::BODY_END,
+                fn (): string => tenant()?->hasEntity('MoodPromptOverlay') ? Blade::render('@livewire(\'mood-prompt-overlay\')') : '',
+            );
     }
 }

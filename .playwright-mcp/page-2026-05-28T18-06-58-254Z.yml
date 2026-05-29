@@ -1,0 +1,114 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e3]:
+    - generic [ref=e4]:
+      - button "Contraer barra lateral" [ref=e6] [cursor=pointer]:
+        - img [ref=e7]
+      - link "Logo" [ref=e9] [cursor=pointer]:
+        - /url: http://cahilt.localhost:8000/admin
+        - img "Logo" [ref=e11]
+    - generic [ref=e12]:
+      - generic [ref=e15]:
+        - generic [ref=e16]: Búsqueda global
+        - generic [ref=e17]:
+          - img [ref=e19]
+          - searchbox "Búsqueda global" [ref=e22]
+      - button "Menú del usuario" [ref=e25] [cursor=pointer]:
+        - img "Avatar of Ivan Ruiz Delfin" [ref=e26]
+  - generic [ref=e27]:
+    - complementary [ref=e29]:
+      - navigation [ref=e30]:
+        - list [ref=e31]:
+          - listitem [ref=e32]:
+            - list [ref=e33]:
+              - listitem [ref=e34]:
+                - link "Escritorio" [ref=e35] [cursor=pointer]:
+                  - /url: http://cahilt.localhost:8000/admin
+                  - img [ref=e36]
+                  - generic [ref=e38]: Escritorio
+          - listitem [ref=e39]:
+            - generic [ref=e40] [cursor=pointer]:
+              - generic [ref=e41]: Talento Humano
+              - button "Talento Humano" [expanded] [ref=e42]:
+                - img [ref=e43]
+            - list [ref=e45]:
+              - listitem [ref=e46]:
+                - link "Felicidad Organizacional" [ref=e47] [cursor=pointer]:
+                  - /url: http://cahilt.localhost:8000/admin/hr/company-happiness
+                  - img [ref=e48]
+                  - generic [ref=e50]: Felicidad Organizacional
+          - listitem [ref=e51]:
+            - generic [ref=e52] [cursor=pointer]:
+              - generic [ref=e53]: Configuracion
+              - button "Configuracion" [expanded] [ref=e54]:
+                - img [ref=e55]
+            - list [ref=e57]:
+              - listitem [ref=e58]:
+                - link "Manage Settings" [ref=e59] [cursor=pointer]:
+                  - /url: http://cahilt.localhost:8000/admin/manage-settings
+                  - img [ref=e60]
+                  - generic [ref=e63]: Manage Settings
+    - main [ref=e65]:
+      - generic [ref=e67]:
+        - heading "Felicidad Organizacional" [level=1] [ref=e70]
+        - generic [ref=e72]:
+          - generic [ref=e77]:
+            - heading "Distribución Mensual de Estados de Ánimo" [level=2] [ref=e82]
+            - generic [ref=e88]:
+              - heading "Acciones Sugeridas por IA" [level=2] [ref=e91]
+              - generic [ref=e94]:
+                - generic [ref=e95]: "Actualizado: 2026-05-28"
+                - generic [ref=e96]: "Impacto en la productividad: Productividad estable. Vigilar cargas y fatiga para evitar descensos si aumenta la proporción Neutral/Med Triste."
+                - generic [ref=e97]:
+                  - generic [ref=e98]: Acciones sugeridas
+                  - generic [ref=e99]:
+                    - text: 1) Promover pausas activas y check-ins breves diarios
+                    - text: 2) Reconocer logros semanales en equipo
+                    - text: 3) Habilitar horarios flexibles en dias de alta carga
+                    - text: 4) Ofrecer espacios de escucha con jefaturas
+                    - text: 5) Fortalecer la comunicacion mediante reuniones abiertas
+                    - text: 6) Impulsar el desarrollo profesional con cursos accesibles
+          - generic [ref=e100]:
+            - generic [ref=e102]:
+              - heading "Registros de Estados de Animo" [level=2] [ref=e105]
+              - generic [ref=e111]:
+                - generic [ref=e114]:
+                  - generic [ref=e115]:
+                    - generic [ref=e116]: Búsqueda
+                    - generic [ref=e117]:
+                      - img [ref=e119]
+                      - searchbox "Búsqueda" [ref=e122]
+                  - button "Filtrar" [ref=e125] [cursor=pointer]:
+                    - img [ref=e126]
+                    - generic [ref=e129]: "0"
+                - table [ref=e131]:
+                  - rowgroup [ref=e132]:
+                    - row "Empleado Departamento Fecha Hora Estado de animo" [ref=e133]:
+                      - columnheader "Empleado" [ref=e134]
+                      - columnheader "Departamento" [ref=e135]
+                      - columnheader "Fecha" [ref=e136]
+                      - columnheader "Hora" [ref=e137]
+                      - columnheader "Estado de animo" [ref=e138]
+                  - rowgroup [ref=e139]:
+                    - row "Ivan Ruiz Delfin I + D+ i 2026-05-28 18:06:25 Neutral" [ref=e140]:
+                      - cell "Ivan Ruiz Delfin" [ref=e141]:
+                        - generic [ref=e143]: Ivan Ruiz Delfin
+                      - cell "I + D+ i" [ref=e144]:
+                        - generic [ref=e146]: I + D+ i
+                      - cell "2026-05-28" [ref=e147]:
+                        - generic [ref=e149]: 2026-05-28
+                      - cell "18:06:25" [ref=e150]:
+                        - generic [ref=e152]: 18:06:25
+                      - cell "Neutral" [ref=e153]:
+                        - generic [ref=e155]: Neutral
+                - navigation "Navegación de paginación" [ref=e156]:
+                  - generic [ref=e159]:
+                    - generic [ref=e161]: por página
+                    - combobox "por página" [ref=e163]:
+                      - option "10" [selected]
+                      - option "25"
+                      - option "50"
+            - generic [ref=e166]:
+              - heading "Estado de Ánimo Hoy" [level=2] [ref=e171]
+              - heading "Estado de Ánimo Según Filtro" [level=2] [ref=e181]
+  - generic:
+    - status
