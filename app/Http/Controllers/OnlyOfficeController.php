@@ -6,6 +6,7 @@ use App\Models\FileItem;
 use App\Models\FileShareLink;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 
@@ -14,6 +15,10 @@ class OnlyOfficeController extends Controller
     public function downloadInternal(Request $request, FileItem $fileItem)
     {
         if (! $request->hasValidSignature()) {
+            Log::channel('daily')->warning('[OnlyOffice downloadInternal] Invalid signature', [
+                'url' => $request->fullUrl(),
+                'fileItem_id' => $fileItem->id,
+            ]);
             abort(403);
         }
 
@@ -24,11 +29,27 @@ class OnlyOfficeController extends Controller
             '/'
         );
 
-        if (! Storage::disk('public')->exists($path)) {
+        $exists = Storage::disk('public')->exists($path);
+        $absolute = Storage::disk('public')->path($path);
+        $url = Storage::disk('public')->url($path);
+
+        Log::channel('daily')->info('[OnlyOffice downloadInternal]', [
+            'fileItem_id' => $fileItem->id,
+            'tenant' => $tenantId,
+            'user_id' => $fileItem->user_id,
+            'name' => $name,
+            'path' => $path,
+            'exists' => $exists,
+            'absolute' => $absolute,
+            'public_url' => $url,
+            'file_exists' => $exists && file_exists($absolute),
+        ]);
+
+        if (! $exists) {
             abort(404);
         }
 
-        return response()->file(Storage::disk('public')->path($path));
+        return response()->file($absolute);
     }
 
     public function openPublic($token, Request $request)
@@ -86,6 +107,20 @@ class OnlyOfficeController extends Controller
 
         $docKey = md5($tenantId.$path.filemtime($absolutePath));
         $this->registerKeyMap($docKey, $path, $tenantId);
+
+        $publicDownloadUrl = route('public.download.onlyoffice', ['token' => $token]);
+
+        Log::channel('daily')->info('[OnlyOffice openPublic] Generating editor config', [
+            'token' => $token,
+            'tenant' => $tenantId,
+            'targetFile_id' => $targetFile->id,
+            'name' => $targetFile->name,
+            'disk_path' => $path,
+            'disk_exists' => Storage::disk('public')->exists($path),
+            'download_url' => $publicDownloadUrl,
+            'callback_url' => route('onlyoffice.callback'),
+            'is_editable' => $isEditable,
+        ]);
 
         $config = [
             'document' => [
@@ -165,16 +200,30 @@ class OnlyOfficeController extends Controller
         $keyMap[$docKey] = $path;
         file_put_contents($mapPath, json_encode($keyMap, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
 
+        $signedUrl = URL::temporarySignedRoute(
+            'onlyoffice.download.internal',
+            now()->addMinutes(60),
+            ['fileItem' => $fileItem->id]
+        );
+
+        Log::channel('daily')->info('[OnlyOffice open] Generating editor config', [
+            'fileItem_id' => $fileItem->id,
+            'tenant' => $tenantId,
+            'user_id' => $fileItem->user_id,
+            'name' => $fileItem->name,
+            'disk_path' => $path,
+            'disk_exists' => Storage::disk('public')->exists($path),
+            'signed_url' => $signedUrl,
+            'callback_url' => route('onlyoffice.callback'),
+            'is_editable' => $isEditable,
+        ]);
+
         $config = [
             'document' => [
                 'fileType' => pathinfo($fileItem->name, PATHINFO_EXTENSION),
                 'key' => $docKey,
                 'title' => $fileItem->name,
-                'url' => URL::temporarySignedRoute(
-                    'onlyoffice.download.internal',
-                    now()->addMinutes(60),
-                    ['fileItem' => $fileItem->id]
-                ),
+                'url' => $signedUrl,
                 'permissions' => [
                     'edit' => $isEditable,
                     'download' => true,
@@ -204,6 +253,7 @@ class OnlyOfficeController extends Controller
         $link = FileShareLink::with('fileItem')->where('token', $token)->firstOrFail();
 
         if (! $link->isValid()) {
+            Log::channel('daily')->warning('[OnlyOffice downloadForOnlyOffice] Link expired', ['token' => $token]);
             abort(404);
         }
 
@@ -214,7 +264,18 @@ class OnlyOfficeController extends Controller
             '/'
         );
 
-        if (! Storage::disk('public')->exists($path)) {
+        $exists = Storage::disk('public')->exists($path);
+
+        Log::channel('daily')->info('[OnlyOffice downloadForOnlyOffice]', [
+            'token' => $token,
+            'tenant' => $tenantId,
+            'fileItem_id' => $fileItem->id,
+            'name' => $fileItem->name,
+            'path' => $path,
+            'exists' => $exists,
+        ]);
+
+        if (! $exists) {
             abort(404);
         }
 

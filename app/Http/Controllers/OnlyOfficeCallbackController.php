@@ -12,8 +12,12 @@ class OnlyOfficeCallbackController extends Controller
 {
     public function handle(Request $request)
     {
-        Log::channel('daily')->info('[ONLYOFFICE] Callback recibido', [
-            'payload' => $request->all(),
+        Log::channel('daily')->info('[OnlyOffice callback] Recibido', [
+            'status' => $request->input('status'),
+            'key' => $request->input('key'),
+            'url' => $request->input('url'),
+            'tenant' => tenant()->id,
+            'all' => $request->all(),
         ]);
 
         $data = $request->all();
@@ -23,7 +27,7 @@ class OnlyOfficeCallbackController extends Controller
         $documentKey = $data['key'] ?? null;
 
         if (! in_array($status, [2, 6]) || ! $fileUrl || ! $documentKey) {
-            Log::channel('daily')->info('[ONLYOFFICE] Sin cambios para guardar');
+            Log::channel('daily')->info('[OnlyOffice callback] Sin cambios que guardar', ['status' => $status]);
 
             return response()->json(['error' => 0]);
         }
