@@ -27,11 +27,11 @@ class FilePreviewController extends Controller
 
         $name = $fileItem->filename ?? $fileItem->name;
         $tenantId = tenant()->id;
+        $relativePath = trim($fileItem->path, '/');
 
-        $path = trim(
-            "tenants/{$tenantId}/files/{$fileItem->user_id}/".trim($fileItem->path, '/').'/'.$name,
-            '/'
-        );
+        $path = $relativePath !== ''
+            ? "tenants/{$tenantId}/files/{$fileItem->user_id}/{$relativePath}/{$name}"
+            : "tenants/{$tenantId}/files/{$fileItem->user_id}/{$name}";
 
         if (! Storage::disk('public')->exists($path)) {
             abort(404, 'Archivo no encontrado en el almacenamiento.');

@@ -22,12 +22,9 @@ class OnlyOfficeController extends Controller
             abort(403);
         }
 
-        $name = $fileItem->filename ?? $fileItem->name;
+        $path = $this->diskFilePath($fileItem);
         $tenantId = tenant()->id;
-        $path = trim(
-            "tenants/{$tenantId}/files/{$fileItem->user_id}/".trim($fileItem->path, '/').'/'.$name,
-            '/'
-        );
+        $name = $fileItem->filename ?? $fileItem->name;
 
         $exists = Storage::disk('public')->exists($path);
         $absolute = Storage::disk('public')->path($path);
@@ -90,10 +87,7 @@ class OnlyOfficeController extends Controller
         $permission = $link->permission;
         $isEditable = ($permission === 'edit');
         $tenantId = tenant()->id;
-        $path = trim(
-            "tenants/{$tenantId}/files/{$targetFile->user_id}/".trim($targetFile->path, '/').'/'.$targetFile->name,
-            '/'
-        );
+        $path = $this->diskFilePath($targetFile);
 
         if (! Storage::disk('public')->exists($path)) {
             abort(404, 'Archivo no encontrado');
@@ -169,10 +163,7 @@ class OnlyOfficeController extends Controller
         $isEditable = in_array($permission, ['full', 'edit']);
         $tenantId = tenant()->id;
 
-        $path = trim(
-            "tenants/{$tenantId}/files/{$fileItem->user_id}/".trim($fileItem->path, '/').'/'.$fileItem->name,
-            '/'
-        );
+        $path = $this->diskFilePath($fileItem);
 
         if (! Storage::disk('public')->exists($path)) {
             abort(404, 'Archivo no encontrado');
@@ -258,11 +249,8 @@ class OnlyOfficeController extends Controller
         }
 
         $fileItem = $link->fileItem;
+        $path = $this->diskFilePath($fileItem);
         $tenantId = tenant()->id;
-        $path = trim(
-            "tenants/{$tenantId}/files/{$fileItem->user_id}/".trim($fileItem->path, '/').'/'.$fileItem->name,
-            '/'
-        );
 
         $exists = Storage::disk('public')->exists($path);
 
@@ -297,6 +285,17 @@ class OnlyOfficeController extends Controller
 
         $keyMap[$docKey] = $path;
         file_put_contents($mapPath, json_encode($keyMap, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+    }
+
+    private function diskFilePath(FileItem $fileItem): string
+    {
+        $name = $fileItem->filename ?? $fileItem->name;
+        $tenantId = tenant()->id;
+        $relativePath = trim($fileItem->path, '/');
+
+        return $relativePath !== ''
+            ? "tenants/{$tenantId}/files/{$fileItem->user_id}/{$relativePath}/{$name}"
+            : "tenants/{$tenantId}/files/{$fileItem->user_id}/{$name}";
     }
 
     private function normalizePath(string $path): string
