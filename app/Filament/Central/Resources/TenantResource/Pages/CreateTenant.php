@@ -5,31 +5,10 @@ namespace App\Filament\Central\Resources\TenantResource\Pages;
 use App\Filament\Central\Resources\TenantResource;
 use App\Models\Plan;
 use Filament\Resources\Pages\CreateRecord;
-use Stancl\Tenancy\Database\Models\Domain;
 
 class CreateTenant extends CreateRecord
 {
     protected static string $resource = TenantResource::class;
-
-    public bool $domainAvailable = false;
-
-    public bool $domainChecked = false;
-
-    public function checkDomainAvailability(string $domain): void
-    {
-        $domain = strtolower(trim($domain));
-
-        if (blank($domain) || ! preg_match('/^[a-z0-9]([a-z0-9\-]*[a-z0-9])?$/', $domain)) {
-            $this->domainAvailable = false;
-            $this->domainChecked = false;
-
-            return;
-        }
-
-        $exists = Domain::where('domain', $domain)->exists();
-        $this->domainAvailable = ! $exists;
-        $this->domainChecked = true;
-    }
 
     protected function getRedirectUrl(): string
     {
@@ -39,7 +18,7 @@ class CreateTenant extends CreateRecord
     protected function mutateFormDataBeforeCreate(array $data): array
     {
         $domain = $data['domain'] ?? null;
-        unset($data['domain'], $data['favicon_url'], $data['logo_light_url'], $data['logo_dark_url']);
+        unset($data['domain'], $data['domain_checked'], $data['domain_available'], $data['favicon_url'], $data['logo_light_url'], $data['logo_dark_url']);
 
         if ($domain) {
             $data['domain_name'] = $domain;

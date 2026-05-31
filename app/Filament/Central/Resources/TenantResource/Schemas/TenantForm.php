@@ -4,12 +4,14 @@ namespace App\Filament\Central\Resources\TenantResource\Schemas;
 
 use App\Models\Plan;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
+use Stancl\Tenancy\Database\Models\Domain;
 
 class TenantForm
 {
@@ -48,20 +50,36 @@ class TenantForm
                             ->placeholder('mi-empresa')
                             ->helperText('El tenant sera accesible en mi-empresa.app.cahilt.com')
                             ->visibleOn('create')
-                            ->afterStateUpdated(function (?string $state) {
-                                if (! method_exists($this, 'checkDomainAvailability')) {
+                            ->afterStateUpdated(function (?string $state, Set $set) {
+                                if (blank($state)) {
+                                    $set('domain_checked', false);
+                                    $set('domain_available', false);
+
                                     return;
                                 }
 
-                                $this->checkDomainAvailability($state ?? '');
-                                $this->validateOnly('data.domain');
+                                $domain = strtolower(trim($state));
+
+                                if (! preg_match('/^[a-z0-9]([a-z0-9\-]*[a-z0-9])?$/', $domain)) {
+                                    $set('domain_checked', false);
+                                    $set('domain_available', false);
+
+                                    return;
+                                }
+
+                                $exists = Domain::where('domain', $domain)->exists();
+                                $set('domain_checked', true);
+                                $set('domain_available', ! $exists);
                             })
-                            ->suffixIcon(fn () => $this->domainChecked ?? false
-                                ? ($this->domainAvailable ?? false ? 'heroicon-o-check-circle' : 'heroicon-o-x-circle')
+                            ->suffixIcon(fn (Get $get) => $get('domain_checked')
+                                ? ($get('domain_available') ? 'heroicon-o-check-circle' : 'heroicon-o-x-circle')
                                 : null)
-                            ->suffixIconColor(fn () => $this->domainChecked ?? false
-                                ? ($this->domainAvailable ?? false ? 'success' : 'danger')
+                            ->suffixIconColor(fn (Get $get) => $get('domain_checked')
+                                ? ($get('domain_available') ? 'success' : 'danger')
                                 : null),
+
+                        Hidden::make('domain_checked')->default(false),
+                        Hidden::make('domain_available')->default(false),
                         Select::make('plan_id')
                             ->label('Plan')
                             ->options(fn () => Plan::where('is_active', true)->pluck('name', 'id'))
