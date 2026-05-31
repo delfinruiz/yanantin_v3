@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Storage;
 use Stancl\Tenancy\Contracts\TenantWithDatabase;
@@ -12,6 +13,8 @@ use Stancl\Tenancy\Database\Models\Tenant as BaseTenant;
 class Tenant extends BaseTenant implements TenantWithDatabase
 {
     use HasDatabase, HasDomains, HasFactory;
+
+    protected $appends = ['next_billing_date'];
 
     public static function getCustomColumns(): array
     {
@@ -72,6 +75,19 @@ class Tenant extends BaseTenant implements TenantWithDatabase
     public function hasEntity(string $basename): bool
     {
         return in_array($basename, $this->allowedEntities());
+    }
+
+    public function getNextBillingDateAttribute(): ?Carbon
+    {
+        if (! $this->created_at) {
+            return null;
+        }
+
+        $signupDay = (int) $this->created_at->day;
+        $next = now()->startOfMonth()->addMonth();
+        $lastDay = (int) $next->daysInMonth;
+
+        return $next->setDay(min($signupDay, $lastDay));
     }
 
     public function getAdminEmailAttribute(): string

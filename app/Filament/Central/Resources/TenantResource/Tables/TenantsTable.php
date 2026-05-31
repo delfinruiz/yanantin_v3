@@ -78,6 +78,11 @@ class TenantsTable
                     ->tooltip(fn ($state) => $state)
                     ->visible(fn ($state) => filled($state)),
 
+                TextColumn::make('next_billing_date')
+                    ->label('Proximo cobro')
+                    ->date('d/m/Y')
+                    ->placeholder('—'),
+
                 TextColumn::make('created_at')
                     ->label('Creado')
                     ->dateTime('d/m/Y H:i')
