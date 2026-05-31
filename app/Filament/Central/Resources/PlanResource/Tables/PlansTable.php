@@ -21,17 +21,6 @@ class PlansTable
                     ->searchable()
                     ->sortable(),
 
-                TextColumn::make('slug')
-                    ->label('Slug')
-                    ->badge()
-                    ->searchable(),
-
-                TextColumn::make('features')
-                    ->label('Modulos')
-                    ->formatStateUsing(fn ($state) => collect($state)
-                        ->map(fn ($f) => config("plans.features.$f.label", $f))
-                        ->implode(', ')),
-
                 TextColumn::make('max_users')
                     ->label('Max. usuarios')
                     ->formatStateUsing(fn ($state) => $state ?? 'Ilimitado')
