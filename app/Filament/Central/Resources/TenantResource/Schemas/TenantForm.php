@@ -23,14 +23,27 @@ class TenantForm
                             ->label('Nombre')
                             ->required()
                             ->maxLength(255)
-                            ->placeholder('Mi Empresa S.A.'),
+                            ->placeholder('Mi Empresa S.A.')
+                            ->live(onBlur: true)
+                            ->afterStateUpdated(function ($state, $set, $get) {
+                                if (blank($state)) {
+                                    return;
+                                }
+
+                                if (filled($get('domain'))) {
+                                    return;
+                                }
+
+                                $set('domain', self::slugifySubdomain($state));
+                            }),
                         TextInput::make('domain')
                             ->label('Subdominio')
                             ->required()
-                            ->maxLength(255)
-                            ->alphaDash()
+                            ->maxLength(63)
+                            ->unique('domains', 'domain', ignoreRecord: true)
+                            ->rule('regex:/^[a-z0-9]([a-z0-9\-]*[a-z0-9])?$/')
                             ->placeholder('mi-empresa')
-                            ->helperText('El tenant sera accesible en mi-empresa.localhost')
+                            ->helperText('El tenant sera accesible en mi-empresa.app.cahilt.com')
                             ->visibleOn('create'),
                         Select::make('plan_id')
                             ->label('Plan')
@@ -92,5 +105,15 @@ class TenantForm
                     ])
                     ->columns(4),
             ]);
+    }
+
+    private static function slugifySubdomain(string $text): string
+    {
+        $text = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $text) ?: $text;
+        $text = strtolower($text);
+        $text = preg_replace('/[^a-z0-9]+/', '-', $text);
+        $text = trim($text, '-');
+
+        return substr($text, 0, 63);
     }
 }

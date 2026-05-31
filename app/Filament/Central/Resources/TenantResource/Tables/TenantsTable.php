@@ -22,7 +22,7 @@ class TenantsTable
                     ->sortable(),
 
                 TextColumn::make('name')
-                    ->label('Nombre')
+                    ->label('Empresa')
                     ->searchable()
                     ->sortable(),
 
