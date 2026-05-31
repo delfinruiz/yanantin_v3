@@ -7,6 +7,8 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 
 class TenantForm
@@ -25,7 +27,7 @@ class TenantForm
                             ->maxLength(255)
                             ->placeholder('Mi Empresa S.A.')
                             ->live(onBlur: true)
-                            ->afterStateUpdated(function ($state, $set, $get) {
+                            ->afterStateUpdated(function (?string $state, Set $set, Get $get) {
                                 if (blank($state)) {
                                     return;
                                 }
@@ -40,11 +42,26 @@ class TenantForm
                             ->label('Subdominio')
                             ->required()
                             ->maxLength(63)
+                            ->live(onBlur: true)
                             ->unique('domains', 'domain', ignoreRecord: true)
                             ->rule('regex:/^[a-z0-9]([a-z0-9\-]*[a-z0-9])?$/')
                             ->placeholder('mi-empresa')
                             ->helperText('El tenant sera accesible en mi-empresa.app.cahilt.com')
-                            ->visibleOn('create'),
+                            ->visibleOn('create')
+                            ->afterStateUpdated(function (?string $state) {
+                                if (! method_exists($this, 'checkDomainAvailability')) {
+                                    return;
+                                }
+
+                                $this->checkDomainAvailability($state ?? '');
+                                $this->validateOnly('data.domain');
+                            })
+                            ->suffixIcon(fn () => $this->domainChecked ?? false
+                                ? ($this->domainAvailable ?? false ? 'heroicon-o-check-circle' : 'heroicon-o-x-circle')
+                                : null)
+                            ->suffixIconColor(fn () => $this->domainChecked ?? false
+                                ? ($this->domainAvailable ?? false ? 'success' : 'danger')
+                                : null),
                         Select::make('plan_id')
                             ->label('Plan')
                             ->options(fn () => Plan::where('is_active', true)->pluck('name', 'id'))
