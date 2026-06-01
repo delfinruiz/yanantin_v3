@@ -21,7 +21,6 @@ class Plan extends Model
         return [
             'features' => 'array',
             'is_active' => 'boolean',
-            'max_users' => 'integer',
         ];
     }
 
