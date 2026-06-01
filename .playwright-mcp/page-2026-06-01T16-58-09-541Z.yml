@@ -1,0 +1,79 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e3]:
+    - button "Contraer barra lateral" [ref=e106] [cursor=pointer]:
+      - img [ref=e107]
+    - generic [ref=e7]:
+      - generic [ref=e10]:
+        - generic [ref=e11]: Búsqueda global
+        - generic [ref=e12]:
+          - img [ref=e14]
+          - searchbox "Búsqueda global" [ref=e17]
+      - button "Abrir notificaciones" [ref=e21] [cursor=pointer]:
+        - img [ref=e22]
+      - link "Webmail" [ref=e25] [cursor=pointer]:
+        - /url: https://cahilt.com:2096/login?user=ivan.ruiz@cahilt.com&pass=8IJTfVQs5Bo5
+        - img [ref=e26]
+      - button "Menú del usuario" [ref=e30] [cursor=pointer]:
+        - img "Avatar of Ivan Ruiz Delfin" [ref=e31]
+  - generic [ref=e32]:
+    - complementary [ref=e33]:
+      - link "Logo" [ref=e111] [cursor=pointer]:
+        - /url: http://cahilt.localhost:8000/admin
+        - img "Logo" [ref=e113]
+      - navigation [ref=e36]:
+        - list [ref=e37]:
+          - listitem [ref=e38]:
+            - list [ref=e39]:
+              - listitem [ref=e40]:
+                - link "Escritorio" [ref=e114] [cursor=pointer]:
+                  - /url: http://cahilt.localhost:8000/admin
+                  - img [ref=e42]
+                  - generic [ref=e115]: Escritorio
+          - listitem [ref=e44]:
+            - generic [ref=e116] [cursor=pointer]:
+              - generic [ref=e117]: Mis Aplicaciones
+              - button "Mis Aplicaciones" [expanded] [ref=e118]:
+                - img [ref=e119]
+            - list [ref=e45]:
+              - listitem [ref=e46]:
+                - link "Webmail" [ref=e121] [cursor=pointer]:
+                  - /url: http://cahilt.localhost:8000/admin/webmail
+                  - img [ref=e48]
+                  - generic [ref=e122]: Webmail
+              - listitem [ref=e50]:
+                - link "Gestor de Archivos 1" [ref=e123] [cursor=pointer]:
+                  - /url: http://cahilt.localhost:8000/admin/file-manager
+                  - img [ref=e52]
+                  - generic [ref=e124]: Gestor de Archivos
+                  - generic [ref=e128]: "1"
+    - main [ref=e55]:
+      - generic [ref=e57]:
+        - heading "Escritorio" [level=1] [ref=e60]
+        - generic [ref=e67]:
+          - generic [ref=e73]:
+            - heading "Estado de felicidad de la organización (hoy)" [level=2] [ref=e75]
+            - generic [ref=e76]:
+              - generic [ref=e77]:
+                - generic [ref=e78]: Nivel 5/5
+                - generic [ref=e79]: Respuestas 1
+              - generic [ref=e80]:
+                - generic [ref=e81]:
+                  - generic [ref=e82]: 😭
+                  - generic [ref=e83]: 0%
+                - generic [ref=e84]:
+                  - generic [ref=e85]: 🙁
+                  - generic [ref=e86]: 0%
+                - generic [ref=e87]:
+                  - generic [ref=e88]: 😐
+                  - generic [ref=e89]: 0%
+                - generic [ref=e90]:
+                  - generic [ref=e91]: 🙂
+                  - generic [ref=e92]: 0%
+                - generic [ref=e93]:
+                  - generic [ref=e94]: 😄
+                  - generic [ref=e95]: 100%
+          - generic [ref=e101]:
+            - heading "Mensaje del día" [level=2] [ref=e103]
+            - generic [ref=e105]: "\"¡Qué alegría saber que te sientes tan feliz hoy! 🌟 Tu energía positiva contagia a todos. Sigue brillando y disfrutando de cada momento. ¡Vamos por más días llenos de sonrisas! 😊✨\""
+  - generic:
+    - status
