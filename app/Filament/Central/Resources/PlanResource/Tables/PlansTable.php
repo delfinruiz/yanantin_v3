@@ -25,7 +25,7 @@ class PlansTable
 
                 TextColumn::make('max_users')
                     ->label('Max. usuarios')
-                    ->formatStateUsing(fn ($state) => $state ?? 'Ilimitado')
+                    ->formatStateUsing(fn ($state) => $state ?: 'Ilimitado')
                     ->badge()
                     ->color(fn ($state) => $state ? 'warning' : 'success'),
 
