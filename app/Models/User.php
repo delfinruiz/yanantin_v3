@@ -75,4 +75,9 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, MustVerif
     {
         return $this->belongsTo(Department::class);
     }
+
+    public function emailAccount()
+    {
+        return $this->hasOne(EmailAccount::class, 'user_id');
+    }
 }

@@ -36,7 +36,7 @@ class CompanyHappiness extends Page implements HasTable
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-face-smile';
 
-    protected static string|UnitEnum|null $navigationGroup = 'Talento Humano';
+    protected static string|UnitEnum|null $navigationGroup = 'Recursos Humanos';
 
     protected static ?string $slug = 'hr/company-happiness';
 

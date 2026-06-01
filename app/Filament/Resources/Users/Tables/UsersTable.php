@@ -5,8 +5,10 @@ namespace App\Filament\Resources\Users\Tables;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Notifications\Notification;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Support\Collection;
 
 class UsersTable
 {
@@ -54,7 +56,20 @@ class UsersTable
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                    DeleteBulkAction::make()
+                        ->action(function (Collection $records) {
+                            $superAdmins = $records->filter(fn ($r) => $r->hasRole('super_admin'));
+
+                            if ($superAdmins->isNotEmpty()) {
+                                Notification::make()
+                                    ->warning()
+                                    ->title('Usuarios super_admin omitidos')
+                                    ->body('Los usuarios super_admin no pueden ser eliminados.')
+                                    ->send();
+                            }
+
+                            $records->reject(fn ($r) => $r->hasRole('super_admin'))->each->delete();
+                        }),
                 ]),
             ]);
     }

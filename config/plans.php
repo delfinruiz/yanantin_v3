@@ -36,6 +36,10 @@ return [
             'label' => 'Gestor de Archivos',
             'entities' => ['FileManager'],
         ],
+        'email' => [
+            'label' => 'Cuentas de Correo',
+            'entities' => ['EmailAccount'],
+        ],
     ],
 
     'default' => 'free',
@@ -43,22 +47,22 @@ return [
     'plans' => [
         'free' => [
             'name' => 'Gratuito',
-            'features' => ['products', 'felicidad-organizacional', 'file_manager'],
+            'features' => ['products', 'felicidad-organizacional', 'file_manager', 'email'],
             'max_users' => null,
         ],
         'basic' => [
             'name' => 'Basico',
-            'features' => ['products', 'users', 'felicidad-organizacional', 'file_manager'],
+            'features' => ['products', 'users', 'felicidad-organizacional', 'file_manager', 'email'],
             'max_users' => null,
         ],
         'pro' => [
             'name' => 'Profesional',
-            'features' => ['products', 'users', 'roles', 'felicidad-organizacional', 'file_manager'],
+            'features' => ['products', 'users', 'roles', 'felicidad-organizacional', 'file_manager', 'email'],
             'max_users' => null,
         ],
         'enterprise' => [
             'name' => 'Enterprise',
-            'features' => ['products', 'users', 'roles', 'departments', 'felicidad-organizacional', 'file_manager'],
+            'features' => ['products', 'users', 'roles', 'departments', 'felicidad-organizacional', 'file_manager', 'email'],
             'max_users' => null,
         ],
     ],

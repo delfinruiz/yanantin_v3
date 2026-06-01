@@ -9,7 +9,10 @@ use App\Filament\Pages\Auth\TenantRequestPasswordReset;
 use App\Filament\Pages\Dashboard;
 use App\Filament\Pages\EditProfilePage;
 use App\Filament\Pages\ManageSettings;
+use App\Filament\Pages\Webmail;
 use App\Http\Middleware\CheckSubscriptionStatus;
+use App\Models\EmailAccount;
+use App\Services\ImapService;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Filament\Actions\Action;
 use Filament\Enums\UserMenuPosition;
@@ -18,6 +21,7 @@ use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Navigation\MenuItem;
+use Filament\Navigation\NavigationItem;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
@@ -28,6 +32,7 @@ use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
@@ -81,6 +86,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->plugins([
                 FilamentShieldPlugin::make()
+                    ->navigationGroup('Configuracion')
                     ->scopeToTenant(false),
             ])
             ->userMenuItems([
@@ -98,6 +104,30 @@ class AdminPanelProvider extends PanelProvider
                         return redirect('/');
                     }),
             ])
+            ->navigationItems([
+                NavigationItem::make('Webmail')
+                    ->group('Mis Aplicaciones')
+                    ->icon('heroicon-o-envelope')
+                    ->badge(function () {
+                        $user = Auth::user();
+                        if (! $user) {
+                            return null;
+                        }
+                        $account = EmailAccount::where('user_id', $user->id)->first();
+                        if (! $account) {
+                            return null;
+                        }
+                        try {
+                            $count = app(ImapService::class)->unreadCount($account);
+
+                            return $count > 0 ? (string) $count : null;
+                        } catch (\Throwable) {
+                            return null;
+                        }
+                    }, 'danger')
+                    ->url(fn (): string => Webmail::getUrl(), shouldOpenInNewTab: true)
+                    ->visible(fn (): bool => Webmail::canAccess()),
+            ])
             ->userMenu(position: UserMenuPosition::Topbar)
             ->sidebarCollapsibleOnDesktop()
             ->databaseNotifications()
@@ -105,6 +135,10 @@ class AdminPanelProvider extends PanelProvider
             ->renderHook(
                 PanelsRenderHook::BODY_END,
                 fn (): string => tenant()?->hasEntity('MoodPromptOverlay') ? Blade::render('@livewire(\'mood-prompt-overlay\')') : '',
+            )
+            ->renderHook(
+                PanelsRenderHook::USER_MENU_BEFORE,
+                fn (): string => tenant()?->hasEntity('EmailAccount') ? Blade::render('@livewire(\'webmail.webmail-badge-poll\')') : '',
             );
     }
 }
