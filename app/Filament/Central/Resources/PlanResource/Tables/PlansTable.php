@@ -25,9 +25,9 @@ class PlansTable
 
                 TextColumn::make('max_users')
                     ->label('Max. usuarios')
-                    ->formatStateUsing(fn ($state) => $state ?: 'Ilimitado')
+                    ->state(fn (Plan $record): string => $record->max_users ? (string) $record->max_users : 'Ilimitado')
                     ->badge()
-                    ->color(fn ($state) => $state ? 'warning' : 'success'),
+                    ->color(fn (Plan $record): string => $record->max_users ? 'warning' : 'success'),
 
                 ToggleColumn::make('is_active')
                     ->label('Activo'),
