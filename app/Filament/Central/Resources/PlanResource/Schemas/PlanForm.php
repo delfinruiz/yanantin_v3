@@ -46,8 +46,8 @@ class PlanForm
                         TextInput::make('max_users')
                             ->label('Max. usuarios')
                             ->numeric()
-                            ->minValue(1)
-                            ->helperText('Limite total de usuarios (internos + publicos) del tenant. Vacio = ilimitado.'),
+                            ->nullable()
+                            ->helperText('Limite total de usuarios del tenant. Vacio = ilimitado.'),
                     ])
                     ->columnSpan(1),
 
