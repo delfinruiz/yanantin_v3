@@ -11,8 +11,6 @@ use App\Filament\Pages\EditProfilePage;
 use App\Filament\Pages\ManageSettings;
 use App\Filament\Pages\Webmail;
 use App\Http\Middleware\CheckSubscriptionStatus;
-use App\Models\EmailAccount;
-use App\Services\ImapService;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Filament\Actions\Action;
 use Filament\Enums\UserMenuPosition;
@@ -32,9 +30,7 @@ use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\HtmlString;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Stancl\Tenancy\Middleware\InitializeTenancyBySubdomain;
@@ -109,29 +105,6 @@ class AdminPanelProvider extends PanelProvider
                 NavigationItem::make('Webmail')
                     ->group('Mis Aplicaciones')
                     ->icon('heroicon-o-envelope')
-                    ->badge(function () {
-                        $user = Auth::user();
-                        if (! $user) {
-                            return null;
-                        }
-                        $account = EmailAccount::where('user_id', $user->id)->first();
-                        if (! $account) {
-                            return null;
-                        }
-                        try {
-                            $count = app(ImapService::class)->unreadCount($account);
-
-                            return $count > 0 ? (string) $count : null;
-                        } catch (\Throwable $e) {
-                            Log::warning('Badge sidebar: '.$e->getMessage(), [
-                                'user' => $user->email,
-                                'file' => $e->getFile(),
-                                'line' => $e->getLine(),
-                            ]);
-
-                            return null;
-                        }
-                    }, 'danger')
                     ->url(fn (): string => Webmail::getUrl(), shouldOpenInNewTab: true)
                     ->visible(fn (): bool => Webmail::canAccess()),
             ])
