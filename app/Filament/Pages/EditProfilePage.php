@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages;
 
+use App\Services\CPanelEmailService;
 use Carbon\Carbon;
 use Filament\Actions\Action;
 use Filament\Facades\Filament;
@@ -10,9 +11,11 @@ use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Jenssegers\Agent\Agent;
 
 class EditProfilePage extends Page
@@ -90,7 +93,19 @@ class EditProfilePage extends Page
                             ->password()
                             ->revealable()
                             ->nullable()
-                            ->same('passwordConfirmation'),
+                            ->minLength(12)
+                            ->same('passwordConfirmation')
+                            ->helperText('Debe tener al menos 12 caracteres, incluyendo mayúsculas, minúsculas y números.')
+                            ->suffixAction(
+                                Action::make('generatePassword')
+                                    ->icon('heroicon-o-key')
+                                    ->label('Generar')
+                                    ->action(function (Set $set) {
+                                        $password = Str::password(12, true, true, false, false);
+                                        $set('password', $password);
+                                        $set('passwordConfirmation', $password);
+                                    })
+                            ),
                         TextInput::make('passwordConfirmation')
                             ->label('Confirmar nueva contraseña')
                             ->password()
@@ -152,6 +167,37 @@ class EditProfilePage extends Page
                 ]);
 
                 return;
+            }
+
+            $emailAccount = $user->emailAccount;
+
+            if ($emailAccount) {
+                try {
+                    app(CPanelEmailService::class)->changePassword(
+                        $emailAccount->email,
+                        $data['password']
+                    );
+
+                    $emailAccount->update([
+                        'password' => Hash::make($data['password']),
+                        'encrypted_password' => $data['password'],
+                    ]);
+                } catch (\Exception $e) {
+                    Notification::make()
+                        ->title('Error al cambiar la contraseña de la cuenta de correo')
+                        ->body($e->getMessage())
+                        ->danger()
+                        ->send();
+
+                    $this->form->fill([
+                        ...$data,
+                        'current_password' => null,
+                        'password' => null,
+                        'passwordConfirmation' => null,
+                    ]);
+
+                    return;
+                }
             }
 
             $user->password = Hash::make($data['password']);
