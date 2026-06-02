@@ -5,6 +5,7 @@ namespace App\Livewire\Webmail;
 use App\Models\EmailAccount;
 use App\Services\ImapService;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
 class WebmailBadgePoll extends Component
@@ -46,6 +47,11 @@ class WebmailBadgePoll extends Component
             $count = app(ImapService::class)->unreadCount($account);
             $this->badgeContent = $count > 0 ? (string) $count : null;
         } catch (\Throwable $e) {
+            Log::warning('Badge Livewire: '.$e->getMessage(), [
+                'user' => $user->email,
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+            ]);
             $this->badgeContent = null;
         }
 

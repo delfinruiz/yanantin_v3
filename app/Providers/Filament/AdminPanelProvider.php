@@ -34,6 +34,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\HtmlString;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Stancl\Tenancy\Middleware\InitializeTenancyBySubdomain;
@@ -121,7 +122,13 @@ class AdminPanelProvider extends PanelProvider
                             $count = app(ImapService::class)->unreadCount($account);
 
                             return $count > 0 ? (string) $count : null;
-                        } catch (\Throwable) {
+                        } catch (\Throwable $e) {
+                            Log::warning('Badge sidebar: '.$e->getMessage(), [
+                                'user' => $user->email,
+                                'file' => $e->getFile(),
+                                'line' => $e->getLine(),
+                            ]);
+
                             return null;
                         }
                     }, 'danger')
