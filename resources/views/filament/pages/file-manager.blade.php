@@ -34,7 +34,7 @@
             $dispatch('open-modal', { id: 'ack-confirm' });
         "
         x-cloak>
-        <x-filament::modal id="ack-confirm" width="md" icon="heroicon-o-check-badge" :close-by-clicking-away="false" :close-by-escaping="false">
+        <x-filament::modal id="ack-confirm" width="lg" icon="heroicon-o-check-badge" :close-by-clicking-away="false" :close-by-escaping="false">
             <x-slot name="heading">
                 {{ __('FileManager_Ack_Required') }}
             </x-slot>
@@ -51,6 +51,9 @@
                         placeholder="{{ __('FileManager_Ack_Code') }}" />
                 </x-filament::input.wrapper>
                 <div class="flex justify-end gap-3 md:gap-4">
+                    <x-filament::button color="gray" x-on:click="$wire.resendAckCode()">
+                        {{ __('FileManager_Resend_Code') }}
+                    </x-filament::button>
                     <x-filament::button color="gray" x-on:click="$dispatch('close-modal', { id: 'ack-confirm' })">
                         {{ __('filament-panels::resources/pages/edit-record.form.actions.cancel.label') }}
                     </x-filament::button>

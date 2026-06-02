@@ -984,5 +984,7 @@
     "FileManager_Preview_Not_Available": "Vista previa no disponible",
     "FileManager_Code_Invalid_Or_Expired": "Codigo invalido o expirado",
     "FileManager_Invalid_Access": "Acceso invalido",
-    "FileManager_Permission_Removed": "Permiso eliminado"
+    "FileManager_Permission_Removed": "Permiso eliminado",
+    "FileManager_Resend_Code": "Reenviar codigo",
+    "FileManager_Code_Resent": "Codigo reenviado exitosamente"
 }

@@ -1662,6 +1662,44 @@ class FileManager extends Page implements HasTable
             ->send();
     }
 
+    public function resendAckCode(): void
+    {
+        if (! $this->currentFileItemId) {
+            return;
+        }
+
+        $pivot = FileItemShare::where('file_item_id', $this->currentFileItemId)
+            ->where('user_id', Auth::id())
+            ->first();
+
+        if (! $pivot || ! ($pivot->requires_ack ?? false) || $pivot->ack_completed_at) {
+            return;
+        }
+
+        $code = $this->generateAckCode();
+        $pivot->update([
+            'ack_code' => $code,
+            'ack_code_expires_at' => now()->addDays(7),
+        ]);
+
+        $file = FileItem::find($this->currentFileItemId);
+        if ($file) {
+            Mail::to(Auth::user())->send(
+                new FileShareAckCodeMail(
+                    file: $file,
+                    code: $code,
+                    expiresAt: now()->addDays(7),
+                    senderName: $file->user->name,
+                )
+            );
+        }
+
+        Notification::make()
+            ->title(__('FileManager_Code_Resent'))
+            ->success()
+            ->send();
+    }
+
     private function generateAckCode(int $length = 6): string
     {
         $length = max(4, min(12, $length));
