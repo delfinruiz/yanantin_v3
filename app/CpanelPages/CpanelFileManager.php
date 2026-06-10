@@ -376,12 +376,14 @@ class CpanelFileManager extends Page implements HasTable
 
         return $table
             ->records(function () use ($service, $dir, $isSharedRoot): Collection {
-                if ($this->getTableSearch()) {
-                    if ($isSharedRoot) {
-                        return $this->getSharedWithMeFiles();
-                    }
+                $search = $this->getTableSearch();
 
-                    return $this->listAllFilesRecursive($service, $this->userDir);
+                if ($search) {
+                    $results = $isSharedRoot
+                        ? $this->getSharedWithMeFiles()
+                        : $this->listAllFilesRecursive($service, $this->userDir);
+
+                    return $results->filter(fn (array $item): bool => stripos($item['file'] ?? '', $search) !== false);
                 }
 
                 if ($isSharedRoot) {
