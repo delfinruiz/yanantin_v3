@@ -389,7 +389,7 @@ class OnlyOfficeController extends Controller
         }
 
         $tenantId = tenant()->id;
-        $docKey = md5('cpanel_public_'.$link->id);
+        $docKey = md5($tenantId.rtrim($link->path, '/').'/'.$link->name);
         $cpanelDir = storage_path("app/tenants/{$tenantId}/onlyoffice/cpanel");
 
         if (! is_dir($cpanelDir)) {

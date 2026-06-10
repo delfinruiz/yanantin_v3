@@ -512,7 +512,7 @@ class CpanelFileManager extends Page implements HasTable
                         }
 
                         $tenantId = tenant()->id;
-                        $docKey = md5($tenantId.$dir.$name);
+                        $docKey = md5($tenantId.rtrim($dir, '/').'/'.$name);
                         $cpanelDir = storage_path("app/tenants/{$tenantId}/onlyoffice/cpanel");
 
                         if (! is_dir($cpanelDir)) {
@@ -729,7 +729,7 @@ class CpanelFileManager extends Page implements HasTable
                                 : $this->currentDiskDir();
 
                             $tenantId = tenant()->id;
-                            $docKey = md5($tenantId.$dir.$name);
+                            $docKey = md5($tenantId.rtrim($dir, '/').'/'.$name);
                             $cpanelDir = storage_path("app/tenants/{$tenantId}/onlyoffice/cpanel");
 
                             if (! is_dir($cpanelDir)) {
@@ -1536,7 +1536,7 @@ class CpanelFileManager extends Page implements HasTable
             $service = $this->getService();
 
             $tenantId = tenant()->id;
-            $docKey = md5($tenantId.$dir.$name);
+            $docKey = md5($tenantId.rtrim($dir, '/').'/'.$name);
             $cpanelDir = storage_path("app/tenants/{$tenantId}/onlyoffice/cpanel");
 
             if (! is_dir($cpanelDir)) {
