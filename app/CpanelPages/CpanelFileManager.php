@@ -1039,6 +1039,11 @@ class CpanelFileManager extends Page implements HasTable
                                             ->label('Enlace')
                                             ->columnSpanFull()
                                             ->readOnly()
+                                            ->afterStateHydrated(function ($state, $set, $get): void {
+                                                if (empty($state) && $token = $get('token')) {
+                                                    $set('url', route('public.cpanel.share', $token));
+                                                }
+                                            })
                                             ->copyable(copyMessage: 'Enlace copiado', copyMessageDuration: 2000),
                                     ]),
                             ];
