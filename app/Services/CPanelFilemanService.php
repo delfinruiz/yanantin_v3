@@ -142,7 +142,7 @@ class CPanelFilemanService
                 $body = $response->body();
                 $contentType = $response->header('Content-Type') ?? '';
 
-                if ($body !== '' && ! str_starts_with($contentType, 'text/html')) {
+                if (! str_starts_with($contentType, 'text/html')) {
                     return $body;
                 }
 
