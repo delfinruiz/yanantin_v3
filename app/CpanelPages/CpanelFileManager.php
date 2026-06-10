@@ -1039,9 +1039,7 @@ class CpanelFileManager extends Page implements HasTable
                                             ->label('Enlace')
                                             ->columnSpanFull()
                                             ->readOnly()
-                                            ->copyable()
-                                            ->copyMessage('Enlace copiado')
-                                            ->copyMessageDuration(2000),
+                                            ->copyable(copyMessage: 'Enlace copiado', copyMessageDuration: 2000),
                                     ]),
                             ];
                         })
