@@ -277,7 +277,9 @@ class OnlyOfficeCallbackController extends Controller
 
         try {
             $service = app(CPanelFilemanService::class);
-            $service->saveFileContent($meta['dir'], $meta['name'], $fileContent);
+
+            $service->deleteFile($meta['dir'], $meta['name']);
+            $service->uploadFile($meta['dir'], $meta['name'], $fileContent);
 
             Log::channel('daily')->info('[OnlyOffice callback cPanel] Archivo subido a cPanel', [
                 'dir' => $meta['dir'],

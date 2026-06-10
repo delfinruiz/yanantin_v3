@@ -166,36 +166,11 @@ class CPanelFilemanService
 
     public function saveFileContent(string $dir, string $file, string $content): void
     {
-        $response = Http::withHeaders($this->headers())
-            ->asForm()
-            ->post($this->uapiUrl().'/Fileman/save_file_content', [
-                'dir' => $dir,
-                'file' => $file,
-                'content' => base64_encode($content),
-            ]);
-
-        $json = method_exists($response, 'json') ? $response->json() : [];
-
-        $resultNode = $json['result'] ?? null;
-        $status = $resultNode['status'] ?? $json['status'] ?? null;
-        $errors = $resultNode['errors'] ?? $json['errors'] ?? null;
-        $errorsList = [];
-
-        if (is_string($errors) && trim($errors) !== '') {
-            $errorsList[] = trim($errors);
-        } elseif (is_array($errors)) {
-            foreach ($errors as $e) {
-                if (is_string($e) && trim($e) !== '') {
-                    $errorsList[] = trim($e);
-                }
-            }
-        }
-
-        if (! empty($errorsList) || $status === 0) {
-            $message = ! empty($errorsList) ? implode('; ', $errorsList) : 'La API devolvió status=0';
-
-            throw new \Exception('Error UAPI cPanel: '.$message);
-        }
+        $this->uapi('Fileman', 'save_file_content', [
+            'dir' => $dir,
+            'file' => $file,
+            'content' => $content,
+        ]);
     }
 
     public function uploadFile(string $dir, string $name, string $content): void
