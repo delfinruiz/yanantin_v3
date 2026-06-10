@@ -256,6 +256,15 @@ class CPanelFilemanService
         }
     }
 
+    public function moveCpanelFile(string $sourceDir, string $sourceName, string $destDir): void
+    {
+        $this->call('Fileman', 'fileop', [
+            'op' => 'move',
+            'sourcefiles' => $sourceDir.'/'.$sourceName,
+            'destfiles' => $destDir.'/'.$sourceName,
+        ]);
+    }
+
     public function directoryExists(string $dir): bool
     {
         try {

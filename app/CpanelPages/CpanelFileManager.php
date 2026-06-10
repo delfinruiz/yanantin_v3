@@ -11,6 +11,7 @@ use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 use Carbon\Carbon;
 use Filament\Actions\Action;
 use Filament\Actions\ActionGroup;
+use Filament\Actions\BulkAction;
 use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Forms\Components\FileUpload;
@@ -1042,6 +1043,75 @@ class CpanelFileManager extends Page implements HasTable
                         }
 
                         return response()->download($zipPath)->deleteFileAfterSend(true);
+                    }),
+
+                BulkAction::make('move')
+                    ->label('Mover')
+                    ->icon('heroicon-o-arrows-right-left')
+                    ->color('warning')
+                    ->modalHeading('Mover seleccionados')
+                    ->requiresConfirmation()
+                    ->visible(fn () => ! $isSharedRoot)
+                    ->schema([
+                        TextInput::make('targetPath')
+                            ->label('Ruta destino')
+                            ->placeholder('/subcarpeta')
+                            ->default(fn () => $this->currentPath)
+                            ->helperText('Ruta desde la raíz. Ej: /documentos/2025')
+                            ->required(),
+                    ])
+                    ->action(function (array $data, Collection $records) use ($service) {
+                        $target = $data['targetPath'];
+                        $target = '/'.trim($target, '/');
+
+                        if ($target !== '/') {
+                            $target .= '/';
+                        }
+
+                        $target = preg_replace('#/+#', '/', $target);
+
+                        if ($target === $this->normalizePath($this->currentPath)) {
+                            Notification::make()
+                                ->title('Mismo destino')
+                                ->body('La ruta destino es la misma que la actual.')
+                                ->warning()
+                                ->send();
+
+                            return;
+                        }
+
+                        $sourceDir = $this->currentDiskDir();
+                        $destDir = $this->userDir.$target;
+                        $destDir = rtrim($destDir, '/');
+
+                        $moved = 0;
+                        $skipped = 0;
+
+                        foreach ($records as $record) {
+                            $name = $record['file'] ?? '';
+                            $type = $record['type'] ?? '';
+
+                            if ($name === '' || $name === self::SHARED_PATH) {
+                                $skipped++;
+
+                                continue;
+                            }
+
+                            try {
+                                $service->moveCpanelFile($sourceDir, $name, $destDir);
+                                $moved++;
+                            } catch (\Exception) {
+                                $skipped++;
+                            }
+                        }
+
+                        $this->resetTable();
+
+                        Notification::make()
+                            ->title('Movidos')
+                            ->body("{$moved} movido(s), {$skipped} omitido(s)")
+                            ->success()
+                            ->send();
                     }),
             ]);
     }
