@@ -118,16 +118,16 @@ class CPanelFilemanService
         $path = rtrim($dir, '/').'/'.ltrim($file, '/');
 
         $endpoints = [
-            'webdav_2078' => "https://{$this->host}:2078",
-            'webdav_2077' => "http://{$this->host}:2077",
-            'cpanel_2083' => "https://{$this->host}:2083",
+            'webdav_2078' => "https://{$this->host}:2078{$path}",
+            'webdav_2077' => "http://{$this->host}:2077{$path}",
+            'cpanel_2083' => "https://{$this->host}:2083{$path}",
         ];
 
-        foreach ($endpoints as $method => $baseUrl) {
+        foreach ($endpoints as $method => $url) {
             try {
                 $response = Http::withBasicAuth($this->username, $this->password)
                     ->timeout(120)
-                    ->get($baseUrl.'/'.implode('/', array_map('rawurlencode', explode('/', trim($path, '/')))));
+                    ->get($url);
             } catch (\Exception $e) {
                 logger()->info('getFileContent: connection failed', [
                     'method' => $method,
@@ -142,7 +142,7 @@ class CPanelFilemanService
                 $body = $response->body();
                 $contentType = $response->header('Content-Type') ?? '';
 
-                if (! str_starts_with($contentType, 'text/html')) {
+                if ($body !== '' && ! str_starts_with($contentType, 'text/html')) {
                     return $body;
                 }
 
