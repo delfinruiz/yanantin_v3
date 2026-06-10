@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CpanelFileShare;
 use App\Models\FileItem;
 use App\Models\FileShareLink;
 use Illuminate\Http\Request;
@@ -282,6 +283,28 @@ class OnlyOfficeController extends Controller
 
         $meta = json_decode(file_get_contents($metaPath), true);
         $name = $meta['name'];
+        $ownerId = $meta['owner_id'] ?? null;
+        $userId = Auth::id();
+
+        if ($ownerId === null || $ownerId === $userId) {
+            $isEditable = true;
+        } else {
+            $share = CpanelFileShare::where('tenant_id', $tenantId)
+                ->where('owner_id', $ownerId)
+                ->where('user_id', $userId)
+                ->where('name', $name)
+                ->first();
+
+            if (! $share) {
+                abort(403);
+            }
+
+            if ($share->requires_ack && ! $share->ack_completed_at) {
+                abort(403, 'Debes confirmar la recepcion antes de abrir el archivo.');
+            }
+
+            $isEditable = $share->permission === 'edit';
+        }
 
         $this->registerKeyMap($docKey, "cpanel://{$docKey}", $tenantId);
 
@@ -294,10 +317,10 @@ class OnlyOfficeController extends Controller
                 'title' => $name,
                 'url' => $downloadUrl,
                 'permissions' => [
-                    'edit' => true,
+                    'edit' => $isEditable,
                     'download' => true,
                     'print' => true,
-                    'review' => true,
+                    'review' => $isEditable,
                 ],
             ],
             'editorConfig' => [
@@ -305,9 +328,9 @@ class OnlyOfficeController extends Controller
                 'lang' => 'es',
                 'locale' => 'es',
                 'region' => 'es-ES',
-                'mode' => 'edit',
+                'mode' => $isEditable ? 'edit' : 'view',
                 'user' => [
-                    'id' => (string) Auth::id(),
+                    'id' => (string) $userId,
                     'name' => Auth::user()->name,
                 ],
             ],

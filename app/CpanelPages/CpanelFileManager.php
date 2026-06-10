@@ -523,6 +523,7 @@ class CpanelFileManager extends Page implements HasTable
                         file_put_contents("{$cpanelDir}/{$docKey}.meta.json", json_encode([
                             'dir' => $dir,
                             'name' => $name,
+                            'owner_id' => $record['owner_id'] ?? Auth::id(),
                         ]));
 
                         if ($content === null) {
@@ -728,6 +729,7 @@ class CpanelFileManager extends Page implements HasTable
                             file_put_contents("{$cpanelDir}/{$docKey}.meta.json", json_encode([
                                 'dir' => $dir,
                                 'name' => $name,
+                                'owner_id' => Auth::id(),
                             ]));
 
                             try {
@@ -1342,6 +1344,7 @@ class CpanelFileManager extends Page implements HasTable
             file_put_contents("{$cpanelDir}/{$docKey}.meta.json", json_encode([
                 'dir' => $dir,
                 'name' => $name,
+                'owner_id' => $record['owner_id'] ?? Auth::id(),
             ]));
 
             if ($content === null) {
