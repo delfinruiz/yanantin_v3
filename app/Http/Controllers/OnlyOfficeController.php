@@ -306,7 +306,7 @@ class OnlyOfficeController extends Controller
             $isEditable = $share->permission === 'edit';
         }
 
-        $this->registerKeyMap($docKey, "cpanel://{$docKey}", $tenantId);
+        $this->registerKeyMap($docKey, "cpanel:{$docKey}", $tenantId);
 
         $downloadUrl = route('onlyoffice.cpanel.download', ['docKey' => $docKey]);
 

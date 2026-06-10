@@ -101,9 +101,9 @@ class OnlyOfficeCallbackController extends Controller
 
         $relativePath = ltrim(str_replace('//', '/', $keyMap[$documentKey]), '/');
 
-        if (str_starts_with($relativePath, 'cpanel://')) {
+        if (str_starts_with($relativePath, 'cpanel:')) {
             return $this->handleCpanelCallback(
-                substr($relativePath, 8),
+                substr($relativePath, 7),
                 $fileUrl,
                 $tenantId,
             );
