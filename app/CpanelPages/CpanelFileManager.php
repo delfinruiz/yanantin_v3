@@ -961,6 +961,7 @@ class CpanelFileManager extends Page implements HasTable
                         ->icon('heroicon-o-link')
                         ->color('success')
                         ->modalHeading('Gestionar enlaces públicos')
+                        ->modalSubmitActionLabel('Guardar')
                         ->visible(function (?array $record) use ($isSharedRoot): bool {
                             if ($isSharedRoot) {
                                 return false;
@@ -979,6 +980,12 @@ class CpanelFileManager extends Page implements HasTable
                                 ->where('path', $path)
                                 ->where('name', $record['file'] ?? '')
                                 ->get()
+                                ->map(function (CpanelFileShareLink $link): array {
+                                    $data = $link->toArray();
+                                    $data['url'] = route('public.cpanel.share', $link->token);
+
+                                    return $data;
+                                })
                                 ->toArray();
 
                             $form->fill([
@@ -1032,26 +1039,9 @@ class CpanelFileManager extends Page implements HasTable
                                             ->label('Enlace')
                                             ->columnSpanFull()
                                             ->readOnly()
-                                            ->formatStateUsing(fn ($get) => route('public.cpanel.share', $get('token')))
-                                            ->suffixAction(
-                                                Action::make('copy')
-                                                    ->icon('heroicon-o-clipboard')
-                                                    ->label('Copiar')
-                                                    ->action(fn () => null)
-                                                    ->extraAttributes(fn ($get) => [
-                                                        'x-on:click.prevent.stop' => "
-                                                            const u = '".route('public.cpanel.share', $get('token'))."';
-                                                            const ta = document.createElement('textarea');
-                                                            ta.value = u;
-                                                            ta.style.position = 'fixed';
-                                                            ta.style.left = '-9999px';
-                                                            document.body.appendChild(ta);
-                                                            ta.select();
-                                                            document.execCommand('copy');
-                                                            document.body.removeChild(ta);
-                                                        ",
-                                                    ]),
-                                            ),
+                                            ->copyable()
+                                            ->copyMessage('Enlace copiado')
+                                            ->copyMessageDuration(2000),
                                     ]),
                             ];
                         })
