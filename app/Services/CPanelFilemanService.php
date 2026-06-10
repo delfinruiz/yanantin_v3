@@ -167,11 +167,11 @@ class CPanelFilemanService
     public function saveFileContent(string $dir, string $file, string $content): void
     {
         $response = Http::withHeaders($this->headers())
-            ->asForm()
+            ->asMultipart()
             ->post($this->uapiUrl().'/Fileman/save_file_content', [
-                'dir' => $dir,
-                'file' => $file,
-                'content' => $content,
+                ['name' => 'dir', 'contents' => $dir],
+                ['name' => 'file', 'contents' => $file],
+                ['name' => 'content', 'contents' => $content],
             ]);
 
         $json = method_exists($response, 'json') ? $response->json() : [];
