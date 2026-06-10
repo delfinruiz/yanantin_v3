@@ -22,9 +22,9 @@ use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
+use Filament\Schemas\Schema;
 use Filament\Support\Enums\IconSize;
 use Filament\Support\Enums\Size;
 use Filament\Support\Enums\Width;
@@ -971,7 +971,7 @@ class CpanelFileManager extends Page implements HasTable
                             return $type !== 'dir'
                                 && ($record['file'] ?? '') !== self::SHARED_PATH;
                         })
-                        ->mountUsing(function (HasForms $form, array $record): void {
+                        ->mountUsing(function (Schema $form, array $record): void {
                             $path = rtrim($this->currentDiskDir(), '/');
 
                             $links = CpanelFileShareLink::where('tenant_id', tenant()->id)
