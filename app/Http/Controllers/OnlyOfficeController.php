@@ -389,14 +389,31 @@ class OnlyOfficeController extends Controller
         }
 
         $tenantId = tenant()->id;
-        $docKey = md5($tenantId.rtrim($link->path, '/').'/'.$link->name);
+
+        $service = app(CPanelFilemanService::class);
+
+        $mtime = 0;
+
+        try {
+            $files = $service->listFiles($link->path);
+
+            foreach ($files as $f) {
+                if (($f['file'] ?? '') === $link->name) {
+                    $mtime = (int) ($f['mtime'] ?? 0);
+
+                    break;
+                }
+            }
+        } catch (\Exception) {
+        }
+
+        $docKey = md5($tenantId.rtrim($link->path, '/').'/'.$link->name.$mtime);
         $cpanelDir = storage_path("app/tenants/{$tenantId}/onlyoffice/cpanel");
 
         if (! is_dir($cpanelDir)) {
             mkdir($cpanelDir, 0755, true);
         }
 
-        $service = app(CPanelFilemanService::class);
         $content = $service->getFileContent($link->path, $link->name);
 
         if ($content === null) {

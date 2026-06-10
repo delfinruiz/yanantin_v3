@@ -296,9 +296,6 @@ class OnlyOfficeCallbackController extends Controller
             return response()->json(['error' => 1]);
         }
 
-        @unlink($dataPath);
-        @unlink($metaPath);
-
         return response()->json(['error' => 0]);
     }
 }
