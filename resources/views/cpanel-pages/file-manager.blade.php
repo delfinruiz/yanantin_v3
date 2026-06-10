@@ -105,13 +105,12 @@
                             <textarea x-model="textContent"
                                 class="w-full h-96 border rounded-lg bg-gray-50 dark:bg-gray-900 p-4 font-mono text-sm resize-y focus:border-primary-500 focus:ring-1 focus:ring-primary-500"
                                 spellcheck="false"></textarea>
-                            <div class="flex justify-between items-center">
-                                <div x-show="savingText" class="flex items-center gap-2 text-sm text-gray-500">
+                            <div class="flex justify-end items-center gap-2 min-h-[36px]">
+                                <span x-show="savingText" x-cloak class="flex items-center gap-2 text-sm text-gray-500 mr-auto">
                                     <x-filament::loading-indicator class="w-4 h-4" />
                                     Guardando...
-                                </div>
-                                <div class="flex gap-2 ml-auto">
-                                    <x-filament::button
+                                </span>
+                                <x-filament::button
                                         color="primary"
                                         size="sm"
                                         x-on:click="saveTxt()"
@@ -128,7 +127,6 @@
                                         <x-heroicon-o-arrow-down-tray class="w-4 h-4" />
                                         Descargar
                                     </x-filament::button>
-                                </div>
                             </div>
                         </div>
                     </div>

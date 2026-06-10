@@ -783,7 +783,7 @@ class CpanelFileManager extends Page implements HasTable
 
                                 file_put_contents($tempPath, $content);
 
-                                return response()->download($tempPath)->deleteFileAfterSend(true);
+                                return response()->download($tempPath, $name)->deleteFileAfterSend(true);
                             } catch (\Exception $e) {
                                 Notification::make()
                                     ->title('Error al descargar')
