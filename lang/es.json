@@ -986,5 +986,13 @@
     "FileManager_Invalid_Access": "Acceso invalido",
     "FileManager_Permission_Removed": "Permiso eliminado",
     "FileManager_Resend_Code": "Reenviar codigo",
-    "FileManager_Code_Resent": "Codigo reenviado exitosamente"
+    "FileManager_Code_Resent": "Codigo reenviado exitosamente",
+
+    "CpanelFileManager_Mail_Subject_Ack": "Codigo de confirmacion para archivo compartido",
+    "CpanelFileManager_Mail_Header_Ack": "Te han compartido un archivo",
+    "CpanelFileManager_Mail_Text_Shared": ":sender te ha compartido el archivo \":file\".",
+    "CpanelFileManager_Mail_Text_Instructions": "Para acceder al archivo, necesitas el siguiente codigo de confirmacion:",
+    "CpanelFileManager_Mail_Text_Expires": "Este codigo expira el :date.",
+    "CpanelFileManager_Mail_Text_After_Confirm": "Despues de confirmar la recepcion, podras acceder al archivo.",
+    "CpanelFileManager_Mail_Text_Ignore": "Si no esperabas este archivo, ignora este mensaje."
 }

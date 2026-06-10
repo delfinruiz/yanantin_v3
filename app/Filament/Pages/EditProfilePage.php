@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Filament\Actions\Action;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
@@ -46,6 +47,7 @@ class EditProfilePage extends Page
             'name' => auth()->user()->name,
             'email' => auth()->user()->email,
             'avatar_url' => auth()->user()->avatar_url,
+            'currency' => auth()->user()->currency,
         ]);
 
         $this->sessions = $this->getSessions();
@@ -77,6 +79,36 @@ class EditProfilePage extends Page
                             ->maxLength(255)
                             ->readOnly(fn () => auth()->user()?->is_internal)
                             ->unique(ignoreRecord: true),
+                        Select::make('currency')
+                            ->label('Moneda')
+                            ->placeholder('Seleccionar moneda')
+                            ->options([
+                                'ARS' => 'ARS - Peso argentino',
+                                'BOB' => 'BOB - Boliviano',
+                                'BRL' => 'BRL - Real brasileño',
+                                'CAD' => 'CAD - Dólar canadiense',
+                                'CLP' => 'CLP - Peso chileno',
+                                'COP' => 'COP - Peso colombiano',
+                                'CRC' => 'CRC - Colón costarricense',
+                                'DOP' => 'DOP - Peso dominicano',
+                                'EUR' => 'EUR - Euro',
+                                'GBP' => 'GBP - Libra esterlina',
+                                'GTQ' => 'GTQ - Quetzal guatemalteco',
+                                'HNL' => 'HNL - Lempira hondureño',
+                                'MXN' => 'MXN - Peso mexicano',
+                                'NIO' => 'NIO - Córdoba nicaragüense',
+                                'NOK' => 'NOK - Corona noruega',
+                                'PAB' => 'PAB - Balboa panameño',
+                                'PEN' => 'PEN - Sol peruano',
+                                'PYG' => 'PYG - Guaraní paraguayo',
+                                'SEK' => 'SEK - Corona sueca',
+                                'CHF' => 'CHF - Franco suizo',
+                                'USD' => 'USD - Dólar estadounidense',
+                                'UYU' => 'UYU - Peso uruguayo',
+                                'VES' => 'VES - Bolívar venezolano',
+                            ])
+                            ->searchable()
+                            ->native(false),
                     ]),
 
                 Section::make('Actualizar contraseña')
@@ -213,12 +245,15 @@ class EditProfilePage extends Page
             $user->avatar_url = $data['avatar_url'];
         }
 
+        $user->currency = $data['currency'];
+
         $user->save();
 
         $this->form->fill([
             'name' => $user->name,
             'email' => $user->email,
             'avatar_url' => $user->avatar_url,
+            'currency' => $user->currency,
             'current_password' => null,
             'password' => null,
             'passwordConfirmation' => null,

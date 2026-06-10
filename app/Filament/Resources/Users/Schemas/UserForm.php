@@ -30,7 +30,7 @@ class UserForm
                     ->maxLength(255)
                     ->unique(ignoreRecord: true)
                     ->readonly(fn (Get $get): bool => $get('is_internal'))
-                    ->disabled(fn ($record): bool => $record?->hasRole('super_admin')),
+                    ->disabled(fn ($record): bool => (bool) $record?->hasRole('super_admin')),
 
                 Select::make('email_account_id')
                     ->label('Cuenta de correo')
@@ -48,7 +48,7 @@ class UserForm
                     ->live()
                     ->hidden(fn () => ! in_array('EmailAccount', tenant()->allowedEntities()))
                     ->visible(fn (Get $get): bool => $get('is_internal'))
-                    ->disabled(fn ($record): bool => $record?->hasRole('super_admin'))
+                    ->disabled(fn ($record): bool => (bool) $record?->hasRole('super_admin'))
                     ->helperText('Selecciona una cuenta de correo disponible. El email y la contrasena se asignaran automaticamente.')
                     ->afterStateUpdated(function ($state, Set $set) {
                         if ($state) {
@@ -93,14 +93,14 @@ class UserForm
                     ->multiple()
                     ->preload()
                     ->options(fn () => Role::where('guard_name', 'web')->pluck('name', 'id'))
-                    ->disabled(fn ($record): bool => $record?->hasRole('super_admin')),
+                    ->disabled(fn ($record): bool => (bool) $record?->hasRole('super_admin')),
 
                 Toggle::make('is_internal')
                     ->label('Usuario interno')
                     ->helperText('Los usuarios internos son parte de la organizacion. Los externos tienen acceso limitado.')
                     ->live()
                     ->default(true)
-                    ->disabled(fn ($record): bool => $record?->hasRole('super_admin')),
+                    ->disabled(fn ($record): bool => (bool) $record?->hasRole('super_admin')),
             ]);
     }
 }

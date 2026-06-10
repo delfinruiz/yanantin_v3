@@ -64,6 +64,7 @@ class ManageSettings extends Page
             'cpanel_host' => $tenant?->cpanel_host,
             'cpanel_user' => $tenant?->cpanel_user,
             'cpanel_token' => $tenant?->cpanel_token,
+            'cpanel_password' => $tenant?->cpanel_password,
             'zadarma_token' => $tenant?->zadarma_token,
         ]);
     }
@@ -135,17 +136,27 @@ class ManageSettings extends Page
                             ->label('Host Cpanel')
                             ->maxLength(255)
                             ->placeholder('https://cpanel.tudominio.com:2083')
-                            ->helperText('URL del servidor Cpanel.'),
+                            ->helperText('URL del servidor Cpanel.')
+                            ->rules(['required_with:cpanel_user,cpanel_token,cpanel_password']),
                         TextInput::make('cpanel_user')
                             ->label('Usuario Cpanel')
                             ->maxLength(255)
-                            ->helperText('Nombre de usuario para acceder a Cpanel.'),
+                            ->helperText('Nombre de usuario para acceder a Cpanel.')
+                            ->rules(['required_with:cpanel_host,cpanel_token,cpanel_password']),
                         TextInput::make('cpanel_token')
                             ->label('Token Cpanel')
                             ->password()
                             ->revealable()
                             ->maxLength(255)
-                            ->helperText('Token de API de Cpanel.'),
+                            ->helperText('Token de API de Cpanel.')
+                            ->rules(['required_with:cpanel_host,cpanel_user,cpanel_password']),
+                        TextInput::make('cpanel_password')
+                            ->label('Contrasena Cpanel')
+                            ->password()
+                            ->revealable()
+                            ->maxLength(255)
+                            ->helperText('Contrasena real de la cuenta cPanel (no el token API). Necesaria para WebDAV.')
+                            ->rules(['required_with:cpanel_host,cpanel_user,cpanel_token']),
                     ])
                     ->columns(2),
 
@@ -179,6 +190,7 @@ class ManageSettings extends Page
             $tenant->cpanel_host = $data['cpanel_host'] ?? null;
             $tenant->cpanel_user = $data['cpanel_user'] ?? null;
             $tenant->cpanel_token = $data['cpanel_token'] ?? null;
+            $tenant->cpanel_password = $data['cpanel_password'] ?? null;
             $tenant->zadarma_token = $data['zadarma_token'] ?? null;
 
             $tenant->save();

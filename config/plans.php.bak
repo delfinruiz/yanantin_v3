@@ -34,7 +34,7 @@ return [
         ],
         'file_manager' => [
             'label' => 'Gestor de Archivos',
-            'entities' => ['FileManager', 'CpanelFileManager'],
+            'entities' => ['FileManager'],
         ],
         'email' => [
             'label' => 'Cuentas de Correo',

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\FileItem;
+use App\Services\CPanelFilemanService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -98,6 +100,14 @@ class OnlyOfficeCallbackController extends Controller
         }
 
         $relativePath = ltrim(str_replace('//', '/', $keyMap[$documentKey]), '/');
+
+        if (str_starts_with($relativePath, 'cpanel://')) {
+            return $this->handleCpanelCallback(
+                substr($relativePath, 8),
+                $fileUrl,
+                $tenantId,
+            );
+        }
 
         Log::channel('daily')->info('[OnlyOffice callback] Ruta resuelta', [
             'relative_path' => $relativePath,
@@ -233,5 +243,60 @@ class OnlyOfficeCallbackController extends Controller
 
             return false;
         }
+    }
+
+    private function handleCpanelCallback(string $docKey, string $fileUrl, string $tenantId): JsonResponse
+    {
+        $cpanelDir = storage_path("app/tenants/{$tenantId}/onlyoffice/cpanel");
+        $metaPath = "{$cpanelDir}/{$docKey}.meta.json";
+        $dataPath = "{$cpanelDir}/{$docKey}.dat";
+
+        if (! file_exists($metaPath)) {
+            Log::channel('daily')->error('[OnlyOffice callback cPanel] Meta no encontrada', [
+                'docKey' => $docKey,
+                'metaPath' => $metaPath,
+            ]);
+
+            return response()->json(['error' => 1]);
+        }
+
+        $meta = json_decode(file_get_contents($metaPath), true);
+
+        $fileContent = $this->downloadFromOnlyOffice($fileUrl);
+
+        if ($fileContent === false || strlen($fileContent) === 0) {
+            Log::channel('daily')->error('[OnlyOffice callback cPanel] Descarga fallida', [
+                'docKey' => $docKey,
+                'url' => $fileUrl,
+            ]);
+
+            return response()->json(['error' => 1]);
+        }
+
+        file_put_contents($dataPath, $fileContent);
+
+        try {
+            $service = app(CPanelFilemanService::class);
+            $service->saveFileContent($meta['dir'], $meta['name'], $fileContent);
+
+            Log::channel('daily')->info('[OnlyOffice callback cPanel] Archivo subido a cPanel', [
+                'dir' => $meta['dir'],
+                'name' => $meta['name'],
+                'size' => strlen($fileContent),
+            ]);
+        } catch (\Exception $e) {
+            Log::channel('daily')->error('[OnlyOffice callback cPanel] Error subiendo a cPanel', [
+                'dir' => $meta['dir'],
+                'name' => $meta['name'],
+                'error' => $e->getMessage(),
+            ]);
+
+            return response()->json(['error' => 1]);
+        }
+
+        @unlink($dataPath);
+        @unlink($metaPath);
+
+        return response()->json(['error' => 0]);
     }
 }

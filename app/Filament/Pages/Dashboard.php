@@ -4,6 +4,7 @@ namespace App\Filament\Pages;
 
 use App\Filament\Widgets\CompanyHappinessBarWidget;
 use App\Filament\Widgets\DailyMoodWidget;
+use App\Filament\Widgets\SetupChecklistWidget;
 use Filament\Pages\Dashboard as BaseDashboard;
 
 class Dashboard extends BaseDashboard
@@ -20,6 +21,10 @@ class Dashboard extends BaseDashboard
     {
         $widgets = [];
         $user = auth()->user();
+
+        if ($user?->is_internal) {
+            $widgets[] = SetupChecklistWidget::class;
+        }
 
         if (tenant()?->hasEntity('CompanyHappinessBarWidget') && $user?->can('View:CompanyHappinessBarWidget')) {
             $widgets[] = CompanyHappinessBarWidget::class;

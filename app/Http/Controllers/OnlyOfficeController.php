@@ -269,6 +269,92 @@ class OnlyOfficeController extends Controller
         return response()->file(Storage::disk('public')->path($path));
     }
 
+    public function openCpanel(string $docKey)
+    {
+        $tenantId = tenant()->id;
+        $cpanelDir = storage_path("app/tenants/{$tenantId}/onlyoffice/cpanel");
+        $metaPath = "{$cpanelDir}/{$docKey}.meta.json";
+        $dataPath = "{$cpanelDir}/{$docKey}.dat";
+
+        if (! file_exists($metaPath) || ! file_exists($dataPath)) {
+            abort(404, 'Archivo no encontrado');
+        }
+
+        $meta = json_decode(file_get_contents($metaPath), true);
+        $name = $meta['name'];
+
+        $this->registerKeyMap($docKey, "cpanel://{$docKey}", $tenantId);
+
+        $downloadUrl = route('onlyoffice.cpanel.download', ['docKey' => $docKey]);
+
+        $config = [
+            'document' => [
+                'fileType' => pathinfo($name, PATHINFO_EXTENSION),
+                'key' => $docKey,
+                'title' => $name,
+                'url' => $downloadUrl,
+                'permissions' => [
+                    'edit' => true,
+                    'download' => true,
+                    'print' => true,
+                    'review' => true,
+                ],
+            ],
+            'editorConfig' => [
+                'callbackUrl' => route('onlyoffice.callback'),
+                'lang' => 'es',
+                'locale' => 'es',
+                'region' => 'es-ES',
+                'mode' => 'edit',
+                'user' => [
+                    'id' => (string) Auth::id(),
+                    'name' => Auth::user()->name,
+                ],
+            ],
+            'documentType' => $this->getDocumentType(pathinfo($name, PATHINFO_EXTENSION)),
+        ];
+
+        return view('onlyoffice.editor', compact('config'));
+    }
+
+    public function downloadCpanelFile(string $docKey, Request $request)
+    {
+        $tenantId = tenant()->id;
+        $baseDir = storage_path("app/tenants/{$tenantId}/onlyoffice/cpanel");
+        $dataPath = "{$baseDir}/{$docKey}.dat";
+        $metaPath = "{$baseDir}/{$docKey}.meta.json";
+
+        if (! file_exists($dataPath) || ! file_exists($metaPath)) {
+            abort(404);
+        }
+
+        $meta = json_decode(file_get_contents($metaPath), true);
+        $name = $meta['name'] ?? 'file';
+        $ext = strtolower(pathinfo($name, PATHINFO_EXTENSION));
+        $isPreview = (bool) $request->query('preview');
+
+        $mimeTypes = [
+            'txt' => 'text/plain',
+            'jpg' => 'image/jpeg',
+            'jpeg' => 'image/jpeg',
+            'png' => 'image/png',
+            'gif' => 'image/gif',
+            'svg' => 'image/svg+xml',
+            'webp' => 'image/webp',
+            'mp4' => 'video/mp4',
+            'avi' => 'video/x-msvideo',
+            'mov' => 'video/quicktime',
+            'mp3' => 'audio/mpeg',
+            'wav' => 'audio/wav',
+            'aac' => 'audio/aac',
+            'm4a' => 'audio/mp4',
+        ];
+
+        $contentType = $isPreview ? ($mimeTypes[$ext] ?? 'application/octet-stream') : 'application/octet-stream';
+
+        return response()->file($dataPath, ['Content-Type' => $contentType]);
+    }
+
     private function registerKeyMap($docKey, $path, string $tenantId): void
     {
         $mapPath = storage_path("app/tenants/{$tenantId}/onlyoffice/key_map.json");

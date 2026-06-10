@@ -30,6 +30,8 @@ Route::middleware([
     // File Manager - Auth required
     Route::middleware(['auth'])->group(function () {
         Route::get('/onlyoffice/open/{fileItem}', [OnlyOfficeController::class, 'open'])->name('onlyoffice.open');
+        Route::get('/onlyoffice/cpanel/{docKey}', [OnlyOfficeController::class, 'openCpanel'])->name('onlyoffice.cpanel.open');
+        Route::get('/onlyoffice/cpanel-download/{docKey}', [OnlyOfficeController::class, 'downloadCpanelFile'])->name('onlyoffice.cpanel.download');
         Route::get('/file/preview/{fileItem}', [FilePreviewController::class, 'show'])->name('file.preview');
     });
 
