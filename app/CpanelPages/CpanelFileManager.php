@@ -4,6 +4,7 @@ namespace App\CpanelPages;
 
 use App\Mail\CpanelFileShareAckCodeMail;
 use App\Models\CpanelFileShare;
+use App\Models\CpanelFileShareLink;
 use App\Models\User;
 use App\Services\CPanelFilemanService;
 use BackedEnum;
@@ -14,10 +15,14 @@ use Filament\Actions\ActionGroup;
 use Filament\Actions\BulkAction;
 use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteBulkAction;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
+use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Filament\Support\Enums\IconSize;
@@ -29,10 +34,12 @@ use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use UnitEnum;
 
 class CpanelFileManager extends Page implements HasTable
@@ -947,6 +954,146 @@ class CpanelFileManager extends Page implements HasTable
                             $shareId = $record['share_id'] ?? null;
 
                             $this->confirmAck((string) $shareId, $data['code']);
+                        }),
+
+                    Action::make('publicLinks')
+                        ->label('Enlaces públicos')
+                        ->icon('heroicon-o-link')
+                        ->color('success')
+                        ->modalHeading('Gestionar enlaces públicos')
+                        ->visible(function (?array $record) use ($isSharedRoot): bool {
+                            if ($isSharedRoot) {
+                                return false;
+                            }
+
+                            $type = $record['type'] ?? '';
+
+                            return $type !== 'dir'
+                                && ($record['file'] ?? '') !== self::SHARED_PATH;
+                        })
+                        ->mountUsing(function (HasForms $form, array $record): void {
+                            $path = rtrim($this->currentDiskDir(), '/');
+
+                            $links = CpanelFileShareLink::where('tenant_id', tenant()->id)
+                                ->where('owner_id', Auth::id())
+                                ->where('path', $path)
+                                ->where('name', $record['file'] ?? '')
+                                ->get()
+                                ->toArray();
+
+                            $form->fill([
+                                'share_links' => $links,
+                            ]);
+                        })
+                        ->schema(function (array $record): array {
+                            $name = $record['file'] ?? '';
+                            $ext = strtolower(pathinfo($name, PATHINFO_EXTENSION));
+                            $isOffice = in_array($ext, ['docx', 'xlsx', 'pptx', 'pdf']);
+
+                            return [
+                                Repeater::make('share_links')
+                                    ->label('Enlaces activos')
+                                    ->addActionLabel('Generar nuevo enlace')
+                                    ->reorderable(false)
+                                    ->columns(2)
+                                    ->schema([
+                                        Hidden::make('id'),
+
+                                        TextInput::make('token')
+                                            ->label('Token')
+                                            ->default(fn () => Str::random(32))
+                                            ->readOnly()
+                                            ->required()
+                                            ->columnSpan(1),
+
+                                        DatePicker::make('expires_at')
+                                            ->label('Expira (opcional)')
+                                            ->minDate(now())
+                                            ->columnSpan(1),
+
+                                        Select::make('permission')
+                                            ->label('Permiso')
+                                            ->options([
+                                                'view' => 'Solo ver',
+                                                'edit' => 'Editar',
+                                            ])
+                                            ->default('view')
+                                            ->required()
+                                            ->visible($isOffice)
+                                            ->columnSpan(1),
+
+                                        TextInput::make('downloads')
+                                            ->label('Descargas')
+                                            ->default(0)
+                                            ->readOnly()
+                                            ->columnSpan(1),
+
+                                        TextInput::make('url')
+                                            ->label('Enlace')
+                                            ->columnSpanFull()
+                                            ->readOnly()
+                                            ->formatStateUsing(fn ($get) => route('public.cpanel.share', $get('token')))
+                                            ->suffixAction(
+                                                Action::make('copy')
+                                                    ->icon('heroicon-o-clipboard')
+                                                    ->label('Copiar')
+                                                    ->action(fn () => null)
+                                                    ->extraAttributes(fn ($get) => [
+                                                        'x-on:click.prevent.stop' => "
+                                                            const u = '".route('public.cpanel.share', $get('token'))."';
+                                                            const ta = document.createElement('textarea');
+                                                            ta.value = u;
+                                                            ta.style.position = 'fixed';
+                                                            ta.style.left = '-9999px';
+                                                            document.body.appendChild(ta);
+                                                            ta.select();
+                                                            document.execCommand('copy');
+                                                            document.body.removeChild(ta);
+                                                        ",
+                                                    ]),
+                                            ),
+                                    ]),
+                            ];
+                        })
+                        ->action(function (array $data, array $record): void {
+                            $links = $data['share_links'] ?? [];
+                            $keepIds = [];
+                            $dir = rtrim($this->currentDiskDir(), '/');
+                            $fname = $record['file'] ?? '';
+
+                            foreach ($links as $item) {
+                                if (isset($item['id'])) {
+                                    $keepIds[] = $item['id'];
+
+                                    CpanelFileShareLink::where('id', $item['id'])->update(
+                                        Arr::except($item, [
+                                            'id', 'url', 'downloads', 'created_at',
+                                            'updated_at', 'path', 'name', 'owner_id', 'tenant_id',
+                                        ])
+                                    );
+                                } else {
+                                    $createData = Arr::except($item, ['url', 'downloads', 'id']);
+                                    $createData['tenant_id'] = tenant()->id;
+                                    $createData['owner_id'] = Auth::id();
+                                    $createData['path'] = $dir;
+                                    $createData['name'] = $fname;
+
+                                    $created = CpanelFileShareLink::create($createData);
+                                    $keepIds[] = $created->id;
+                                }
+                            }
+
+                            CpanelFileShareLink::where('tenant_id', tenant()->id)
+                                ->where('owner_id', Auth::id())
+                                ->where('path', $dir)
+                                ->where('name', $fname)
+                                ->whereNotIn('id', $keepIds)
+                                ->delete();
+
+                            Notification::make()
+                                ->title('Enlaces actualizados')
+                                ->success()
+                                ->send();
                         }),
                 ]),
             ])

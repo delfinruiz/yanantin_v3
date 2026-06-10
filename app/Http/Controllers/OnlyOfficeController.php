@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\CpanelFileShare;
+use App\Models\CpanelFileShareLink;
 use App\Models\FileItem;
 use App\Models\FileShareLink;
+use App\Services\CPanelFilemanService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -376,6 +378,101 @@ class OnlyOfficeController extends Controller
         $contentType = $isPreview ? ($mimeTypes[$ext] ?? 'application/octet-stream') : 'application/octet-stream';
 
         return response()->file($dataPath, ['Content-Type' => $contentType]);
+    }
+
+    public function openPublicCpanel(string $token)
+    {
+        $link = CpanelFileShareLink::where('token', $token)->firstOrFail();
+
+        if (! $link->isValid()) {
+            abort(404, 'El enlace ha expirado o no es valido.');
+        }
+
+        $tenantId = tenant()->id;
+        $docKey = md5('cpanel_public_'.$link->id.microtime());
+        $cpanelDir = storage_path("app/tenants/{$tenantId}/onlyoffice/cpanel");
+
+        if (! is_dir($cpanelDir)) {
+            mkdir($cpanelDir, 0755, true);
+        }
+
+        $service = app(CPanelFilemanService::class);
+        $content = $service->getFileContent($link->path, $link->name);
+
+        if ($content === null) {
+            abort(404, 'No se pudo leer el archivo desde cPanel.');
+        }
+
+        file_put_contents("{$cpanelDir}/{$docKey}.dat", $content);
+
+        file_put_contents("{$cpanelDir}/{$docKey}.meta.json", json_encode([
+            'dir' => $link->path,
+            'name' => $link->name,
+            'owner_id' => $link->owner_id,
+        ]));
+
+        $this->registerKeyMap($docKey, "cpanel:{$docKey}", $tenantId);
+
+        $isEditable = $link->permission === 'edit';
+
+        $downloadUrl = route('public.cpanel.download.onlyoffice', [
+            'token' => $token,
+            'docKey' => $docKey,
+        ]);
+
+        $config = [
+            'document' => [
+                'fileType' => pathinfo($link->name, PATHINFO_EXTENSION),
+                'key' => $docKey,
+                'title' => $link->name,
+                'url' => $downloadUrl,
+                'permissions' => [
+                    'edit' => $isEditable,
+                    'download' => true,
+                    'print' => true,
+                    'review' => $isEditable,
+                ],
+            ],
+            'editorConfig' => [
+                'callbackUrl' => route('onlyoffice.callback'),
+                'lang' => 'es',
+                'locale' => 'es',
+                'region' => 'es-ES',
+                'mode' => $isEditable ? 'edit' : 'view',
+                'user' => [
+                    'id' => 'guest-'.uniqid(),
+                    'name' => 'Invitado',
+                ],
+            ],
+            'documentType' => $this->getDocumentType(pathinfo($link->name, PATHINFO_EXTENSION)),
+        ];
+
+        return view('onlyoffice.editor', compact('config'));
+    }
+
+    public function downloadPublicCpanel(string $token, Request $request)
+    {
+        $link = CpanelFileShareLink::where('token', $token)->firstOrFail();
+
+        if (! $link->isValid()) {
+            abort(404);
+        }
+
+        $docKey = $request->query('docKey');
+
+        if (! $docKey) {
+            abort(400, 'Falta docKey.');
+        }
+
+        $tenantId = tenant()->id;
+        $baseDir = storage_path("app/tenants/{$tenantId}/onlyoffice/cpanel");
+        $dataPath = "{$baseDir}/{$docKey}.dat";
+
+        if (! file_exists($dataPath)) {
+            abort(404);
+        }
+
+        return response()->file($dataPath);
     }
 
     private function registerKeyMap($docKey, $path, string $tenantId): void

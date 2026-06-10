@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Http\Controllers\FilePreviewController;
 use App\Http\Controllers\OnlyOfficeCallbackController;
 use App\Http\Controllers\OnlyOfficeController;
+use App\Http\Controllers\PublicCpanelShareController;
 use App\Http\Controllers\PublicShareController;
 use App\Http\Controllers\TenantLandingController;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +24,12 @@ Route::middleware([
     Route::get('/d/{token}', [PublicShareController::class, 'download'])->name('public.download');
     Route::get('/o/{token}', [OnlyOfficeController::class, 'openPublic'])->name('public.onlyoffice');
     Route::get('/o/download/{token}', [OnlyOfficeController::class, 'downloadForOnlyOffice'])->name('public.download.onlyoffice');
+
+    // Cpanel File Manager - Public routes
+    Route::get('/cs/{token}', [PublicCpanelShareController::class, 'show'])->name('public.cpanel.share');
+    Route::get('/cd/{token}', [PublicCpanelShareController::class, 'download'])->name('public.cpanel.download');
+    Route::get('/co/{token}', [OnlyOfficeController::class, 'openPublicCpanel'])->name('public.cpanel.onlyoffice');
+    Route::get('/co/download/{token}', [OnlyOfficeController::class, 'downloadPublicCpanel'])->name('public.cpanel.download.onlyoffice');
 
     // OnlyOffice callback
     Route::post('/onlyoffice/callback', [OnlyOfficeCallbackController::class, 'handle'])->name('onlyoffice.callback');
