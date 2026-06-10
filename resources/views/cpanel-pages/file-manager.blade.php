@@ -326,4 +326,5 @@
         window.open(event.detail.url, '_blank');
     });
     </script>
+    <div wire:poll.30s="$refresh"></div>
 </x-filament-panels::page>
