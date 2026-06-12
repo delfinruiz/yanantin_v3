@@ -20,6 +20,7 @@ use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Navigation\MenuItem;
+use Filament\Navigation\NavigationGroup;
 use Filament\Navigation\NavigationItem;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -88,6 +89,7 @@ class AdminPanelProvider extends PanelProvider
             ->plugins([
                 FilamentShieldPlugin::make()
                     ->navigationGroup('Configuracion')
+                    ->navigationLabel('Gestion de Roles')
                     ->scopeToTenant(false),
             ])
             ->userMenuItems([
@@ -106,7 +108,7 @@ class AdminPanelProvider extends PanelProvider
                     }),
             ])
             ->navigationItems([
-                NavigationItem::make('Webmail')
+                NavigationItem::make('Mis Correos')
                     ->group('Mis Aplicaciones')
                     ->icon('heroicon-o-envelope')
                     ->badge(function () {
@@ -124,6 +126,20 @@ class AdminPanelProvider extends PanelProvider
                     }, 'danger')
                     ->url(fn (): string => Webmail::getUrl(), shouldOpenInNewTab: true)
                     ->visible(fn (): bool => Webmail::canAccess()),
+            ])
+            ->navigationGroups([
+                NavigationGroup::make()
+                    ->label('Mis Aplicaciones')
+                    ->icon('heroicon-o-rocket-launch'),
+                NavigationGroup::make()
+                    ->label('Inventario')
+                    ->icon('heroicon-o-cube'),
+                NavigationGroup::make()
+                    ->label('Recursos Humanos')
+                    ->icon('heroicon-o-user-group'),
+                NavigationGroup::make()
+                    ->label('Configuracion')
+                    ->icon('heroicon-o-cog-6-tooth'),
             ])
             ->userMenu(position: UserMenuPosition::Topbar)
             ->sidebarCollapsibleOnDesktop()

@@ -71,9 +71,12 @@
                 path: null,
                 type: null,
                 name: null,
+                downloadUrl: null,
+                fileId: null,
             },
             textContent: '',
             loadingText: false,
+            savingText: false,
             resetMedia() {
                 const media = document.querySelector('audio, video');
                 if (media) {
@@ -86,6 +89,7 @@
                 }
                 this.textContent = '';
                 this.loadingText = false;
+                this.savingText = false;
             },
             async loadTextContent() {
                 if (this.file.type === 'txt' && this.file.path) {
@@ -100,6 +104,14 @@
                     } finally {
                         this.loadingText = false;
                     }
+                }
+            },
+            async saveTxt() {
+                this.savingText = true;
+                try {
+                    await $wire.saveTxt(this.file.fileId, this.textContent);
+                } finally {
+                    this.savingText = false;
                 }
             }
         }"
@@ -126,11 +138,38 @@
 
             <div class="space-y-4">
                 <template x-if="file.type === 'txt'">
-                    <div class="w-full h-96 border rounded-lg bg-gray-50 dark:bg-gray-900 p-4 overflow-auto font-mono text-sm">
-                        <div x-show="loadingText" class="flex items-center justify-center h-full text-gray-400">
+                    <div>
+                        <div x-show="loadingText" class="flex items-center justify-center h-96 text-gray-400">
                             <x-filament::loading-indicator class="w-8 h-8" />
                         </div>
-                        <pre x-show="!loadingText" x-text="textContent" class="whitespace-pre-wrap break-words"></pre>
+                        <div x-show="!loadingText" class="space-y-3">
+                            <textarea x-model="textContent"
+                                class="w-full h-96 border rounded-lg bg-gray-50 dark:bg-gray-900 p-4 font-mono text-sm resize-y focus:border-primary-500 focus:ring-1 focus:ring-primary-500"
+                                spellcheck="false"></textarea>
+                            <div class="flex justify-end items-center gap-2 min-h-[36px]">
+                                <span x-show="savingText" x-cloak class="flex items-center gap-2 text-sm text-gray-500 mr-auto">
+                                    <x-filament::loading-indicator class="w-4 h-4" />
+                                    {{ __('FileManager_Saving') }}
+                                </span>
+                                <x-filament::button
+                                    color="primary"
+                                    size="sm"
+                                    x-on:click="saveTxt()"
+                                    x-bind:disabled="savingText">
+                                    <x-heroicon-o-check class="w-4 h-4" />
+                                    {{ __('FileManager_Save') }}
+                                </x-filament::button>
+                                <x-filament::button
+                                    tag="a"
+                                    color="gray"
+                                    size="sm"
+                                    x-bind:href="file.downloadUrl"
+                                    target="_blank">
+                                    <x-heroicon-o-arrow-down-tray class="w-4 h-4" />
+                                    {{ __('FileManager_Download') }}
+                                </x-filament::button>
+                            </div>
+                        </div>
                     </div>
                 </template>
 

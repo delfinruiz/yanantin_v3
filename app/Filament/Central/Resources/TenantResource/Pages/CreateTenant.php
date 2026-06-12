@@ -18,10 +18,15 @@ class CreateTenant extends CreateRecord
     protected function mutateFormDataBeforeCreate(array $data): array
     {
         $domain = $data['domain'] ?? null;
-        unset($data['domain'], $data['domain_checked'], $data['domain_available'], $data['favicon_url'], $data['logo_light_url'], $data['logo_dark_url']);
+        $adminEmail = $data['admin_email'] ?? null;
+        unset($data['domain'], $data['domain_checked'], $data['domain_available'], $data['admin_email'], $data['favicon_url'], $data['logo_light_url'], $data['logo_dark_url']);
 
         if ($domain) {
             $data['domain_name'] = $domain;
+        }
+
+        if ($adminEmail) {
+            $data['admin_email'] = $adminEmail;
         }
 
         if ($planId = $data['plan_id'] ?? null) {

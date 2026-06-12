@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Mail\TenantWelcomeMail;
 use App\Models\Role;
 use App\Models\Tenant;
 use App\Models\User;
@@ -14,6 +15,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class SeedTenantAdmin implements ShouldQueue
 {
@@ -28,12 +31,13 @@ class SeedTenantAdmin implements ShouldQueue
         tenancy()->initialize($this->tenant);
 
         $adminEmail = 'admin@'.$this->getTenantSlug().'.localhost';
+        $password = Str::password(16);
 
         $user = User::withoutGlobalScope('tenant')->updateOrCreate(
             ['email' => $adminEmail],
             [
                 'name' => 'Admin',
-                'password' => Hash::make('password'),
+                'password' => Hash::make($password),
                 'is_internal' => true,
                 'tenant_id' => $this->tenant->id,
             ]
@@ -56,6 +60,16 @@ class SeedTenantAdmin implements ShouldQueue
         tenancy()->end();
 
         $this->createTenantLandingDirectory();
+
+        $recipientEmail = $this->tenant->getRawOriginal('admin_email');
+
+        if ($recipientEmail) {
+            Mail::send(new TenantWelcomeMail(
+                tenant: $this->tenant,
+                password: $password,
+                recipientEmail: $recipientEmail,
+            ));
+        }
     }
 
     protected function copyGlobalRolePermissions(Role $role): void

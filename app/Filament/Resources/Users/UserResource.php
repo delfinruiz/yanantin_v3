@@ -25,7 +25,9 @@ class UserResource extends Resource
 
     protected static ?string $modelLabel = 'Usuario';
 
-    protected static ?string $pluralModelLabel = 'Usuarios';
+    protected static ?string $pluralModelLabel = 'Gestion de usuarios';
+
+    protected static bool $hasTitleCaseModelLabel = false;
 
     public static function form(Schema $schema): Schema
     {

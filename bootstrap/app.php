@@ -18,6 +18,8 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->validateCsrfTokens(except: [
             '/onlyoffice/callback',
+            '/meet/api/*/participant-left',
+            '/meet/api/*/heartbeat',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

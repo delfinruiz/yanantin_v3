@@ -80,6 +80,15 @@ class TenantForm
 
                         Hidden::make('domain_checked')->default(false),
                         Hidden::make('domain_available')->default(false),
+                        TextInput::make('admin_email')
+                            ->label('Correo del administrador')
+                            ->email()
+                            ->required()
+                            ->maxLength(255)
+                            ->placeholder('admin@ejemplo.com')
+                            ->helperText('A este correo se enviaran las credenciales de acceso al tenant.')
+                            ->visibleOn(['create', 'edit']),
+
                         Select::make('plan_id')
                             ->label('Plan')
                             ->options(fn () => Plan::where('is_active', true)->pluck('name', 'id'))

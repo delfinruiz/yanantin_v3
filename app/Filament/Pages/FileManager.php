@@ -1525,7 +1525,9 @@ class FileManager extends Page implements HasTable
                 'open-preview',
                 path: route('file.preview', $record->id),
                 type: $extension,
-                name: $record->name
+                name: $record->name,
+                downloadUrl: route('file.preview', $record->id),
+                fileId: $record->id,
             );
 
             return;
@@ -1546,6 +1548,65 @@ class FileManager extends Page implements HasTable
         Notification::make()
             ->title(__('FileManager_Preview_Not_Available'))
             ->warning()
+            ->send();
+    }
+
+    public function saveTxt(int $fileId, string $content): void
+    {
+        $record = FileItem::find($fileId);
+
+        if (! $record || $record->is_folder) {
+            Notification::make()
+                ->title(__('FileManager_File_Not_Found'))
+                ->danger()
+                ->send();
+
+            return;
+        }
+
+        if ($record->user_id !== Auth::id()) {
+            $share = $record->sharedWith->firstWhere('id', Auth::id());
+
+            if (! $share || $share->pivot->permission !== 'edit') {
+                Notification::make()
+                    ->title(__('FileManager_No_Edit_Permission'))
+                    ->danger()
+                    ->send();
+
+                return;
+            }
+
+            if (($share->pivot->requires_ack ?? false) && empty($share->pivot->ack_completed_at)) {
+                Notification::make()
+                    ->title(__('FileManager_Action_Required'))
+                    ->body(__('FileManager_Pending_Ack_Warning'))
+                    ->danger()
+                    ->send();
+
+                return;
+            }
+        }
+
+        $diskPath = $this->recordDiskPath($record);
+
+        if (! Storage::disk('public')->exists($diskPath)) {
+            Notification::make()
+                ->title(__('FileManager_File_Not_Found'))
+                ->danger()
+                ->send();
+
+            return;
+        }
+
+        Storage::disk('public')->put($diskPath, $content);
+
+        $record->update([
+            'size' => Storage::disk('public')->size($diskPath),
+        ]);
+
+        Notification::make()
+            ->title(__('FileManager_Saved_Successfully'))
+            ->success()
             ->send();
     }
 

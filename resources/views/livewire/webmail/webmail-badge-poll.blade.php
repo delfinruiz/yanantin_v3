@@ -23,7 +23,7 @@
             if (!link) {
                 link = items.find(el => {
                     const text = (el.textContent || '').trim()
-                    return text.includes('Webmail')
+                    return text.includes('Mis Correos')
                 })
             }
 
@@ -71,7 +71,7 @@
             color="gray"
             icon="heroicon-o-envelope"
             size="lg"
-            label="Webmail"
+            label="Mis Correos"
             class="fi-topbar-webmail-btn"
             tag="a"
             :href="$webmailUrl"

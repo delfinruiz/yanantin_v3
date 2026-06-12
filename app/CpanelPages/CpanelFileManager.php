@@ -51,7 +51,7 @@ class CpanelFileManager extends Page implements HasTable
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-server-stack';
 
-    protected static ?string $navigationLabel = 'Mi Disco';
+    protected static ?string $navigationLabel = 'Mis Archivos';
 
     protected static string|UnitEnum|null $navigationGroup = 'Mis Aplicaciones';
 
@@ -103,7 +103,7 @@ class CpanelFileManager extends Page implements HasTable
 
     public function getTitle(): string|Htmlable
     {
-        return __('Mi Disco');
+        return __('Mis Archivos');
     }
 
     public function mount(CPanelFilemanService $cpanel): void

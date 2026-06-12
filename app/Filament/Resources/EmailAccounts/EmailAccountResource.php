@@ -22,6 +22,8 @@ class EmailAccountResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'email';
 
+    protected static bool $hasTitleCaseModelLabel = false;
+
     public static function getNavigationGroup(): ?string
     {
         return 'Configuracion';

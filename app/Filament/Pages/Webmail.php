@@ -10,7 +10,7 @@ class Webmail extends Page
 {
     protected static ?string $slug = 'webmail';
 
-    protected static ?string $title = 'Webmail';
+    protected static ?string $title = 'Mis Correos';
 
     protected static bool $shouldRegisterNavigation = false;
 

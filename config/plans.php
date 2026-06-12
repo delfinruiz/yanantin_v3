@@ -34,11 +34,19 @@ return [
         ],
         'file_manager' => [
             'label' => 'Gestor de Archivos',
-            'entities' => ['FileManager', 'CpanelFileManager'],
+            'entities' => ['FileManager'],
+        ],
+        'mis_archivos' => [
+            'label' => 'Mis Archivos',
+            'entities' => ['CpanelFileManager'],
         ],
         'email' => [
             'label' => 'Cuentas de Correo',
             'entities' => ['EmailAccount'],
+        ],
+        'meet_rooms' => [
+            'label' => 'Salas de Reunion',
+            'entities' => ['MeetRoom'],
         ],
     ],
 
@@ -47,22 +55,22 @@ return [
     'plans' => [
         'free' => [
             'name' => 'Gratuito',
-            'features' => ['products', 'felicidad-organizacional', 'file_manager', 'email'],
+            'features' => ['products', 'felicidad-organizacional', 'file_manager', 'mis_archivos', 'email'],
             'max_users' => null,
         ],
         'basic' => [
             'name' => 'Basico',
-            'features' => ['products', 'users', 'felicidad-organizacional', 'file_manager', 'email'],
+            'features' => ['products', 'users', 'felicidad-organizacional', 'file_manager', 'mis_archivos', 'email'],
             'max_users' => null,
         ],
         'pro' => [
             'name' => 'Profesional',
-            'features' => ['products', 'users', 'roles', 'felicidad-organizacional', 'file_manager', 'email'],
+            'features' => ['products', 'users', 'roles', 'felicidad-organizacional', 'file_manager', 'mis_archivos', 'email', 'meet_rooms'],
             'max_users' => null,
         ],
         'enterprise' => [
             'name' => 'Enterprise',
-            'features' => ['products', 'users', 'roles', 'departments', 'felicidad-organizacional', 'file_manager', 'email'],
+            'features' => ['products', 'users', 'roles', 'departments', 'felicidad-organizacional', 'file_manager', 'mis_archivos', 'email', 'meet_rooms'],
             'max_users' => null,
         ],
     ],
