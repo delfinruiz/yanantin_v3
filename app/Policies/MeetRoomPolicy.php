@@ -19,6 +19,10 @@ class MeetRoomPolicy
 
     public function view(AuthUser $authUser, MeetRoom $meetRoom): bool
     {
+        if ($meetRoom->canAccess($authUser)) {
+            return true;
+        }
+
         return $authUser->can('View:MeetRoom');
     }
 
@@ -29,11 +33,19 @@ class MeetRoomPolicy
 
     public function update(AuthUser $authUser, MeetRoom $meetRoom): bool
     {
+        if ($meetRoom->isOwner($authUser)) {
+            return true;
+        }
+
         return $authUser->can('Update:MeetRoom');
     }
 
     public function delete(AuthUser $authUser, MeetRoom $meetRoom): bool
     {
+        if ($meetRoom->isOwner($authUser)) {
+            return true;
+        }
+
         return $authUser->can('Delete:MeetRoom');
     }
 
@@ -44,11 +56,19 @@ class MeetRoomPolicy
 
     public function restore(AuthUser $authUser, MeetRoom $meetRoom): bool
     {
+        if ($meetRoom->isOwner($authUser)) {
+            return true;
+        }
+
         return $authUser->can('Restore:MeetRoom');
     }
 
     public function forceDelete(AuthUser $authUser, MeetRoom $meetRoom): bool
     {
+        if ($meetRoom->isOwner($authUser)) {
+            return true;
+        }
+
         return $authUser->can('ForceDelete:MeetRoom');
     }
 
@@ -64,6 +84,10 @@ class MeetRoomPolicy
 
     public function replicate(AuthUser $authUser, MeetRoom $meetRoom): bool
     {
+        if ($meetRoom->isOwner($authUser)) {
+            return true;
+        }
+
         return $authUser->can('Replicate:MeetRoom');
     }
 
