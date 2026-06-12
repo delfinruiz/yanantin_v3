@@ -81,12 +81,12 @@ class PlanShieldServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Gate::before(function ($user, string $ability, array $arguments): ?bool {
-            if (! $user?->hasRole('super_admin')) {
+            if (! tenancy()->initialized || ! tenant()) {
                 return null;
             }
 
-            if (! tenancy()->initialized || ! tenant()) {
-                return true;
+            if (! $user?->hasRole('super_admin')) {
+                return null;
             }
 
             $allowed = tenant()->allowedEntities();
