@@ -50,6 +50,7 @@ class MeetRoom extends Model
     protected function casts(): array
     {
         return [
+            'accepting_participants' => 'boolean',
             'user_id' => 'integer',
             'scheduled_date' => 'date',
             'waiting_room_enabled' => 'boolean',
