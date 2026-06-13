@@ -97,19 +97,9 @@ class EditTenant extends EditRecord
 
     protected function mutateFormDataBeforeSave(array $data): array
     {
-        $adminEmail = $data['admin_email'] ?? null;
-        unset($data['admin_email']);
-
         $data['favicon_url'] = $this->extractFilePath($data['favicon_url'] ?? null);
         $data['logo_light_url'] = $this->extractFilePath($data['logo_light_url'] ?? null);
         $data['logo_dark_url'] = $this->extractFilePath($data['logo_dark_url'] ?? null);
-
-        if ($adminEmail) {
-            $data['data'] = array_merge(
-                $this->record->data ?? [],
-                ['admin_email' => $adminEmail],
-            );
-        }
 
         return $data;
     }
