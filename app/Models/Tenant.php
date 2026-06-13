@@ -91,11 +91,13 @@ class Tenant extends BaseTenant implements TenantWithDatabase
 
     public function getAdminEmailAttribute(): string
     {
-        $domain = $this->domain_name
+        $subdomain = $this->domain_name
             ?? $this->domains()->first()?->domain
             ?? $this->id;
 
-        return 'admin@'.$domain.'.localhost';
+        $rootDomain = config('services.cpanel.root_domain') ?: parse_url(config('app.url'), PHP_URL_HOST);
+
+        return 'admin@'.$subdomain.'.'.$rootDomain;
     }
 
     public function slug(): string

@@ -49,6 +49,7 @@ class TenantsTable
 
                 TextColumn::make('admin_email')
                     ->label('Admin')
+                    ->formatStateUsing(fn ($record) => $record->getRawOriginal('admin_email') ?: $record->admin_email)
                     ->copyable()
                     ->placeholder('pendiente...'),
 
