@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 #[Fillable([
@@ -216,10 +217,24 @@ class MeetRoom extends Model
     public function isOwner(?User $user): bool
     {
         if (! $user) {
+            Log::debug('[MeetRoom] isOwner: user es null', [
+                'room_id' => $this->id,
+                'room_user_id' => $this->user_id,
+            ]);
+
             return false;
         }
 
-        return $this->user_id === $user->id;
+        $result = $this->user_id === $user->id;
+
+        Log::debug('[MeetRoom] isOwner', [
+            'room_id' => $this->id,
+            'room_user_id' => $this->user_id,
+            'auth_user_id' => $user->id,
+            'result' => $result,
+        ]);
+
+        return $result;
     }
 
     public function isRecurrent(): bool
@@ -242,7 +257,19 @@ class MeetRoom extends Model
 
     public function canAccess(?User $user): bool
     {
-        return $this->isOwner($user) || $this->isInvited($user);
+        $isOwner = $this->isOwner($user);
+        $isInvited = $this->isInvited($user);
+        $result = $isOwner || $isInvited;
+
+        Log::debug('[MeetRoom] canAccess', [
+            'room_id' => $this->id,
+            'auth_user_id' => $user?->id,
+            'isOwner' => $isOwner,
+            'isInvited' => $isInvited,
+            'result' => $result,
+        ]);
+
+        return $result;
     }
 
     public function getJoinUrl(?string $token = null): string

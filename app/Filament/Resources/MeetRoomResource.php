@@ -35,6 +35,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use UnitEnum;
 
 class MeetRoomResource extends Resource
@@ -300,11 +301,54 @@ class MeetRoomResource extends Resource
                     ->color('success')
                     ->url(fn (MeetRoom $record): string => route('meet.join', ['roomCode' => $record->room_code]))
                     ->openUrlInNewTab()
-                    ->visible(fn (MeetRoom $record): bool => $record->canAccess(Auth::user())),
+                    ->visible(function (MeetRoom $record): bool {
+                        $user = Auth::user();
+                        $result = $record->canAccess($user);
+
+                        Log::debug('[MeetRoom] Accion "Unirse" evaluada', [
+                            'room_id' => $record->id,
+                            'room_name' => $record->name,
+                            'room_user_id' => $record->user_id,
+                            'auth_user_id' => $user?->id,
+                            'auth_user_name' => $user?->name,
+                            'isOwner' => $user ? $record->isOwner($user) : 'auth_null',
+                            'isInvited' => $user ? $record->isInvited($user) : 'auth_null',
+                            'canAccess' => $result,
+                            'visible' => $result,
+                        ]);
+
+                        return $result;
+                    }),
                 EditAction::make()
-                    ->visible(fn (MeetRoom $record): bool => $record->isOwner(Auth::user())),
+                    ->visible(function (MeetRoom $record): bool {
+                        $user = Auth::user();
+                        $result = $record->isOwner($user);
+
+                        Log::debug('[MeetRoom] Accion "Editar" evaluada', [
+                            'room_id' => $record->id,
+                            'room_user_id' => $record->user_id,
+                            'auth_user_id' => $user?->id,
+                            'isOwner' => $result,
+                            'visible' => $result,
+                        ]);
+
+                        return $result;
+                    }),
                 DeleteAction::make()
-                    ->visible(fn (MeetRoom $record): bool => $record->isOwner(Auth::user())),
+                    ->visible(function (MeetRoom $record): bool {
+                        $user = Auth::user();
+                        $result = $record->isOwner($user);
+
+                        Log::debug('[MeetRoom] Accion "Eliminar" evaluada', [
+                            'room_id' => $record->id,
+                            'room_user_id' => $record->user_id,
+                            'auth_user_id' => $user?->id,
+                            'isOwner' => $result,
+                            'visible' => $result,
+                        ]);
+
+                        return $result;
+                    }),
                 RestoreAction::make(),
                 ForceDeleteAction::make(),
             ])
@@ -319,6 +363,11 @@ class MeetRoomResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
+        Log::debug('[MeetRoom] getEloquentQuery llamado', [
+            'auth_id' => Auth::id(),
+            'auth_check' => Auth::check(),
+        ]);
+
         return parent::getEloquentQuery()
             ->withoutGlobalScopes([SoftDeletingScope::class])
             ->accessibleBy(Auth::id());
