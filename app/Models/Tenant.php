@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Facades\Storage;
 use Stancl\Tenancy\Contracts\TenantWithDatabase;
 use Stancl\Tenancy\Database\Concerns\HasDatabase;
 use Stancl\Tenancy\Database\Concerns\HasDomains;
@@ -140,6 +139,6 @@ class Tenant extends BaseTenant implements TenantWithDatabase
             return $path;
         }
 
-        return Storage::disk('public')->url($path);
+        return url('/storage/'.ltrim($path, '/'));
     }
 }

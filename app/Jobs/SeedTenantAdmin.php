@@ -30,7 +30,8 @@ class SeedTenantAdmin implements ShouldQueue
     {
         tenancy()->initialize($this->tenant);
 
-        $adminEmail = 'admin@'.$this->getTenantSlug().'.localhost';
+        $rootDomain = config('services.cpanel.root_domain') ?: parse_url(config('app.url'), PHP_URL_HOST);
+        $adminEmail = 'admin@'.$this->getTenantSlug().'.'.$rootDomain;
         $password = Str::password(16);
 
         $user = User::withoutGlobalScope('tenant')->updateOrCreate(

@@ -22,7 +22,7 @@ class FileShareAckCodeMail extends Mailable
     public function build()
     {
         $companyName = tenant()?->name ?? config('app.name');
-        $logoUrl = tenant()?->logoLightUrl() ?: asset('/asset/images/logo-light.png');
+        $logoUrl = tenant()?->logoLightUrl();
 
         return $this
             ->subject(__('FileManager_Mail_Subject_Ack'))

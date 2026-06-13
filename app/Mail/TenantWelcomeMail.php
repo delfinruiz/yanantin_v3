@@ -20,12 +20,14 @@ class TenantWelcomeMail extends Mailable
     public function build()
     {
         $companyName = $this->tenant->name ?? config('app.name');
-        $logoUrl = $this->tenant->logoLightUrl() ?: asset('/asset/images/logo-light.png');
+        $logoUrl = $this->tenant->logoLightUrl();
         $subdomain = $this->tenant->domain_name
             ?? $this->tenant->domains()->first()?->domain
             ?? $this->tenant->id;
-        $adminEmail = 'admin@'.$subdomain.'.localhost';
-        $loginUrl = 'https://'.$subdomain.'.'.config('tenancy.central_domains')[0] ?? $subdomain.'.localhost';
+
+        $rootDomain = config('services.cpanel.root_domain') ?: parse_url(config('app.url'), PHP_URL_HOST);
+        $adminEmail = 'admin@'.$subdomain.'.'.$rootDomain;
+        $loginUrl = 'https://'.$subdomain.'.'.$rootDomain;
 
         return $this
             ->subject('Bienvenido a '.$companyName.' - Credenciales de acceso')

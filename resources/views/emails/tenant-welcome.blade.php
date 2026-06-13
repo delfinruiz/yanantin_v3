@@ -7,7 +7,11 @@
                         <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
                             <tr>
                                 <td style="vertical-align:middle;">
+                                    @if ($logoUrl)
                                     <img src="{{ $logoUrl }}" alt="{{ $companyName }}" style="height:40px;max-height:40px;display:block;">
+                                    @else
+                                    <span style="font-size:18px;font-weight:bold;color:#ffffff;">{{ $companyName }}</span>
+                                    @endif
                                 </td>
                                 <td align="right" style="font-size:14px;opacity:.9;">
                                     {{ $companyName }}
