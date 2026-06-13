@@ -32,17 +32,31 @@ class SeedTenantAdmin implements ShouldQueue
 
         $rootDomain = config('services.cpanel.root_domain') ?: parse_url(config('app.url'), PHP_URL_HOST);
         $adminEmail = 'admin@'.$this->getTenantSlug().'.'.$rootDomain;
+        $oldAdminEmail = 'admin@'.$this->getTenantSlug().'.localhost';
         $password = Str::password(16);
 
-        $user = User::withoutGlobalScope('tenant')->updateOrCreate(
-            ['email' => $adminEmail],
-            [
+        $user = User::withoutGlobalScope('tenant')
+            ->where('tenant_id', $this->tenant->id)
+            ->where(function ($q) use ($adminEmail, $oldAdminEmail) {
+                $q->where('email', $adminEmail)
+                    ->orWhere('email', $oldAdminEmail);
+            })
+            ->first();
+
+        if ($user) {
+            $user->update([
+                'email' => $adminEmail,
+                'password' => Hash::make($password),
+            ]);
+        } else {
+            $user = User::withoutGlobalScope('tenant')->create([
                 'name' => 'Admin',
+                'email' => $adminEmail,
                 'password' => Hash::make($password),
                 'is_internal' => true,
                 'tenant_id' => $this->tenant->id,
-            ]
-        );
+            ]);
+        }
 
         $superAdmin = Role::firstOrCreate([
             'name' => 'super_admin',

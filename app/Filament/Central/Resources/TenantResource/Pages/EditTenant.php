@@ -48,16 +48,25 @@ class EditTenant extends EditRecord
 
                     $password = Str::password(16);
 
+                    $rootDomain = config('services.cpanel.root_domain') ?: parse_url(config('app.url'), PHP_URL_HOST);
+                    $slug = $this->record->domain_name
+                        ?? $this->record->domains()->first()?->domain
+                        ?? $this->record->id;
+                    $newAdminEmail = 'admin@'.$slug.'.'.$rootDomain;
+
                     tenancy()->initialize($this->record);
 
-                    $adminEmail = $this->record->admin_email;
-
                     $user = User::withoutGlobalScope('tenant')
-                        ->where('email', $adminEmail)
+                        ->where('tenant_id', $this->record->id)
+                        ->where(function ($q) use ($newAdminEmail, $slug) {
+                            $q->where('email', $newAdminEmail)
+                                ->orWhere('email', 'admin@'.$slug.'.localhost');
+                        })
                         ->first();
 
                     if ($user) {
                         $user->update([
+                            'email' => $newAdminEmail,
                             'password' => Hash::make($password),
                         ]);
                     }
